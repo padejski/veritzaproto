@@ -163,6 +163,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    'userena.middleware.UserenaLocaleMiddleware',
 )
 ########## END MIDDLEWARE CONFIGURATION
 
@@ -192,17 +194,17 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    # Database migration helpers:
     'south',
-
-    # Static file management:
     'compressor',
-
-    # Asynchronous task queue:
     'djcelery',
+    'django_extensions',
+    'easy_thumbnails',
+    'guardian',
+    'userena',
 )
 
 LOCAL_APPS = (
+    'veritza.apps.core',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -235,6 +237,11 @@ LOGGING = {
         'django.request': {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
+            'propagate': True,
+        },
+        'debug': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }
@@ -277,3 +284,20 @@ COMPRESS_JS_FILTERS = [
     'compressor.filters.template.TemplateFilter',
 ]
 ########## END COMPRESSION CONFIGURATION
+
+AUTH_USER_MODEL = 'core.User'
+
+########## USERENA CONFIGURATION
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+ANONYMOUS_USER_ID = -1
+LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+USERENA_HTML_EMAIL = True
+AUTH_PROFILE_MODULE = 'core.DummyProfile'
+########## END USERENA CONFIGURATION

@@ -1,14 +1,20 @@
 from django.contrib import admin
 from django.conf.urls import patterns, include, url
 
+from veritza.apps.core import views as core_views
 
-# See: https://docs.djangoproject.com/en/dev/ref/contrib/admin/#hooking-adminsite-instances-into-your-urlconf
+
 admin.autodiscover()
 
-
-# See: https://docs.djangoproject.com/en/dev/topics/http/urls/
 urlpatterns = patterns('',
-    # Admin panel and documentation:
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    (r'^accounts/', include('userena.urls')),
+
+    url(r'^$', core_views.HomeView.as_view(), name='home'),
+    url(r'^datasets/', core_views.DatasetsView.as_view(), name='datasets'),
+
+
+    url(r'^faq/', core_views.FaqView.as_view(), name='faq'),
+    url(r'^about/', core_views.AboutView.as_view(), name='about'),
+    url(r'^contact/', core_views.ContactView.as_view(), name='contact'),
 )
