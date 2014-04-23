@@ -205,6 +205,7 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'veritza.apps.core',
+    'veritza.apps.stats',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
