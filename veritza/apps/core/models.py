@@ -7,7 +7,7 @@ from django_extensions.db.fields import UUIDField
 # CORE VERITZA MODELS ##################################
 class User(AbstractUser):
     uuid = UUIDField()
-    subscriptions = models.ManyToMany("Veritza")
+    subscriptions = models.ManyToManyField("Veritza")
 
     def subscribe(self, veritza):
         self.subscriptions.add(veritza)
@@ -25,8 +25,8 @@ class VeritzaBaseModel(models.Model):
 
     uuid = UUIDField()
     created_by = models.ForeignKey('User')
-    modified_by = models.ForeignKey('User')
-    created = models.DateTimeField(_("Created Timestamp"), auto_add_now=True)
+    # modified_by = models.ForeignKey('User')
+    created = models.DateTimeField(_("Created Timestamp"), auto_now_add=True)
     updated = models.DateTimeField(_("Last Modified"), auto_now=True)
     active = models.BooleanField(_("Active"), default=True)
 
@@ -47,27 +47,35 @@ class Person(VeritzaBaseModel):
     def __unicode__(self):
         return "%s %s - %s" % (self.first_name, self.last_name, self.national_id)
 
-class Official(VeritzaBaseModel):
-    person = models.OneToOneField(Person, null=True, blank=True)
-
-    def __unicode__(self):
-        return self.__repr__()
-
 class Dataset(VeritzaBaseModel):
     name = models.CharField(_("Name"), max_length=255)
     source = models.CharField(_("Source"), max_length=512)
     description = models.TextField(_("Description"), null=True, blank=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
-    tags = models.ManyToMany("Tag", null=True, blank=True)
+    tags = models.ManyToManyField("Tag", null=True, blank=True)
 
     def __unicode__(self):
         return self.name
 
 class Veritza(VeritzaBaseModel):
     name = models.CharField(_("Name"), max_length=255)
-    sources = models.ManyToMany(_("Sources"))
+    sources = models.ManyToManyField(Dataset)
     description = models.TextField(_("Description"), null=True, blank=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
+
+
+# Public Procurement models ###############################
+class BidderCompany(VeritzaBaseModel):
+    pass
+
+class ContractingAuthority(VeritzaBaseModel):
+    pass
+
+class PublicProcurement(VeritzaBaseModel):
+    id_number = models.CharField(max_length=40)
+    record_type = models.CharField(max_length=255)
+    bidder = models.ForeignKey(BidderCompany)
+    authority = models.ForeignKey(ContractingAuthority)
 
 
 # ADDITIONAL MODELS ##################################
@@ -79,7 +87,6 @@ class UserSettings(models.Model):
 class Alert(models.Model):
     user = models.ForeignKey("User")
     veritza = models.ForeignKey("Veritza", null=True, blank=True)
-    text
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
