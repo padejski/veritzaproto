@@ -25,6 +25,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'veritza',
+        'USER': 'veritza',
+        'PASSWORD': 'veritza',
+        'HOST': '',
+        'PORT': '',
+        'OPTIONS': {'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'}
+    },
+    'legacy': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
         'USER': '',
@@ -73,3 +82,6 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 ########## END TOOLBAR CONFIGURATION
+
+
+REQUESTS_DELAY = 1  # seconds

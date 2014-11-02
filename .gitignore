@@ -22,3 +22,5 @@ dev_local.py
 
 # Misc
 *.log
+
+migrations_old/

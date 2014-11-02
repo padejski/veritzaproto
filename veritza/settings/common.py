@@ -300,5 +300,5 @@ LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
 LOGIN_URL = '/accounts/signin/'
 LOGOUT_URL = '/accounts/signout/'
 USERENA_HTML_EMAIL = True
-AUTH_PROFILE_MODULE = 'core.DummyProfile'
+AUTH_PROFILE_MODULE = 'core.UserProfile'
 ########## END USERENA CONFIGURATION
