@@ -140,6 +140,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
 TEMPLATE_LOADERS = (
+    'apptemplates.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
@@ -189,11 +190,13 @@ DJANGO_APPS = (
     'django.contrib.humanize',
 
     # Admin panel and documentation:
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )
 
 THIRD_PARTY_APPS = (
+    'apptemplates',
     'south',
     'compressor',
     'djcelery',
@@ -302,3 +305,9 @@ LOGOUT_URL = '/accounts/signout/'
 USERENA_HTML_EMAIL = True
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 ########## END USERENA CONFIGURATION
+
+
+########## GRAPPELLI CONFIGURATION
+GRAPPELLI_ADMIN_TITLE = "Veritza Administration"
+GRAPPELLI_SWITCH_USER = True
+########## END GRAPPELLI CONFIGURATION

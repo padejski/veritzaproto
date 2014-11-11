@@ -71,7 +71,7 @@ INSTALLED_APPS += (
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', '89.25.61.77')
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 MIDDLEWARE_CLASSES += (

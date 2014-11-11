@@ -22,5 +22,8 @@ dev_local.py
 
 # Misc
 *.log
+*.csv
+*.sqlite
 
 migrations_old/
+
