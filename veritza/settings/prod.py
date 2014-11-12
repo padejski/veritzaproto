@@ -87,7 +87,8 @@ INSTALLED_APPS += (
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
 # AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
