@@ -106,7 +106,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
+    # 'compressor.finders.CompressorFinder',
 )
 ########## END STATIC FILE CONFIGURATION
 
@@ -198,7 +198,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'apptemplates',
     'south',
-    'compressor',
+    # 'compressor',
     'djcelery',
     'django_extensions',
     'easy_thumbnails',
@@ -273,7 +273,7 @@ WSGI_APPLICATION = 'wsgi.application'
 
 ########## COMPRESSION CONFIGURATION
 # See: http://django_compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_ENABLED
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 # See: http://django-compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_CSS_HASHING_METHOD
 COMPRESS_CSS_HASHING_METHOD = 'content'
