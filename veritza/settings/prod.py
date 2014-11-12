@@ -1,10 +1,10 @@
 """Production settings and globals."""
 
-
 from os import environ
 
-from memcacheify import memcacheify
-from postgresify import postgresify
+# from memcacheify import memcacheify
+# from postgresify import postgresify
+import dj_database_url
 from S3 import CallingFormat
 
 from common import *
@@ -38,13 +38,14 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 
 ########## DATABASE CONFIGURATION
-DATABASES = postgresify()
+# DATABASES = postgresify()
+# DATABASES = {'default': dj_database_url.config(default='mysql://localhost')}
 ########## END DATABASE CONFIGURATION
 
 
 ########## CACHE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = memcacheify()
+# CACHES = memcacheify()
 ########## END CACHE CONFIGURATION
 
 
