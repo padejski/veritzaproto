@@ -39,7 +39,7 @@ SERVER_EMAIL = EMAIL_HOST_USER
 
 ########## DATABASE CONFIGURATION
 # DATABASES = postgresify()
-# DATABASES = {'default': dj_database_url.config(default='mysql://localhost')}
+DATABASES = {'default': dj_database_url.config(default='mysql://veritza:veritza@89.25.61.77:3306/veritza')}
 ########## END DATABASE CONFIGURATION
 
 
