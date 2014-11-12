@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from django.conf.urls.static import static
 from veritza.apps.core import views as core_views
 
 admin.autodiscover()
@@ -17,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^faq/', core_views.FaqView.as_view(), name='faq'),
     url(r'^about/', core_views.AboutView.as_view(), name='about'),
     url(r'^contact/', core_views.ContactView.as_view(), name='contact'),
-)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
