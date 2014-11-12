@@ -83,7 +83,11 @@ INSTALLED_APPS += (
 )
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
 # AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
@@ -135,4 +139,3 @@ SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['.herokuapp.com']
 ########## END ALLOWED HOST CONFIGURATION
-
