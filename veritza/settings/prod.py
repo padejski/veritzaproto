@@ -5,7 +5,7 @@ from os import environ
 # from memcacheify import memcacheify
 # from postgresify import postgresify
 import dj_database_url
-from S3 import CallingFormat
+# from S3 import CallingFormat
 
 from common import *
 
@@ -86,7 +86,7 @@ INSTALLED_APPS += (
 STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
+# AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
 AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID', '')
