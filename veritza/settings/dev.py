@@ -32,14 +32,6 @@ DATABASES = {
         'HOST': '',
         'PORT': '',
         'OPTIONS': {'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'}
-    },
-    'legacy': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': normpath(join(DJANGO_ROOT, 'default.db')),
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
     }
 }
 ########## END DATABASE CONFIGURATION
