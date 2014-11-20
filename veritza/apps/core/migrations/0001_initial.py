@@ -125,6 +125,19 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['veritza_id', 'dataset_id'])
 
+        # Adding model 'PublicOfficial'
+        db.create_table(u'core_publicofficial', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('system_id', self.gf('django.db.models.fields.CharField')(max_length=255, unique=True, null=True, db_index=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, db_index=True)),
+        ))
+        db.send_create_signal(u'core', ['PublicOfficial'])
+
         # Adding model 'PublicOfficialReport'
         db.create_table(u'core_publicofficialreport', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -133,27 +146,42 @@ class Migration(SchemaMigration):
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('system_id', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('official', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PublicOfficial'], null=True)),
+            ('system_id', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, db_index=True)),
+            ('report_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('report_type', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('year', self.gf('django.db.models.fields.CharField')(max_length=10, null=True)),
+            ('rbr', self.gf('django.db.models.fields.CharField')(max_length=10, null=True)),
+            ('link', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
             ('public_office', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('public_office_other', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('official_type', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('address', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('job', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('company_board_member', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
             ('salary', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('movables', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('real_estate', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('companies', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('report_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('report_type', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('year', self.gf('django.db.models.fields.CharField')(max_length=10, null=True)),
-            ('rbr', self.gf('django.db.models.fields.CharField')(max_length=10, null=True)),
+            ('other_activities', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
+            ('other_activities_salary', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
+            ('real_estate', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
+            ('movables', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
+            ('movables_others', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
+            ('companies', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
+            ('company_salary', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('annual_income', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('other_income', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('credits_debts', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('spouse', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('spouse_job', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('spouse_salary', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('spouse_companies', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('spouse_other_activities', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
             ('spouse_movables', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('spouse_movables_others', self.gf('django.db.models.fields.CharField')(max_length=1024, null=True)),
             ('spouse_real_estate', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('link', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
+            ('spouse_companies', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('spouse_company_salary', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('spouse_annual_income', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('spouse_other_income', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('spouse_credits_debts', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
         ))
         db.send_create_signal(u'core', ['PublicOfficialReport'])
 
@@ -165,8 +193,8 @@ class Migration(SchemaMigration):
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('registration_number', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
-            ('identification_number', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('registration_number', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, db_index=True)),
+            ('identification_number', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, db_index=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('full_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('address', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
@@ -180,6 +208,37 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'core', ['Company'])
 
+        # Adding model 'CompanyMember'
+        db.create_table(u'core_companymember', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Company'], null=True)),
+            ('company_registration_number', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
+            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('link', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
+        ))
+        db.send_create_signal(u'core', ['CompanyMember'])
+
+        # Adding model 'CompanyMemberTitle'
+        db.create_table(u'core_companymembertitle', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('company_registration_number', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
+            ('company_member', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.CompanyMember'], null=True)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('company_share', self.gf('django.db.models.fields.CharField')(max_length=30, null=True)),
+        ))
+        db.send_create_signal(u'core', ['CompanyMemberTitle'])
+
         # Adding model 'BidderCompany'
         db.create_table(u'core_biddercompany', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -188,7 +247,8 @@ class Migration(SchemaMigration):
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('identification_number', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
+            ('procurement_number', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
+            ('identification_number', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('town', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True)),
@@ -206,10 +266,11 @@ class Migration(SchemaMigration):
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('identification_number', self.gf('django.db.models.fields.CharField')(max_length=40)),
+            ('procurement_number', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('identification_number', self.gf('django.db.models.fields.CharField')(max_length=40, db_index=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('town', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True)),
+            ('email', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('address', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
             ('webpage', self.gf('django.db.models.fields.URLField')(max_length=200, null=True)),
         ))
@@ -223,20 +284,31 @@ class Migration(SchemaMigration):
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('number', self.gf('django.db.models.fields.CharField')(max_length=40)),
+            ('number', self.gf('django.db.models.fields.CharField')(max_length=40, null=True)),
+            ('system_id', self.gf('django.db.models.fields.CharField')(max_length=40, null=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('subject', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
+            ('value', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=10, decimal_places=2)),
+            ('location', self.gf('django.db.models.fields.CharField')(max_length=50, null=True)),
             ('description', self.gf('django.db.models.fields.TextField')(null=True)),
             ('record_type', self.gf('django.db.models.fields.CharField')(max_length=255, null=True)),
-            ('bidder', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.BidderCompany'], null=True)),
-            ('authority', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.ContractingAuthority'], null=True)),
             ('creation_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('link', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
         ))
         db.send_create_signal(u'core', ['PublicProcurement'])
+
+        # Adding model 'PublicOfficialCompany'
+        db.create_table(u'core_publicofficialcompany', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('official', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PublicOfficial'])),
+            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Company'])),
+        ))
+        db.send_create_signal(u'core', ['PublicOfficialCompany'])
 
         # Adding model 'ConflictInterest'
         db.create_table(u'core_conflictinterest', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('official', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PublicOfficialReport'])),
+            ('official', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PublicOfficial'])),
             ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Company'])),
             ('public_procurement', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PublicProcurement'])),
         ))
@@ -299,11 +371,20 @@ class Migration(SchemaMigration):
         # Removing M2M table for field sources on 'Veritza'
         db.delete_table(db.shorten_name(u'core_veritza_sources'))
 
+        # Deleting model 'PublicOfficial'
+        db.delete_table(u'core_publicofficial')
+
         # Deleting model 'PublicOfficialReport'
         db.delete_table(u'core_publicofficialreport')
 
         # Deleting model 'Company'
         db.delete_table(u'core_company')
+
+        # Deleting model 'CompanyMember'
+        db.delete_table(u'core_companymember')
+
+        # Deleting model 'CompanyMemberTitle'
+        db.delete_table(u'core_companymembertitle')
 
         # Deleting model 'BidderCompany'
         db.delete_table(u'core_biddercompany')
@@ -313,6 +394,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'PublicProcurement'
         db.delete_table(u'core_publicprocurement')
+
+        # Deleting model 'PublicOfficialCompany'
+        db.delete_table(u'core_publicofficialcompany')
 
         # Deleting model 'ConflictInterest'
         db.delete_table(u'core_conflictinterest')
@@ -362,9 +446,10 @@ class Migration(SchemaMigration):
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'identification_number': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'identification_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'postal_address': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'procurement_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'town': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'}),
@@ -380,14 +465,41 @@ class Migration(SchemaMigration):
             'economic_activity': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'full_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'identification_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'identification_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'db_index': 'True'}),
             'link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'mail_address': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'registration_date': ('django.db.models.fields.DateField', [], {'null': 'True'}),
-            'registration_number': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
+            'registration_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'db_index': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'max_length': '32', 'null': 'True'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
+        },
+        u'core.companymember': {
+            'Meta': {'object_name': 'CompanyMember'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Company']", 'null': 'True'}),
+            'company_registration_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
+            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
+        },
+        u'core.companymembertitle': {
+            'Meta': {'object_name': 'CompanyMemberTitle'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'company_member': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.CompanyMember']", 'null': 'True'}),
+            'company_registration_number': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
+            'company_share': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
         },
@@ -395,7 +507,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'ConflictInterest'},
             'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Company']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'official': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PublicOfficialReport']"}),
+            'official': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PublicOfficial']"}),
             'public_procurement': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PublicProcurement']"})
         },
         u'core.contractingauthority': {
@@ -404,10 +516,11 @@ class Migration(SchemaMigration):
             'address': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'null': 'True'}),
+            'email': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'identification_number': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'identification_number': ('django.db.models.fields.CharField', [], {'max_length': '40', 'db_index': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'procurement_number': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'town': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'}),
@@ -442,32 +555,64 @@ class Migration(SchemaMigration):
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
         },
+        u'core.publicofficial': {
+            'Meta': {'object_name': 'PublicOfficial'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'db_index': 'True'}),
+            'system_id': ('django.db.models.fields.CharField', [], {'max_length': '255', 'unique': 'True', 'null': 'True', 'db_index': 'True'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
+        },
+        u'core.publicofficialcompany': {
+            'Meta': {'object_name': 'PublicOfficialCompany'},
+            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Company']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'official': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PublicOfficial']"})
+        },
         u'core.publicofficialreport': {
             'Meta': {'object_name': 'PublicOfficialReport'},
             'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'address': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'companies': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'annual_income': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'companies': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'company_board_member': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'company_salary': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
+            'credits_debts': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'job': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True'}),
-            'movables': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'movables': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'movables_others': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'db_index': 'True'}),
+            'official': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PublicOfficial']", 'null': 'True'}),
             'official_type': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'other_activities': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'other_activities_salary': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'other_income': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'public_office': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'public_office_other': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'rbr': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True'}),
-            'real_estate': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'real_estate': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
             'report_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'report_type': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'salary': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'spouse': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'spouse_annual_income': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'spouse_companies': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'spouse_company_salary': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'spouse_credits_debts': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'spouse_job': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'spouse_movables': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'spouse_movables_others': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'spouse_other_activities': ('django.db.models.fields.CharField', [], {'max_length': '1024', 'null': 'True'}),
+            'spouse_other_income': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'spouse_real_estate': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'spouse_salary': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
-            'system_id': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'system_id': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'}),
             'year': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True'})
@@ -475,18 +620,21 @@ class Migration(SchemaMigration):
         u'core.publicprocurement': {
             'Meta': {'object_name': 'PublicProcurement'},
             'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'authority': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.ContractingAuthority']", 'null': 'True'}),
-            'bidder': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.BidderCompany']", 'null': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
             'creation_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'null': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'id_number': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True'}),
+            'number': ('django.db.models.fields.CharField', [], {'max_length': '40', 'null': 'True'}),
             'record_type': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'subject': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
+            'system_id': ('django.db.models.fields.CharField', [], {'max_length': '40', 'null': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
+            'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'}),
+            'value': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '10', 'decimal_places': '2'})
         },
         u'core.tag': {
             'Meta': {'object_name': 'Tag'},

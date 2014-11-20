@@ -25,13 +25,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.mysql',
         'NAME': 'veritza',
         'USER': 'veritza',
         'PASSWORD': 'veritza',
         'HOST': '',
         'PORT': '',
-        'OPTIONS': {'init_command': 'SET storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci'}
     }
 }
 ########## END DATABASE CONFIGURATION
