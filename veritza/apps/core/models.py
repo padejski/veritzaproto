@@ -102,6 +102,27 @@ class Veritza(VeritzaBaseModel):
         return self.name
 
 
+class ElectionsContributions(VeritzaBaseModel):
+    """
+    From Elections commission database
+    """
+    class Meta:
+        verbose_name_plural = "Elections contributions"
+
+    date = models.DateField(null=True)
+    election_type = models.CharField(max_length=255, null=True)
+    election_place = models.CharField(max_length=40, null=True)
+    political_party = models.CharField(max_length=1024, null=True)
+    candidate = models.CharField(max_length=255, null=True, db_index=True)
+    contributor_type = models.CharField(max_length=255, null=True)
+    contributor_name = models.CharField(max_length=255, null=True, db_index=True)
+    contributor_address = models.CharField(max_length=255, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+
+    def __unicode__(self):
+        return u"{0} to {1}: {2}".format(self.cadidate, self.contributor_name, self.amount)
+
+
 class PublicOfficial(VeritzaBaseModel):
     """
     From Public officials

@@ -7,8 +7,8 @@ from django.contrib import admin
 from veritza.apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
     Company, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
-    ConflictInterest, PublicOfficialCompany
-)  # , PublicOfficial)
+    ConflictInterest, PublicOfficialCompany, PublicOfficial, ElectionsContributions
+)
 
 
 class ProcurementValueListFilter(SimpleListFilter):
@@ -208,6 +208,10 @@ class ConflictInterestAdmin(VeritzaBaseAdmin, OfficialLinkAdminMixin, CompanyLin
     public_procurement_link.short_description = "Procurement"
 
 
+class ElectionsContributionsAdmin(VeritzaBaseAdmin):
+    pass
+
+
 class PublicOfficialReportAdmin(VeritzaBaseAdmin, OfficialLinkAdminMixin):
     list_display = ('id', 'system_id', 'name', 'year', 'official_type', 'salary',
                     'public_office', 'companies', 'report_type', 'rbr', 'address', 'job',
@@ -392,6 +396,7 @@ class PublicProcurementAdmin(VeritzaBaseAdmin):
 admin.site.register(Dataset, DatasetAdmin)
 admin.site.register(Veritza, VeritzaAdmin)
 admin.site.register(Person)
+admin.site.register(ElectionsContributions, ElectionsContributionsAdmin)
 admin.site.register(PublicOfficial, PublicOfficialAdmin)
 admin.site.register(PublicOfficialReport, PublicOfficialReportAdmin)
 admin.site.register(PublicOfficialCompany, PublicOfficialCompanyAdmin)
