@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 
+import csv
+import logging
 import dateutil
+
+from django.conf import settings
+from django.db.models import signals
 from django.db import models, connection
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import UUIDField
 
 from userena.models import UserenaBaseProfile
+
+logger = logging.getLogger('debug')
 
 
 # CORE VERITZA MODELS ##################################
@@ -109,18 +116,29 @@ class ElectionsContributions(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Elections contributions"
 
-    date = models.DateField(null=True)
-    election_type = models.CharField(max_length=255, null=True)
-    election_place = models.CharField(max_length=40, null=True)
-    political_party = models.CharField(max_length=1024, null=True)
-    candidate = models.CharField(max_length=255, null=True, db_index=True)
-    contributor_type = models.CharField(max_length=255, null=True)
-    contributor_name = models.CharField(max_length=255, null=True, db_index=True)
-    contributor_address = models.CharField(max_length=255, null=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    date = models.DateField(null=True, blank=True)
+    election_type = models.CharField(max_length=255, null=True, blank=True)
+    election_place = models.CharField(max_length=40, null=True, blank=True)
+    political_party = models.CharField(max_length=1024, null=True, blank=True)
+    candidate = models.CharField(max_length=255, null=True, blank=True, db_index=True)
+    contributor_type = models.CharField(max_length=255, null=True, blank=True)
+    contributor_name = models.CharField(max_length=255, null=True, blank=True, db_index=True)
+    contributor_address = models.CharField(max_length=255, null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    csv_file = models.FileField(upload_to=settings.MEDIA_ROOT, null=True, blank=True)
 
     def __unicode__(self):
-        return u"{0} to {1}: {2}".format(self.cadidate, self.contributor_name, self.amount)
+        return u"{0} to {1}: {2}".format(self.candidate, self.contributor_name, self.amount)
+
+    @classmethod
+    def import_from_csv(cls, filename, created_by=None):
+        records = []
+        with open(filename) as file:
+            reader = csv.reader(file)
+            columns = reader.next()
+            for values in reader:
+                records.append(ElectionsContributions(created_by=created_by, **dict(zip(columns, values))))
+            cls.objects.bulk_create(records)
 
 
 class PublicOfficial(VeritzaBaseModel):
@@ -530,3 +548,12 @@ class Alert(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=255)
+
+
+# SIGNALS CONNECTING ############################################
+def parse_csv(sender, instance=None, created=None, **kwargs):
+    if created:
+        sender.import_from_csv(instance.csv_file.name, created_by=instance.created_by)
+        instance.delete()
+
+signals.post_save.connect(parse_csv, sender=ElectionsContributions)

@@ -209,7 +209,20 @@ class ConflictInterestAdmin(VeritzaBaseAdmin, OfficialLinkAdminMixin, CompanyLin
 
 
 class ElectionsContributionsAdmin(VeritzaBaseAdmin):
-    pass
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ElectionsContributionsAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['created_by'].initial = request.user.id
+        # form.base_fields['created_by'].widget = request.user.id
+        return form
+
+    fieldsets = (
+        ('File upload',
+            {'fields': ['csv_file']}),
+        ('Manual data entry',
+            {'fields': ['date', 'election_type', 'election_place', 'political_party',
+                        'candidate', 'contributor_type', 'contributor_name',
+                        'contributor_address', 'amount', 'created_by']})
+    )
 
 
 class PublicOfficialReportAdmin(VeritzaBaseAdmin, OfficialLinkAdminMixin):
