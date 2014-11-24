@@ -149,11 +149,24 @@ class PublicOfficial(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Public officials"
 
+    PUBLIC_OFFICIALS_BASE_URL = "http://www.konfliktinteresa.me/funkcioneri/EvidFunPrijave.php?ID="
+
     system_id = models.CharField(max_length=255, db_index=True, null=True, unique=True)
     name = models.CharField(max_length=255, null=True, db_index=True)
 
     def __unicode__(self):
         return u"{0}".format(self.name)
+
+    @property
+    def link(self):
+        return "{0}{1}".format(self.PUBLIC_OFFICIALS_BASE_URL, self.system_id)
+
+    @property
+    def companies(self):
+        """
+        Return QuerySet
+        """
+        return self.publicofficialcompany_set.all()
 
 
 class PublicOfficialReport(VeritzaBaseModel):
@@ -323,6 +336,38 @@ class CompanyMemberTitle(VeritzaBaseModel):
 
 
 # Public Procurement models ###############################
+class ProcurementCompany(VeritzaBaseModel):
+    """
+    From Public procurement
+    """
+    class Meta:
+        verbose_name_plural = "Procurement Companies"
+
+    procurement_number = models.CharField(max_length=255, db_index=True)
+    identification_number = models.CharField(max_length=255, db_index=True)
+    name = models.CharField(max_length=255)
+    town = models.CharField(max_length=255, null=True)
+    email = models.EmailField(null=True)
+    postal_address = models.CharField(max_length=255, null=True)
+    webpage = models.CharField(max_length=255, null=True)
+    contact_point = models.CharField(max_length=255, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def from_dict(self, data, commit=True):
+        self.identification_number = data.get('bidder_id', "").strip()
+        self.name = data.get('bidder_name', "").strip()
+        self.town = data.get('bidder_town', "").strip()
+        self.email = data.get('bidder_email', "").strip()
+        self.postal_address = data.get('bidder_postal_address', "").strip()
+        self.webpage = data.get('bidder_webpage', "").strip()
+        self.contact_point = data.get('bidder_contact_point', "").strip()
+        if commit:
+            self.save()
+        return self
+
+
 class BidderCompany(VeritzaBaseModel):
     """
     From Public procurement
@@ -436,10 +481,13 @@ class PublicOfficialCompany(models.Model):
                 ON m.company_registration_number = c.registration_number
             JOIN core_publicofficial o
                 ON CONCAT(m.first_name, ' ', m.last_name) = o.name
-            WHERE c.registration_number != ""
+            WHERE c.registration_number != ''
+                AND m.company_registration_number is not null
+                AND m.company_registration_number != ''
+                AND o.name != ''
+                AND o.name is not null
                 AND c.registration_number is not null
-                AND o.name != ""
-                AND o.name is not null;
+                AND c.registration_number != '';
         """
         query_args = []
 
@@ -513,10 +561,15 @@ class ConflictInterest(models.Model):
                 ON b.procurement_number = p.number
             JOIN core_publicofficialcompany poc
                 ON poc.company_id = c.id
-            WHERE b.identification_number != ""
+            WHERE   b.identification_number != ''
                 AND b.identification_number is not null
-                AND b.procurement_number != ""
-                AND b.procurement_number is not null;
+                AND b.procurement_number != ''
+                AND b.procurement_number is not null
+                AND c.identification_number != ''
+                AND c.identification_number is not null
+                AND p.number != ''
+                AND p.number is not null
+                AND c.id in (4198, 3688);
         """
         query_args = []
 

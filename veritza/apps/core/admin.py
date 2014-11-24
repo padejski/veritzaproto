@@ -7,7 +7,7 @@ from django.contrib import admin
 from veritza.apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
     Company, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
-    ConflictInterest, PublicOfficialCompany, PublicOfficial, ElectionsContributions
+    ConflictInterest, PublicOfficialCompany, ElectionsContributions
 )
 
 
@@ -157,8 +157,8 @@ class PublicOfficialCompanyInline(admin.TabularInline, OfficialLinkAdminMixin, C
     model = PublicOfficialCompany
 
     extra = 0
+    readonly_fields = ['official', 'company']
     # fields = ['official_link', 'company_link']
-    # readonly_fields = ['official_link', 'company_link']
 
 
 class CompanyMemberInline(admin.TabularInline):
@@ -185,7 +185,7 @@ class CompanyMemberInline(admin.TabularInline):
 
 class ConflictInterestAdmin(VeritzaBaseAdmin, OfficialLinkAdminMixin, CompanyLinkAdminMixin):
     list_display = ('official', 'official_title', 'company_link', 'public_procurement_link')
-    search_fields = ('official', 'company', 'public_procurement')
+    search_fields = ('official__name', 'company__full_name',)
     fields = ('official_link', 'company_link', 'public_procurement_link')
     readonly_fields = ('official', 'official_link', 'company', 'company_link', 'public_procurement', 'public_procurement_link')
     # list_filter = ('official_title',)
@@ -291,14 +291,21 @@ class PublicOfficialCompanyAdmin(VeritzaBaseAdmin):
     company_link.allow_tags = True
 
 
-class PublicOfficialAdmin(VeritzaBaseAdmin):
+class PublicOfficialAdmin(OfficialLinkAdminMixin, VeritzaBaseAdmin):
     list_display = ('name', 'alerts', 'companies', 'system_id',)
+    readonly_fields = ('official_link',)
     search_fields = ('name',)
     fieldsets = (
         ('Personal information', {
-            'fields': (('name', 'system_id'),),
+            'fields': ('official_link', 'system_id',),
         }),
     )
+
+    def official_link(self, obj):
+        return u'<a href="/admin/core/official/{0}">{1}</a> - [<a href="{2}">source</a>]'.format(obj.id, obj.name, obj.link)
+    official_link.allow_tags = True
+    official_link.short_description = "Official"
+
 
     inlines = [
         OfficialAlertInline,
@@ -320,6 +327,7 @@ class CompanyAdmin(VeritzaBaseAdmin):
     list_display_links = ('id', 'registration_number',)
     search_fields = ('id', 'registration_number', 'identification_number', 'full_name', 'address')
     list_filter = ('status', 'registration_date', 'economic_activity', 'location')
+    readonly_fields = ('full_name',)
 
     inlines = [
         CompanyAlertInline,
@@ -344,6 +352,7 @@ class CompanyAdmin(VeritzaBaseAdmin):
 class CompanyMemberAdmin(VeritzaBaseAdmin):
     list_display = ('id', 'company_registration_number', 'first_name', 'last_name',)
     search_fields = ('id', 'company_registration_number', 'first_name', 'last_name')
+    readonly_fields = ('company',)
 
 
 class BidderCompanyAdmin(VeritzaBaseAdmin):
