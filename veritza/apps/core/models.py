@@ -367,38 +367,9 @@ class ProcurementCompany(VeritzaBaseModel):
             self.save()
         return self
 
-
 class BidderCompany(VeritzaBaseModel):
-    """
-    From Public procurement
-    """
-    class Meta:
-        verbose_name_plural = "Bidder Companies"
-
-    procurement_number = models.CharField(max_length=255, db_index=True)
-    identification_number = models.CharField(max_length=255, db_index=True)
-    name = models.CharField(max_length=255)
-    town = models.CharField(max_length=255, null=True)
-    email = models.EmailField(null=True)
-    postal_address = models.CharField(max_length=255, null=True)
-    webpage = models.CharField(max_length=255, null=True)
-    contact_point = models.CharField(max_length=255, null=True)
-
-    def __unicode__(self):
-        return self.name
-
-    def from_dict(self, data, commit=True):
-        self.identification_number = data.get('bidder_id', "").strip()
-        self.name = data.get('bidder_name', "").strip()
-        self.town = data.get('bidder_town', "").strip()
-        self.email = data.get('bidder_email', "").strip()
-        self.postal_address = data.get('bidder_postal_address', "").strip()
-        self.webpage = data.get('bidder_webpage', "").strip()
-        self.contact_point = data.get('bidder_contact_point', "").strip()
-        if commit:
-            self.save()
-        return self
-
+    company = models.ForeignKey('Company')
+    procurement = models.ForeignKey('PublicProcurement')
 
 class ContractingAuthority(VeritzaBaseModel):
 
