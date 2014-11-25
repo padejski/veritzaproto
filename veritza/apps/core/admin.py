@@ -306,7 +306,6 @@ class PublicOfficialAdmin(OfficialLinkAdminMixin, VeritzaBaseAdmin):
     official_link.allow_tags = True
     official_link.short_description = "Official"
 
-
     inlines = [
         OfficialAlertInline,
         PublicOfficialCompanyInline,
@@ -355,8 +354,14 @@ class CompanyMemberAdmin(VeritzaBaseAdmin):
     readonly_fields = ('company',)
 
 
-class BidderCompanyAdmin(VeritzaBaseAdmin):
-    pass
+class BidderCompanyAdmin(CompanyLinkAdminMixin, ProcurementLinkAdminMixin, VeritzaBaseAdmin):
+    readonly_fields = ('company', 'procurement', 'company_link', 'public_procurement_link')
+    fields = ('company_link', 'public_procurement_link')
+
+    def public_procurement_link(self, obj):
+        return u'<a href="/admin/core/publicprocurement/{0}">{1}</a> - [<a href="{2}">source</a>]'.format(obj.procurement.id, obj.procurement, obj.procurement.link)
+    public_procurement_link.allow_tags = True
+    public_procurement_link.short_description = "Procurement"
 
 
 class ProcurementCompanyAdmin(VeritzaBaseAdmin):
