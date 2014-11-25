@@ -459,6 +459,12 @@ class ProcurementCompany(VeritzaBaseModel):
             self.save()
         return self
 
+    @classmethod
+    def refresh(cls):
+        uniques = ProcurementCompanyRaw.objects.all().distinct('identification_number')
+        cls.objects.bulk_create(uniques)
+        return len(uniques)
+
 
 class ContractingAuthority(VeritzaBaseModel):
 
