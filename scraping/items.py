@@ -3,8 +3,10 @@
 import dateutil
 import scrapy
 from scrapy.contrib.djangoitem import DjangoItem
-from veritza.apps.core.models import (PublicOfficial, PublicOfficialReport, Company,
-    CompanyMember, PublicProcurement, BidderCompany, ContractingAuthority)
+from veritza.apps.core.models import (
+    PublicOfficial, PublicOfficialReport, Company,
+    CompanyMember, PublicProcurement, ProcurementCompanyRaw, ContractingAuthority
+)
 
 
 class PublicOfficialItem(DjangoItem):
@@ -79,8 +81,8 @@ class PublicProcurementItem(DjangoItem):
     active = scrapy.Field()
 
 
-class BidderCompanyItem(DjangoItem):
-    django_model = BidderCompany
+class ProcurementCompanyItem(DjangoItem):
+    django_model = ProcurementCompanyRaw
 
     uuid = scrapy.Field()
     created_by = scrapy.Field()

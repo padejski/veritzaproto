@@ -114,10 +114,10 @@ class PublicProcurementSpider(scrapy.Spider):
                 'webpage': urljoin('http://', ''.join(table.xpath('tr[5]/td[2]/strong/text()').extract()).strip()),
             })
 
-        yield contracting_authority
+        # yield contracting_authority
 
         # Collect BidderCompany data
-        bidder = BidderCompanyItem()
+        bidder = ProcurementCompanyItem()
 
         if procurement['record_type'] == "Contract of award":
             bidder_table = response.xpath('//div[@class="container"]/fieldset[6]/table')
@@ -134,6 +134,7 @@ class PublicProcurementSpider(scrapy.Spider):
         if bidder_table:
             bidder_table = bidder_table[0]
             bidder.update({
+                'procurement_system_id': procurement['system_id'],
                 'procurement_number': procurement['number'],
                 'name': ''.join(bidder_table.xpath('tr[1]/td[1]/text()').extract()).strip(),
                 'identification_number': ''.join(bidder_table.xpath('tr[3]/td[2]/text()').extract()).strip(),
@@ -146,4 +147,4 @@ class PublicProcurementSpider(scrapy.Spider):
 
             yield bidder
 
-        yield procurement
+        # yield procurement

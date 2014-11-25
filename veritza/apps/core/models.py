@@ -405,7 +405,7 @@ class ProcurementCompanyRaw(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies (Raw)"
 
-    system_id = models.CharField(max_length=20, db_index=True, default=0)
+    procurement_system_id = models.CharField(max_length=20, db_index=True, default=0)
     procurement_number = models.CharField(max_length=255, db_index=True)
     identification_number = models.CharField(max_length=255, db_index=True)
     name = models.CharField(max_length=255)
@@ -438,7 +438,7 @@ class ProcurementCompany(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies"
 
-    system_id = models.CharField(max_length=20, db_index=True, default=0)
+    procurement_system_id = models.CharField(max_length=20, db_index=True, default=0)
     procurement_number = models.CharField(max_length=255, db_index=True)
     identification_number = models.CharField(max_length=255, db_index=True)
     name = models.CharField(max_length=255)
