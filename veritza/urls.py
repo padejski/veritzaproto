@@ -20,11 +20,11 @@ urlpatterns = patterns('',
     url(r'^contact/', core_views.ContactView.as_view(), name='contact'),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+    urlpatterns += patterns(
+        'django.views.static', (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}), )
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += patterns('',
         url(r'^__debug__/', include(debug_toolbar.urls)),
     )
-
-    urlpatterns += patterns(
-        'django.views.static', (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}), )
