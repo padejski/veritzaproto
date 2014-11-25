@@ -275,7 +275,7 @@ class Company(VeritzaBaseModel):
     link = models.URLField(null=True)
 
     def __unicode__(self):
-        return u"%s [%s]" % (self.full_name, self.registration_number)
+        return u"%s [%s]" % (self.full_name, self.identification_number)
 
     def from_dict(self, data, commit=True):
         self.registration_number = data.get('registarski_broj', "").strip()
@@ -359,10 +359,12 @@ class BidderCompany(VeritzaBaseModel):
                 ON pc.identification_number = c.identification_number
             JOIN core_publicprocurement p
                 ON p.number = pc.procurement_number
-            WHERE  c.identification_number is not null
+            WHERE c.identification_number is not null
                 AND c.identification_number != ''
                 AND pc.identification_number is not null
                 AND pc.identification_number != ''
+                AND pc.procurement_number is not null
+                AND pc.procurement_number != ''
                 AND p.number is not null
                 AND p.number != '';
         """
@@ -403,6 +405,7 @@ class ProcurementCompanyRaw(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies (Raw)"
 
+    system_id = models.CharField(max_length=20, db_index=True, default=0)
     procurement_number = models.CharField(max_length=255, db_index=True)
     identification_number = models.CharField(max_length=255, db_index=True)
     name = models.CharField(max_length=255)
@@ -435,6 +438,7 @@ class ProcurementCompany(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies"
 
+    system_id = models.CharField(max_length=20, db_index=True, default=0)
     procurement_number = models.CharField(max_length=255, db_index=True)
     identification_number = models.CharField(max_length=255, db_index=True)
     name = models.CharField(max_length=255)
@@ -593,49 +597,29 @@ class ConflictInterest(models.Model):
 
     @classmethod
     def refresh(cls, start=0, end=100000):
-        # bidders_ids = BidderCompany.objects.all().values_list('identification_number', flat=True)
-        # companies_ids = Company.objects.filter(identification_number__in=bidders_ids)\
-        #                        .values_list('registration_number', flat=True)
-        # members_names = [m.full_name() for m in CompanyMember.objects.filter(company_registration_number__in=companies_ids)]
-        # officials = PublicOfficialReport.objects.filter(name__in=members_names)
 
         cursor = connection.cursor()
 
         # query_string = """
-        #     SELECT c.id as company, o.id as official, p.id as public_procurement
+        #     SELECT c.id as company, poc.official_id as official, p.id as public_procurement
         #     FROM core_company c
         #     JOIN core_biddercompany b
-        #         ON c.identification_number = b.identification_number
+        #         ON c.id = b.company_id
         #     JOIN core_publicprocurement p
-        #         ON b.procurement_number = p.number
-        #     JOIN core_companymember m
-        #         ON m.company_registration_number = c.registration_number
-        #     JOIN core_publicofficial o
-        #         ON CONCAT(m.first_name, ' ', m.last_name) = o.name
-        #     WHERE b.identification_number != ""
-        #         AND b.identification_number is not null
-        #         AND b.procurement_number != ""
-        #         AND b.procurement_number is not null
-        #         AND m.id > %s and m.id < %s;
+        #         ON p.id = b.procurement_id
+        #     JOIN core_publicofficialcompany poc
+        #         ON poc.company_id = c.id
+        #     WHERE c.identification_number != ''
+        #         AND c.identification_number is not null
+        #         AND p.number != ''
+        #         AND p.number is not null;
         # """
+
         query_string = """
-            SELECT c.id as company, poc.official_id as official, p.id as public_procurement
-            FROM core_company c
-            JOIN core_biddercompany b
-                ON c.identification_number = b.identification_number
-            JOIN core_publicprocurement p
-                ON b.procurement_number = p.number
+            SELECT poc.company_id as company, poc.official_id as official, b.procurement_id as public_procurement
+            FROM core_biddercompany b
             JOIN core_publicofficialcompany poc
-                ON poc.company_id = c.id
-            WHERE   b.identification_number != ''
-                AND b.identification_number is not null
-                AND b.procurement_number != ''
-                AND b.procurement_number is not null
-                AND c.identification_number != ''
-                AND c.identification_number is not null
-                AND p.number != ''
-                AND p.number is not null
-                AND c.id in (4198, 3688);
+                ON poc.company_id = b.company_id;
         """
         query_args = []
 

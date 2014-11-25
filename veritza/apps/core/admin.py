@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin import SimpleListFilter
@@ -6,9 +7,11 @@ from django.contrib import admin
 
 from veritza.apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
-    Company, ProcurementCompany, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
+    Company, ProcurementCompany, ProcurementCompanyRaw, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
     ConflictInterest, PublicOfficialCompany, ElectionsContributions
 )
+
+logger = logging.getLogger('debug')
 
 
 class ProcurementValueListFilter(SimpleListFilter):
@@ -364,22 +367,32 @@ class BidderCompanyAdmin(CompanyLinkAdminMixin, ProcurementLinkAdminMixin, Verit
     public_procurement_link.short_description = "Procurement"
 
 
+
 class ProcurementCompanyAdmin(VeritzaBaseAdmin):
     list_display = ('id', 'identification_number', 'name', 'postal_address', 'contact_point',
                     'email', 'town', 'public_procurement', 'link')
     search_fields = ('id', 'identification_number', 'name', 'name')
 
     def link(self, obj):
-        return u'<a href="{0}">{0}</a>'.format(obj.webpage)
+        if obj.webpage.strip() and obj.webpage.strip() != 'nema' and len(obj.webpage.strip()) > 10:
+            return u'<a href="{0}">{0}</a>'.format(obj.webpage)
+        return u'-'
     link.allow_tags = True
 
     def public_procurement(self, obj):
         try:
-            procurement = PublicProcurement.objects.get(number=obj.procurement_number)
-            return "{1}<br/># <strong>{0}</strong>".format(procurement.number, procurement.title)
-        except:
-            return " - "
+            procurement = PublicProcurement.objects.filter(number=obj.procurement_number)
+            if procurement:
+                procurement = procurement[0]
+            return u"<a href='http://portal.ujn.gov.me/delta/search/displayNotice.html?id={0}'>{1}<br/># <strong>{2}</strong></a>".format(procurement.system_id, procurement.title, procurement.number)
+        except Exception as e:
+            logger.exception(e)
+            return u"<a href='http://portal.ujn.gov.me/delta/search/displayNotice.html?id={0}'>{1}</a>".format(procurement.system_id, procurement.number)
     public_procurement.allow_tags = True
+
+
+class ProcurementCompanyAdminRaw(ProcurementCompanyAdmin):
+    pass
 
 
 class ContractingAuthorityAdmin(VeritzaBaseAdmin):
@@ -434,6 +447,7 @@ admin.site.register(PublicOfficialCompany, PublicOfficialCompanyAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(CompanyMember, CompanyMemberAdmin)
 admin.site.register(ProcurementCompany, ProcurementCompanyAdmin)
+admin.site.register(ProcurementCompanyRaw, ProcurementCompanyAdminRaw)
 admin.site.register(BidderCompany, BidderCompanyAdmin)
 admin.site.register(ContractingAuthority, ContractingAuthorityAdmin)
 admin.site.register(PublicProcurement, PublicProcurementAdmin)
