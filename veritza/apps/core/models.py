@@ -336,6 +336,66 @@ class CompanyMemberTitle(VeritzaBaseModel):
 
 
 # Public Procurement models ###############################
+class BidderCompany(VeritzaBaseModel):
+
+    class Meta:
+        verbose_name_plural = "Bidder Companies"
+
+    company = models.ForeignKey('Company')
+    procurement = models.ForeignKey('PublicProcurement')
+
+    def __unicode__(self):
+        return u"{0} - {1}".format(self.company.full_name, self.procurement.number)
+
+    @classmethod
+    def refresh(cls):
+
+        cursor = connection.cursor()
+
+        query_string = """
+            SELECT c.id as company, p.id as procurement
+            FROM core_company c
+            JOIN core_procurementcompany pc
+                ON pc.identification_number = c.identification_number
+            JOIN core_publicprocurement p
+                ON p.number = pc.procurement_number
+            WHERE  c.identification_number is not null
+                AND c.identification_number != ''
+                AND pc.identification_number is not null
+                AND pc.identification_number != ''
+                AND p.number is not null
+                AND p.number != '';
+        """
+
+        # query_string = """
+        #     SELECT pc.id as company, p.id as procurement
+        #     FROM core_procurementcompany pc
+        #     JOIN core_publicprocurement p
+        #         ON p.number = pc.procurement_number
+        #     WHERE  c.identification_number is not null
+        #         AND c.identification_number != ''
+        #         AND pc.identification_number is not null
+        #         AND pc.identification_number != ''
+        #         AND p.number is not null
+        #         AND p.number != '';
+        # """
+        query_args = []
+
+        cursor.execute(query_string, query_args)
+
+        bidder_companies = []
+        rows = cursor.fetchall()
+        for row in rows:
+            bc = cls()
+            bc.company_id = row[0]
+            bc.procurement_id = row[1]
+            bidder_companies.append(bc)
+            if len(bidder_companies) > 50:
+                cls.objects.bulk_create(bidder_companies)
+                bidder_companies = []
+        cls.objects.bulk_create(bidder_companies)
+
+
 class ProcurementCompany(VeritzaBaseModel):
     """
     From Public procurement
@@ -367,9 +427,6 @@ class ProcurementCompany(VeritzaBaseModel):
             self.save()
         return self
 
-class BidderCompany(VeritzaBaseModel):
-    company = models.ForeignKey('Company')
-    procurement = models.ForeignKey('PublicProcurement')
 
 class ContractingAuthority(VeritzaBaseModel):
 

@@ -190,9 +190,9 @@ DJANGO_APPS = (
     'django.contrib.humanize',
 
     # Admin panel and documentation:
+    'grappelli.dashboard',
     'grappelli',
     'django.contrib.admin',
-    'django.contrib.admindocs',
 )
 
 THIRD_PARTY_APPS = (
@@ -310,4 +310,5 @@ AUTH_PROFILE_MODULE = 'core.UserProfile'
 ########## GRAPPELLI CONFIGURATION
 GRAPPELLI_ADMIN_TITLE = "Veritza Administration"
 GRAPPELLI_SWITCH_USER = True
+# GRAPPELLI_INDEX_DASHBOARD = "grappelli_dashboard.VeritzaDashboard"
 ########## END GRAPPELLI CONFIGURATION

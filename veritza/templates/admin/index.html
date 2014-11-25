@@ -1,0 +1,203 @@
+{% extends "grappelli:admin/index.html" %}
+
+<!-- LOADING -->
+{% load i18n grp_tags log %}
+{% load humanize %}
+{% load veritza_utils %}
+
+<!-- JAVASCRIPTS -->
+{% block javascripts %}
+    {{ block.super }}
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+{% endblock %}
+
+<!-- COLTYPE/BODYCLASS-- >
+{% block bodyclass %}dashboard{% endblock %}
+{% block content-class %}content-grid{% endblock %}
+
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}
+    <ul class="grp-horizontal-list">
+        <li>{% trans "Home" %}</li>
+    </ul>
+{% endblock %}
+{% block content_title %}
+    {% if title %}
+        <header><h1>Veritza's Datasets</h1></header>
+    {% endif %}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+
+    <div class="g-d-c-fluid">
+        <div class="g-d-10 g-d-f">
+            <a href="/admin/core/publicofficial/">
+                <div class="grp-module">
+                <h2 style="font-size: 12pt">Public Officials ({{ app_list.1.models.10|count_objects|intcomma }})</h2>
+                    <div class="grp-row grp-cells">
+                        <div class="grp-cell">
+                            <img src="{{ MEDIA_URL }}images/public-official.png"></img>
+                        </div>
+                        <div class="grp-cell">
+                            <div class="admin-category-description" style="white-space: normal">Montenegro public officials database</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="g-d-10">
+            <a href="/admin/core/company/">
+                <div class="grp-module">
+                    <h2 style="font-size: 12pt">Companies ({{ app_list.1.models.1|count_objects|intcomma }})</h2>
+                    <div class="grp-row grp-cells">
+                        <div class="grp-cell">
+                            <img src="{{ MEDIA_URL }}images/company.png"></img>
+                        </div>
+                        <div class="grp-cell">
+                            <div class="admin-category-description" style="white-space: normal">Montenegro companies database</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="g-d-10 g-d-l">
+            <a href="/admin/core/publicprocurement/">
+                <div class="grp-module">
+                    <h2 class="text" style="font-size: 11pt">Public Procurements ({{ app_list.1.models.12|count_objects|intcomma }})</h2>
+                    <div class="grp-row grp-cells">
+                        <div class="grp-cell">
+                            <img src="{{ MEDIA_URL }}images/public-procurement.png"></img>
+                        </div>
+                        <div class="grp-cell">
+                            <div class="admin-category-description" style="white-space: normal">Montenegro public procurements database</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="g-d-c-fluid">
+        <div class="g-d-10 g-d-f">
+            <a href="/admin/core/publicofficialcompany/">
+                <div class="grp-module">
+                     <h2 class="text" style="font-size: 11pt">Public Officials Companies ({{ app_list.1.models.11|count_objects|intcomma }})</h2>
+                    <div class="grp-row grp-cells">
+                        <div class="grp-cell">
+                            <img src="{{ MEDIA_URL }}images/official-company.png"></img>
+                        </div>
+                        <div class="grp-cell">
+                            <div class="admin-category-description" style="white-space: normal">Montenegro public officials that are part or have share in a montenegro company</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="g-d-10">
+            <a href="/admin/core/biddercompany/">
+                <div class="grp-module">
+                    <h2 class="text" style="font-size: 11pt">Bidder Companies ({{ app_list.1.models.0|count_objects|intcomma }})</h2>
+                    <div class="grp-row grp-cells">
+                        <div class="grp-cell">
+                            <img src="{{ MEDIA_URL }}images/bidder-company.png"></img>
+                        </div>
+                        <div class="grp-cell">
+                            <div class="admin-category-description" style="white-space: normal">Montenegro companies that bidded for a public procurement and were awarded</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="g-d-10 g-d-l">
+            <a href="/admin/core/conflictinterest/">
+                <div class="grp-module">
+                    <h2 class="text" style="font-size: 12pt">Conflict Of Interest ({{ app_list.1.models.3|count_objects|intcomma }})</h2>
+                    <div class="grp-row grp-cells">
+                        <div class="grp-cell">
+                            <img src="{{ MEDIA_URL }}images/conflict-interest.png"></img>
+                        </div>
+                        <div class="grp-cell">
+                            <div class="admin-category-description" style="white-space: normal">Alerts for possible conflict of interest. Generated whenever a company whose member is a public official was awarded a public procurement.</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+    <br/>
+
+    <div class="g-d-c-fluid">
+        <div class="g-d-10 g-d-f">
+            <a href="/admin/core/electionscontributions/">
+                <div class="grp-module">
+                    <h2 class="text" style="font-size: 12pt">Elections Contributions ({{ app_list.1.models.6|count_objects|intcomma }})</h2>
+                    <div class="grp-row grp-cells">
+                        <div class="grp-cell">
+                            <img src="{{ MEDIA_URL }}images/elections-contributions.png"></img>
+                        </div>
+                        <div class="grp-cell">
+                            <div class="admin-category-description" style="white-space: normal">Contributions during elections campaign to political parties or candidates by physical or legal persons.</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+    <br/>
+    <hr/>
+    <br/>
+
+    <div class="g-d-c-fluid">
+        <div class="g-d-12 g-d-f">
+            {% for app in app_list %}
+                {% if app.name|lower == 'core' %}
+                    <div class="grp-module " id="app_{{ app.name|lower }}">
+                        <h2><a href="{{ app.app_url }}" class="grp-section">Others</a></h2>
+                        {% for model in app.models %}
+                            <div class="grp-row" id="model-{{ model.object_name|lower }}">
+                                {% if model.admin_url %}
+                                    <a href="{{ model.admin_url }}"><strong>{{ model.name }}</strong></a>
+                                {% else %}
+                                    <strong>{{ model.name }}</strong>
+                                {% endif %}
+                                {% if model.add_url or model.admin_url %}
+                                    <ul class="grp-actions">
+                                        {% if model.add_url %}
+                                            <li class="grp-add-link">
+                                                <a href="{{ model.add_url }}">{% trans "Add" %}</a>
+                                            </li>
+                                        {% endif %}
+                                        {% if model.admin_url %}
+                                            <li class="grp-change-link">
+                                                <a href="{{ model.admin_url }}">{% trans "Change" %}</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% empty %}
+                <p>{% trans "You don´t have permission to edit anything." %}</p>
+            {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}
+

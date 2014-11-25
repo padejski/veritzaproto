@@ -6,7 +6,7 @@ from django.contrib import admin
 
 from veritza.apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
-    Company, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
+    Company, ProcurementCompany, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
     ConflictInterest, PublicOfficialCompany, ElectionsContributions
 )
 
@@ -356,6 +356,10 @@ class CompanyMemberAdmin(VeritzaBaseAdmin):
 
 
 class BidderCompanyAdmin(VeritzaBaseAdmin):
+    pass
+
+
+class ProcurementCompanyAdmin(VeritzaBaseAdmin):
     list_display = ('id', 'identification_number', 'name', 'postal_address', 'contact_point',
                     'email', 'town', 'public_procurement', 'link')
     search_fields = ('id', 'identification_number', 'name', 'name')
@@ -424,6 +428,7 @@ admin.site.register(PublicOfficialReport, PublicOfficialReportAdmin)
 admin.site.register(PublicOfficialCompany, PublicOfficialCompanyAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(CompanyMember, CompanyMemberAdmin)
+admin.site.register(ProcurementCompany, ProcurementCompanyAdmin)
 admin.site.register(BidderCompany, BidderCompanyAdmin)
 admin.site.register(ContractingAuthority, ContractingAuthorityAdmin)
 admin.site.register(PublicProcurement, PublicProcurementAdmin)
