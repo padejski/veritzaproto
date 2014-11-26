@@ -47,6 +47,7 @@ class VeritzaBaseModel(models.Model):
     created = models.DateTimeField(_("Created Timestamp"), auto_now_add=True)
     updated = models.DateTimeField(_("Last Modified"), auto_now=True)
     active = models.BooleanField(_("Active"), default=True)
+    is_ok = models.NullBooleanField()
 
     # def __unicode__(self):
     #     if hasattr(self, 'name'):
@@ -348,7 +349,10 @@ class BidderCompany(VeritzaBaseModel):
         return u"{0} - {1}".format(self.company.full_name, self.procurement.number)
 
     @classmethod
-    def refresh(cls):
+    def refresh(cls, delete_old=False):
+
+        if delete_old:
+            cls.objects.all().delete()
 
         cursor = connection.cursor()
 
@@ -359,12 +363,17 @@ class BidderCompany(VeritzaBaseModel):
                 ON pc.identification_number = c.identification_number
             JOIN core_publicprocurement p
                 ON p.number = pc.procurement_number
+                AND p.system_id = pc.procurement_system_id
             WHERE c.identification_number is not null
                 AND c.identification_number != ''
                 AND pc.identification_number is not null
                 AND pc.identification_number != ''
                 AND pc.procurement_number is not null
                 AND pc.procurement_number != ''
+                AND pc.procurement_system_id is not null
+                AND pc.procurement_system_id != ''
+                AND p.system_id is not null
+                AND p.system_id != ''
                 AND p.number is not null
                 AND p.number != '';
         """
@@ -405,7 +414,7 @@ class ProcurementCompanyRaw(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies (Raw)"
 
-    procurement_system_id = models.CharField(max_length=20, db_index=True, default=0)
+    procurement_system_id = models.CharField(max_length=40, null=True)
     procurement_number = models.CharField(max_length=255, db_index=True)
     identification_number = models.CharField(max_length=255, db_index=True)
     name = models.CharField(max_length=255)
@@ -438,7 +447,7 @@ class ProcurementCompany(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies"
 
-    procurement_system_id = models.CharField(max_length=20, db_index=True, default=0)
+    procurement_system_id = models.CharField(max_length=40, null=True)
     procurement_number = models.CharField(max_length=255, db_index=True)
     identification_number = models.CharField(max_length=255, db_index=True)
     name = models.CharField(max_length=255)
@@ -464,7 +473,11 @@ class ProcurementCompany(VeritzaBaseModel):
         return self
 
     @classmethod
-    def refresh(cls):
+    def refresh(cls, delete_old=False, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
         uniques = ProcurementCompanyRaw.objects.all().distinct('identification_number')
         cls.objects.bulk_create(uniques)
         return len(uniques)
@@ -475,6 +488,7 @@ class ContractingAuthority(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Contracting Authorities"
 
+    procurement_system_id = models.CharField(max_length=40, null=True)
     procurement_number = models.CharField(max_length=255)
     identification_number = models.CharField(max_length=40, db_index=True)
     name = models.CharField(max_length=255)
@@ -540,7 +554,10 @@ class PublicOfficialCompany(models.Model):
         return u"{0} - {1}".format(self.official.name, self.company.full_name)
 
     @classmethod
-    def refresh(cls):
+    def refresh(cls, delete_old=True, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
 
         cursor = connection.cursor()
 
@@ -596,7 +613,10 @@ class ConflictInterest(models.Model):
         return u"{0} [{1}]".format(self.official.public_office, self.official.official_type)
 
     @classmethod
-    def refresh(cls, start=0, end=100000):
+    def refresh(cls, delete_old=False, start=0, end=100000, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
 
         cursor = connection.cursor()
 

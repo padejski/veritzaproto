@@ -4,7 +4,7 @@ from urlparse import urljoin
 import scrapy
 from scrapy import http, log
 
-from scraping.items import PublicProcurementItem, BidderCompanyItem, ContractingAuthorityItem
+from scraping.items import PublicProcurementItem, ProcurementCompanyItem, ContractingAuthorityItem
 
 
 class PublicProcurementSpider(scrapy.Spider):
@@ -44,11 +44,11 @@ class PublicProcurementSpider(scrapy.Spider):
 
     def after_logged_in(self, response):
         # decision on award request
-        # yield http.Request(url=self.SEARCH_URL, method='POST',
-        #                    body=urllib.urlencode({
-        #                        'title': '', 'advanced': 1, 'noticeType': 'DecisionOnAward',
-        #                        'startDate': self.START_DATE, 'endDate': self.END_DATE
-        #                    }), headers=self.HEADERS, callback=self.parse_data, dont_filter=True)
+        yield http.Request(url=self.SEARCH_URL, method='POST',
+                           body=urllib.urlencode({
+                               'title': '', 'advanced': 1, 'noticeType': 'DecisionOnAward',
+                               'startDate': self.START_DATE, 'endDate': self.END_DATE
+                           }), headers=self.HEADERS, callback=self.parse_data, dont_filter=True)
 
         # contract of award request
         yield http.Request(url=self.SEARCH_URL, method='POST',
@@ -105,6 +105,7 @@ class PublicProcurementSpider(scrapy.Spider):
             table = table[0]
 
             contracting_authority.update({
+                'procurement_system_id': procurement['system_id'],
                 'procurement_number': procurement['number'],
                 'identification_number': ''.join(table.xpath('tr[3]/td[2]/strong/text()').extract()).strip(),
                 # 'contact_person': ''.join(table.xpath('tr[1]/td[2]/strong/text()').extract()).strip(),
@@ -114,7 +115,7 @@ class PublicProcurementSpider(scrapy.Spider):
                 'webpage': urljoin('http://', ''.join(table.xpath('tr[5]/td[2]/strong/text()').extract()).strip()),
             })
 
-        # yield contracting_authority
+        yield contracting_authority
 
         # Collect BidderCompany data
         bidder = ProcurementCompanyItem()
@@ -147,4 +148,4 @@ class PublicProcurementSpider(scrapy.Spider):
 
             yield bidder
 
-        # yield procurement
+        yield procurement

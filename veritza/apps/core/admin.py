@@ -381,10 +381,12 @@ class ProcurementCompanyAdmin(VeritzaBaseAdmin):
 
     def public_procurement(self, obj):
         try:
-            procurement = PublicProcurement.objects.filter(number=obj.procurement_number)
+            procurement = PublicProcurement.objects.filter(number=obj.procurement_number, system_id=obj.procurement_system_id)
             if procurement:
                 procurement = procurement[0]
-            return u"<a href='http://portal.ujn.gov.me/delta/search/displayNotice.html?id={0}'>{1}<br/># <strong>{2}</strong></a>".format(procurement.system_id, procurement.title, procurement.number)
+                return u"<a href='http://portal.ujn.gov.me/delta/search/displayNotice.html?id={0}'>{1}<br/># <strong>{2}</strong></a>".format(procurement.system_id, procurement.title, procurement.number)
+            else:
+                return "-"
         except Exception as e:
             logger.exception(e)
             return u"<a href='http://portal.ujn.gov.me/delta/search/displayNotice.html?id={0}'>{1}</a>".format(procurement.system_id, procurement.number)
