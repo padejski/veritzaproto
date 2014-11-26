@@ -788,3 +788,12 @@ def parse_csv(sender, instance=None, created=None, **kwargs):
     sender.import_from_csv(instance.csv_file, created_by=instance.created_by)
 
 signals.pre_save.connect(parse_csv, sender=ElectionsContributions)
+
+
+def refresh_all_veritzas(delete_old=False):
+    ProcurementCompany.refresh(delete_old=delete_old)
+    BidderCompany.refresh(delete_old=delete_old)
+    ConflictInterest.refresh(delete_old=delete_old)
+    FamilyMember.refresh(delete_old=delete_old)
+    FamilyMemberCompany.refresh(delete_old=delete_old)
+    ConflictInterestFamilyMember.refresh(delete_old=delete_old)
