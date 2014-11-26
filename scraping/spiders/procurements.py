@@ -44,11 +44,11 @@ class PublicProcurementSpider(scrapy.Spider):
 
     def after_logged_in(self, response):
         # decision on award request
-        yield http.Request(url=self.SEARCH_URL, method='POST',
-                           body=urllib.urlencode({
-                               'title': '', 'advanced': 1, 'noticeType': 'DecisionOnAward',
-                               'startDate': self.START_DATE, 'endDate': self.END_DATE
-                           }), headers=self.HEADERS, callback=self.parse_data, dont_filter=True)
+        # yield http.Request(url=self.SEARCH_URL, method='POST',
+        #                    body=urllib.urlencode({
+        #                        'title': '', 'advanced': 1, 'noticeType': 'DecisionOnAward',
+        #                        'startDate': self.START_DATE, 'endDate': self.END_DATE
+        #                    }), headers=self.HEADERS, callback=self.parse_data, dont_filter=True)
 
         # contract of award request
         yield http.Request(url=self.SEARCH_URL, method='POST',
@@ -115,7 +115,7 @@ class PublicProcurementSpider(scrapy.Spider):
                 'webpage': urljoin('http://', ''.join(table.xpath('tr[5]/td[2]/strong/text()').extract()).strip()),
             })
 
-        yield contracting_authority
+        # yield contracting_authority
 
         # Collect BidderCompany data
         bidder = ProcurementCompanyItem()
@@ -148,4 +148,4 @@ class PublicProcurementSpider(scrapy.Spider):
 
             yield bidder
 
-        yield procurement
+        # yield procurement

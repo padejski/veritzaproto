@@ -170,80 +170,6 @@ class PublicOfficial(VeritzaBaseModel):
         return self.publicofficialcompany_set.all()
 
 
-class FamilyMember(VeritzaBaseModel):
-
-    FAMILY_RELATION_CHOICES = {
-        '1': 'Spouse',
-        '2': 'Daughter',
-        '3': 'Son',
-    }
-
-    public_official = models.ForeignKey('PublicOfficial')
-    name = models.CharField(max_length=255)
-    relationship = models.CharField(max_length=40, choices=FAMILY_RELATION_CHOICES.items())
-
-    def __unicode__(self):
-        return u"{0} ({1}) of {2}".format(self.name, self.FAMILY_RELATION_CHOICES[self.relationship], self.public_official.name)
-
-    @classmethod
-    def refresh(cls, **kwargs):
-        # TODO: what if an official divorced and got married again, while in office?
-        members = {}
-        for report in PublicOfficialReport.objects.filter(spouse__isnull=False).exclude(spouse=''):
-            if not members.setdefault(report.official.id, ''):
-                members[report.official.id] = cls(public_official=report.official, relationship='1', name=report.spouse)
-        cls.objects.bulk_create(members.values())
-        return len(members)
-
-
-class FamilyMemberCompany(VeritzaBaseModel):
-
-    class Meta:
-        verbose_name_plural = "Family Member Companies"
-
-    member = models.ForeignKey('FamilyMember')
-    company = models.ForeignKey('Company')
-
-    @classmethod
-    def refresh(cls, delete_old=True, **kwargs):
-
-        if delete_old:
-            cls.objects.all().delete()
-
-        cursor = connection.cursor()
-
-        query_string = """
-            SELECT c.id as company, f.id as member
-            FROM core_company c
-            JOIN core_companymember m
-                ON m.company_registration_number = c.registration_number
-            JOIN core_familymember f
-                ON CONCAT(m.first_name, ' ', m.last_name) = f.name
-            WHERE c.registration_number != ''
-                AND m.company_registration_number is not null
-                AND m.company_registration_number != ''
-                AND f.name != ''
-                AND f.name is not null
-                AND c.registration_number is not null
-                AND c.registration_number != '';
-        """
-        query_args = []
-
-        cursor.execute(query_string, query_args)
-
-        members_companies = []
-        rows = cursor.fetchall()
-        for row in rows:
-            fmc = cls()
-            fmc.company_id = row[0]
-            fmc.member_id = row[1]
-            members_companies.append(fmc)
-            if len(members_companies) > 50:
-                cls.objects.bulk_create(members_companies)
-                members_companies = []
-        cls.objects.bulk_create(members_companies)
-
-
 class PublicOfficialReport(VeritzaBaseModel):
     """
     From Public officials
@@ -327,6 +253,86 @@ class PublicOfficialReport(VeritzaBaseModel):
             por = cls.objects.get(id=row[0])
             por.official_id = row[1]
             por.save()
+
+
+class FamilyMember(VeritzaBaseModel):
+
+    class Meta:
+        verbose_name_plural = "Family members"
+
+    FAMILY_RELATION_CHOICES = {
+        '1': 'Spouse',
+        '2': 'Daughter',
+        '3': 'Son',
+    }
+
+    public_official = models.ForeignKey('PublicOfficial')
+    name = models.CharField(max_length=255)
+    relationship = models.CharField(max_length=40, choices=FAMILY_RELATION_CHOICES.items())
+
+    def __unicode__(self):
+        return u"{0} ({1} of {2})".format(self.name, self.FAMILY_RELATION_CHOICES[self.relationship], self.public_official.name)
+
+    @classmethod
+    def refresh(cls, **kwargs):
+        # TODO: what if an official divorced and got married again, while in office?
+        members = {}
+        for report in PublicOfficialReport.objects.filter(spouse__isnull=False).exclude(spouse=''):
+            if not members.setdefault(report.official.id, ''):
+                members[report.official.id] = cls(public_official=report.official, relationship='1', name=report.spouse)
+        cls.objects.bulk_create(members.values())
+        return len(members)
+
+
+class FamilyMemberCompany(VeritzaBaseModel):
+
+    class Meta:
+        verbose_name_plural = "Family member companies"
+
+    member = models.ForeignKey('FamilyMember')
+    company = models.ForeignKey('Company')
+
+    def __unicode__(self):
+        return u"{0}: {1}".format(self.member.name, self.company.full_name)
+
+    @classmethod
+    def refresh(cls, delete_old=True, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
+        cursor = connection.cursor()
+
+        query_string = """
+            SELECT c.id as company, f.id as member
+            FROM core_company c
+            JOIN core_companymember m
+                ON m.company_registration_number = c.registration_number
+            JOIN core_familymember f
+                ON CONCAT(m.first_name, ' ', m.last_name) = f.name
+            WHERE c.registration_number != ''
+                AND m.company_registration_number is not null
+                AND m.company_registration_number != ''
+                AND f.name != ''
+                AND f.name is not null
+                AND c.registration_number is not null
+                AND c.registration_number != '';
+        """
+        query_args = []
+
+        cursor.execute(query_string, query_args)
+
+        members_companies = []
+        rows = cursor.fetchall()
+        for row in rows:
+            fmc = cls()
+            fmc.company_id = row[0]
+            fmc.member_id = row[1]
+            members_companies.append(fmc)
+            if len(members_companies) > 50:
+                cls.objects.bulk_create(members_companies)
+                members_companies = []
+        cls.objects.bulk_create(members_companies)
 
 
 class Company(VeritzaBaseModel):
@@ -667,6 +673,47 @@ class PublicOfficialCompany(models.Model):
         cls.objects.bulk_create(official_companies)
 
 
+class ConflictInterestFamilyMember(models.Model):
+    class Meta:
+        verbose_name = "Conflict of Interest (Family Members)"
+        verbose_name_plural = "Conflicts of Interest (Family Members)"
+
+    member = models.ForeignKey('FamilyMember')
+    company = models.ForeignKey('Company')
+    public_procurement = models.ForeignKey('PublicProcurement')
+
+    def __unicode__(self):
+        return u"{0} - {1} [{2}]".format(self.member.name, self.company.full_name, self.public_procurement.title)
+
+    @classmethod
+    def refresh(cls, delete_old=False, start=0, end=100000, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
+        cursor = connection.cursor()
+
+        query_string = """
+            SELECT fmc.company_id as company, fmc.member_id as member, b.procurement_id as public_procurement
+            FROM core_biddercompany b
+            JOIN core_familymembercompany fmc
+                ON fmc.company_id = b.company_id;
+        """
+        query_args = []
+
+        cursor.execute(query_string, query_args)
+
+        conflit_interests = []
+        for row in cursor.fetchall():
+            ci = cls()
+            ci.company_id = row[0]
+            ci.member_id = row[1]
+            ci.public_procurement_id = row[2]
+            conflit_interests.append(ci)
+        cls.objects.bulk_create(conflit_interests, batch_size=500)
+        return len(conflit_interests)
+
+
 class ConflictInterest(models.Model):
 
     class Meta:
@@ -679,7 +726,6 @@ class ConflictInterest(models.Model):
     public_procurement = models.ForeignKey(PublicProcurement)
 
     def __unicode__(self):
-        # return u"{0} - {1} [{2}] - {3}".format(self.official.name, self.company.full_name, self.official_title(), self.public_procurement.title)
         return u"{0} - {1} [{2}]".format(self.official.name, self.company.full_name, self.public_procurement.title)
 
     def official_title(self):
@@ -693,21 +739,6 @@ class ConflictInterest(models.Model):
             cls.objects.all().delete()
 
         cursor = connection.cursor()
-
-        # query_string = """
-        #     SELECT c.id as company, poc.official_id as official, p.id as public_procurement
-        #     FROM core_company c
-        #     JOIN core_biddercompany b
-        #         ON c.id = b.company_id
-        #     JOIN core_publicprocurement p
-        #         ON p.id = b.procurement_id
-        #     JOIN core_publicofficialcompany poc
-        #         ON poc.company_id = c.id
-        #     WHERE c.identification_number != ''
-        #         AND c.identification_number is not null
-        #         AND p.number != ''
-        #         AND p.number is not null;
-        # """
 
         query_string = """
             SELECT poc.company_id as company, poc.official_id as official, b.procurement_id as public_procurement

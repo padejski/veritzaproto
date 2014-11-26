@@ -8,7 +8,8 @@ from django.contrib import admin
 from veritza.apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
     Company, ProcurementCompany, ProcurementCompanyRaw, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
-    ConflictInterest, PublicOfficialCompany, ElectionsContributions, FamilyMember, FamilyMemberCompany
+    ConflictInterest, ConflictInterestFamilyMember, PublicOfficialCompany, ElectionsContributions,
+    FamilyMember, FamilyMemberCompany
 )
 
 logger = logging.getLogger('debug')
@@ -184,6 +185,21 @@ class CompanyMemberInline(admin.TabularInline):
         return u'<a href="{0}">{0}</a>'.format(obj.link) if obj.link else " - "
     webpage.allow_tags = True
 # END INLINES ############################################
+
+
+class ConflictInterestFamilyMemberAdmin(VeritzaBaseAdmin, CompanyLinkAdminMixin):
+    fields = ('company_link', 'public_procurement_link')
+    readonly_fields = ('member', 'company', 'company_link', 'public_procurement', 'public_procurement_link')
+
+    def company_link(self, obj):
+        return u'<a href="/admin/core/company/{0}">{1}</a> - [<a href="{2}">source</a>]'.format(obj.company.id, obj.company, obj.company.link)
+    company_link.allow_tags = True
+    company_link.short_description = "Company"
+
+    def public_procurement_link(self, obj):
+        return u'<a href="/admin/core/publicprocurement/{0}">{1}</a> - [<a href="{2}">source</a>]'.format(obj.public_procurement.id, obj.public_procurement, obj.public_procurement.link)
+    public_procurement_link.allow_tags = True
+    public_procurement_link.short_description = "Procurement"
 
 
 class ConflictInterestAdmin(VeritzaBaseAdmin, OfficialLinkAdminMixin, CompanyLinkAdminMixin):
@@ -400,8 +416,9 @@ class FamilyMemberAdmin(VeritzaBaseAdmin):
     pass
 
 
-class FamilyMemberCompanyAdmin(VeritzaBaseAdmin):
-    pass
+class FamilyMemberCompanyAdmin(CompanyLinkAdminMixin, VeritzaBaseAdmin):
+    readonly_fields = ('member', 'company', 'company_link')
+    fields = ('member', 'company_link')
 
 
 class ContractingAuthorityAdmin(VeritzaBaseAdmin):
@@ -464,3 +481,4 @@ admin.site.register(ContractingAuthority, ContractingAuthorityAdmin)
 admin.site.register(PublicProcurement, PublicProcurementAdmin)
 
 admin.site.register(ConflictInterest, ConflictInterestAdmin)
+admin.site.register(ConflictInterestFamilyMember, ConflictInterestFamilyMemberAdmin)
