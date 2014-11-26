@@ -680,7 +680,7 @@ class PublicOfficialCompany(models.Model):
 class ConflictInterestFamilyMember(models.Model):
     class Meta:
         verbose_name = "Conflict of Interest (Family Members)"
-        verbose_name_plural = "Conflicts of ifnterest (Family Members)"
+        verbose_name_plural = "Conflicts of interest (Family Members)"
 
     member = models.ForeignKey('FamilyMember')
     company = models.ForeignKey('Company')
