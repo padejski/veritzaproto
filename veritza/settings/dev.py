@@ -2,6 +2,7 @@
 
 
 from os.path import join, normpath
+import dj_database_url
 
 from common import *
 
@@ -31,7 +32,8 @@ DATABASES = {
         'PASSWORD': 'veritza',
         'HOST': '',
         'PORT': '',
-    }
+    },
+    'heroku': dj_database_url.config(env='HEROKU_DATABASE_URL')
 }
 ########## END DATABASE CONFIGURATION
 
