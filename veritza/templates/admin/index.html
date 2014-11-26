@@ -37,7 +37,7 @@
         <div class="g-d-10 g-d-f">
             <a href="/admin/core/publicofficial/">
                 <div class="grp-module">
-                <h2 style="font-size: 12pt">Public Officials</h2>
+                <h2 style="font-size: 12pt">Public Officials ({{ 'Public officials'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/public-official.png"></img>
@@ -53,7 +53,7 @@
         <div class="g-d-10">
             <a href="/admin/core/company/">
                 <div class="grp-module">
-                    <h2 style="font-size: 12pt">Companies</h2>
+                    <h2 style="font-size: 12pt">Companies ({{ 'Companies'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/company.png"></img>
@@ -69,7 +69,7 @@
         <div class="g-d-10 g-d-l">
             <a href="/admin/core/publicprocurement/">
                 <div class="grp-module">
-                    <h2 class="text" style="font-size: 11pt">Public Procurements</h2>
+                    <h2 class="text" style="font-size: 11pt">Public Procurements ({{ 'Public procurements'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/public-procurement.png"></img>
@@ -89,7 +89,7 @@
         <div class="g-d-10 g-d-f">
             <a href="/admin/core/publicofficialcompany/">
                 <div class="grp-module">
-                     <h2 class="text" style="font-size: 11pt">Public Officials Companies</h2>
+                     <h2 class="text" style="font-size: 11pt">Public Officials Companies ({{ 'Public officials companies'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/official-company.png"></img>
@@ -105,7 +105,7 @@
         <div class="g-d-10">
             <a href="/admin/core/familymembercompany/">
                 <div class="grp-module">
-                    <h2 class="text" style="font-size: 12pt">Family Members Companies</h2>
+                    <h2 class="text" style="font-size: 12pt">Family Member Companies ({{ 'Family member companies'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/family-member-company.png"></img>
@@ -121,7 +121,7 @@
         <div class="g-d-10 g-d-l">
             <a href="/admin/core/biddercompany/">
                 <div class="grp-module">
-                    <h2 class="text" style="font-size: 11pt">Bidder Companies</h2>
+                    <h2 class="text" style="font-size: 11pt">Bidder Companies ({{ 'Bidder companies'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/bidder-company.png"></img>
@@ -144,7 +144,7 @@
         <div class="g-d-10 g-d-f">
             <a href="/admin/core/conflictinterest/">
                 <div class="grp-module">
-                    <h2 class="text" style="font-size: 12pt">Conflict Of Interest</h2>
+                    <h2 class="text" style="font-size: 12pt">Conflicts Of Interest ({{ 'Conflicts of interest'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/conflict-interest.png"></img>
@@ -160,7 +160,7 @@
         <div class="g-d-10">
             <a href="/admin/core/conflictinterestfamilymember/">
                 <div class="grp-module">
-                    <h2 class="text" style="font-size: 12pt">Conflict of Interest (Family Members)</h2>
+                    <h2 class="text" style="font-size: 12pt">Conflict of Interest (Family Members) ({{ 'Conflicts of interest (Family Members)'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/conflict-interest-family-member.png"></img>
@@ -176,7 +176,7 @@
         <div class="g-d-10 g-d-l">
             <a href="/admin/core/electionscontributions/">
                 <div class="grp-module">
-                    <h2 class="text" style="font-size: 12pt">Elections Contributions</h2>
+                    <h2 class="text" style="font-size: 12pt">Elections Contributions ({{ 'Elections contributions'|count_objects|intcomma }})</h2>
                     <div class="grp-row grp-cells">
                         <div class="grp-cell">
                             <img src="{{ MEDIA_URL }}images/elections-contributions.png"></img>
@@ -210,7 +210,7 @@
                                 {% endif %}
                                 {% if model.add_url or model.admin_url %}
                                     <ul class="grp-actions">
-                                            <li class="grp-add-link">{{ model|count_objects|intcomma }}</li>
+                                            <li class="grp-add-link">{{ model.name|count_objects|intcomma }}</li>
                                     </ul>
                                 {% endif %}
                             </div>

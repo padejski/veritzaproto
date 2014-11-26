@@ -424,7 +424,7 @@ class CompanyMemberTitle(VeritzaBaseModel):
 class BidderCompany(VeritzaBaseModel):
 
     class Meta:
-        verbose_name_plural = "Bidder Companies"
+        verbose_name_plural = "Bidder companies"
 
     company = models.ForeignKey('Company')
     procurement = models.ForeignKey('PublicProcurement')
@@ -680,7 +680,7 @@ class PublicOfficialCompany(models.Model):
 class ConflictInterestFamilyMember(models.Model):
     class Meta:
         verbose_name = "Conflict of Interest (Family Members)"
-        verbose_name_plural = "Conflicts of Interest (Family Members)"
+        verbose_name_plural = "Conflicts of ifnterest (Family Members)"
 
     member = models.ForeignKey('FamilyMember')
     company = models.ForeignKey('Company')
@@ -722,7 +722,7 @@ class ConflictInterest(models.Model):
 
     class Meta:
         verbose_name = "Conflict of Interest"
-        verbose_name_plural = "Conflicts of Interest"
+        verbose_name_plural = "Conflicts of interest"
         # unique_together = ('official', 'company', 'public_procurement')
 
     official = models.ForeignKey(PublicOfficial)

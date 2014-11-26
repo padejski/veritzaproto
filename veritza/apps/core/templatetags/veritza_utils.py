@@ -5,11 +5,10 @@ register = template.Library()
 
 
 @register.filter
-def count_objects(model_data, app_label='core'):
-    model_verbose_plural_name = model_data.get('name', '')
+def count_objects(model_name_verbose, app_label='core'):
     app = get_app(app_label)
     for model in get_models(app):
-        if model._meta.verbose_name_plural == model_verbose_plural_name:
+        if model._meta.verbose_name_plural == model_name_verbose:
             return model.objects.all().count()
             break
     return "-"
