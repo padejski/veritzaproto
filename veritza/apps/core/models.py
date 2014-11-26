@@ -274,7 +274,11 @@ class FamilyMember(VeritzaBaseModel):
         return u"{0} ({1} of {2})".format(self.name, self.FAMILY_RELATION_CHOICES[self.relationship], self.public_official.name)
 
     @classmethod
-    def refresh(cls, **kwargs):
+    def refresh(cls, delete_old=False, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
         # TODO: what if an official divorced and got married again, while in office?
         members = {}
         for report in PublicOfficialReport.objects.filter(spouse__isnull=False).exclude(spouse=''):
@@ -634,7 +638,7 @@ class PublicOfficialCompany(models.Model):
         return u"{0} - {1}".format(self.official.name, self.company.full_name)
 
     @classmethod
-    def refresh(cls, delete_old=True, **kwargs):
+    def refresh(cls, delete_old=False, **kwargs):
 
         if delete_old:
             cls.objects.all().delete()
