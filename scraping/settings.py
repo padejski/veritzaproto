@@ -22,8 +22,8 @@ NEWSPIDER_MODULE = 'scraping.spiders'
 USER_AGENT = "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0"
 
 
-LOG_FILE = normpath(join(settings.DJANGO_ROOT, '../scraping.log'))
 LOG_STDOUT = True
+LOG_FILE = normpath(join(settings.DJANGO_ROOT, '../scraping.log'))
 
 ITEM_PIPELINES = {"scraping.pipelines.VeritzaModelsPipeline": 10}
 
