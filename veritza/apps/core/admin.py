@@ -8,7 +8,7 @@ from django.contrib import admin
 from veritza.apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
     Company, ProcurementCompany, ProcurementCompanyRaw, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
-    ConflictInterest, PublicOfficialCompany, ElectionsContributions
+    ConflictInterest, PublicOfficialCompany, ElectionsContributions, FamilyMember, FamilyMemberCompany
 )
 
 logger = logging.getLogger('debug')
@@ -367,7 +367,6 @@ class BidderCompanyAdmin(CompanyLinkAdminMixin, ProcurementLinkAdminMixin, Verit
     public_procurement_link.short_description = "Procurement"
 
 
-
 class ProcurementCompanyAdmin(VeritzaBaseAdmin):
     list_display = ('id', 'identification_number', 'name', 'postal_address', 'contact_point',
                     'email', 'town', 'public_procurement', 'link')
@@ -394,6 +393,14 @@ class ProcurementCompanyAdmin(VeritzaBaseAdmin):
 
 
 class ProcurementCompanyAdminRaw(ProcurementCompanyAdmin):
+    pass
+
+
+class FamilyMemberAdmin(VeritzaBaseAdmin):
+    pass
+
+
+class FamilyMemberCompanyAdmin(VeritzaBaseAdmin):
     pass
 
 
@@ -448,6 +455,8 @@ admin.site.register(PublicOfficialReport, PublicOfficialReportAdmin)
 admin.site.register(PublicOfficialCompany, PublicOfficialCompanyAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(CompanyMember, CompanyMemberAdmin)
+admin.site.register(FamilyMember, FamilyMemberAdmin)
+admin.site.register(FamilyMemberCompany, FamilyMemberCompanyAdmin)
 admin.site.register(ProcurementCompany, ProcurementCompanyAdmin)
 admin.site.register(ProcurementCompanyRaw, ProcurementCompanyAdminRaw)
 admin.site.register(BidderCompany, BidderCompanyAdmin)
