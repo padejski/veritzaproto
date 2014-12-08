@@ -348,6 +348,7 @@ class Company(VeritzaBaseModel):
 
     registration_number = models.CharField(max_length=255, null=True, db_index=True)
     identification_number = models.CharField(max_length=255, null=True, db_index=True)
+    system_id = models.CharField(max_length=40, unique=True)
     name = models.CharField(max_length=255, null=True)
     full_name = models.CharField(max_length=1024, null=True)
     address = models.CharField(max_length=1024, null=True)
@@ -690,7 +691,7 @@ class ConflictInterestFamilyMember(models.Model):
         return u"{0} - {1} [{2}]".format(self.member.name, self.company.full_name, self.public_procurement.title)
 
     @classmethod
-    def refresh(cls, delete_old=False, start=0, end=100000, **kwargs):
+    def refresh(cls, delete_old=False, **kwargs):
 
         if delete_old:
             cls.objects.all().delete()
