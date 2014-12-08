@@ -3,6 +3,7 @@
 import csv
 import logging
 import dateutil
+from datetime import datetime
 
 from django.conf import settings
 from django.db.models import signals
@@ -136,10 +137,16 @@ class ElectionsContributions(VeritzaBaseModel):
     @classmethod
     def import_from_csv(cls, file, created_by=None):
         records = []
-        reader = csv.reader(file)
-        columns = reader.next()
+        reader = csv.reader(file.read().splitlines())
+        columns = map(lambda c: c.replace('-', '_'), reader.next())
         for values in reader:
-            records.append(ElectionsContributions(created_by=created_by, **dict(zip(columns, values))))
+            data = dict(zip(columns, values))
+            try:
+                data['date'] = datetime.strftime(datetime.strptime(data['date'], "%d.%m.%Y"), "%Y-%m-%d")
+            except ValueError as exc:
+                logger.exception(exc)
+            else:
+                records.append(ElectionsContributions(created_by=created_by, **data))
         cls.objects.bulk_create(records)
 
 
@@ -786,7 +793,8 @@ class Tag(models.Model):
 
 # SIGNALS CONNECTING ############################################
 def parse_csv(sender, instance=None, created=None, **kwargs):
-    sender.import_from_csv(instance.csv_file, created_by=instance.created_by)
+    if instance.csv_file:
+        sender.import_from_csv(instance.csv_file, created_by=instance.created_by)
 
 signals.pre_save.connect(parse_csv, sender=ElectionsContributions)
 
