@@ -140,11 +140,17 @@ class ElectionsContributions(VeritzaBaseModel):
         reader = csv.reader(file.read().splitlines())
         columns = map(lambda c: c.replace('-', '_'), reader.next())
         for values in reader:
-            data = dict(zip(columns, values))
+            data = dict(zip(columns, [value.decode('latin-1') for value in values]))
             try:
-                data['date'] = datetime.strftime(datetime.strptime(data['date'], "%d.%m.%Y"), "%Y-%m-%d")
+                data['date'] = datetime.strftime(datetime.strptime(data['date'], "%d.%m.%Y."), "%Y-%m-%d")
             except ValueError as exc:
-                logger.exception(exc)
+                try:
+                    # Try same date format ubt without the dot at the end
+                    data['date'] = datetime.strftime(datetime.strptime(data['date'], "%d.%m.%Y"), "%Y-%m-%d")
+                except ValueError as exc:
+                    logger.exception(exc)
+                else:
+                    records.append(ElectionsContributions(created_by=created_by, **data))
             else:
                 records.append(ElectionsContributions(created_by=created_by, **data))
         cls.objects.bulk_create(records)
