@@ -231,8 +231,11 @@ class ElectionsContributionsAdmin(VeritzaBaseAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(ElectionsContributionsAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['created_by'].initial = request.user.id
-        # form.base_fields['created_by'].widget = request.user.id
         return form
+
+    list_filter = ('contributor_type',)
+
+    list_display = ('date', 'candidate', 'contributor_name', 'contributor_type', 'political_party')
 
     fieldsets = (
         ('File upload',
