@@ -27,6 +27,8 @@ LOG_FILE = normpath(join(settings.DJANGO_ROOT, '../scraping.log'))
 
 ITEM_PIPELINES = {"scraping.pipelines.VeritzaModelsPipeline": 10}
 
-DOWNLOAD_DELAY = 0.5  # seconds
+DOWNLOAD_DELAY = 0.25  # seconds
 
 DUPEFILTER_CLASS = "scraping.DBDupeFilter"
+
+DUPEFILTER_DEBUG = True

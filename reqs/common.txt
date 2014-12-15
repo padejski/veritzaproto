@@ -13,4 +13,4 @@ django-apptemplates==0.0.1
 zope.interface==4.1.1
 psycopg2==2.5
 dj-static==0.0.6
-dj_database_url==0.3.0
+dj-database-url==0.3.0

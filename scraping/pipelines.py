@@ -6,6 +6,7 @@ from dateutil import parser
 
 from django.db.utils import IntegrityError
 from django.db.models.fields import DateField, DateTimeField
+from django.db import transaction
 from scrapy import log
 
 from veritza.apps.core.models import PublicOfficial
@@ -26,12 +27,9 @@ class VeritzaModelsPipeline(object):
         instance = item.save()
 
         # saving the instance to the database
-        if isinstance(instance, PublicOfficial):
-            try:
-                instance.save()
-            except IntegrityError as e:
-                log.msg(e, level=log.ERROR)
-        else:
+        try:
             instance.save()
+        except IntegrityError as e:
+            log.msg(e, level=log.ERROR)
 
         return item

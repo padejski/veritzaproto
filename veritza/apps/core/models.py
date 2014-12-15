@@ -113,6 +113,122 @@ class Veritza(VeritzaBaseModel):
         return self.name
 
 
+class ContributorCompanyProcurement(VeritzaBaseModel):
+    company = models.ForeignKey('Company')
+    procurement = models.ForeignKey('PublicProcurement')
+    contribution_record = models.ForeignKey('ElectionsContributions')
+
+    def __unicode__(self):
+        return u"{0} [{1}] / {2}".format(
+            self.company.name,
+            self.company.identification_number,
+            self.procurement_number
+        )
+
+    @classmethod
+    def refresh(cls, delete_old=True, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
+        cursor = connection.cursor()
+
+        query_string = """
+            SELECT c.id as company, p.id as procurement, cn.id as contribution
+            # FROM core_company c
+            # JOIN core_companymember m
+            #     ON m.company_registration_number = c.registration_number
+            # JOIN core_familymember f
+            #     ON CONCAT(m.first_name, ' ', m.last_name) = f.name
+            # WHERE c.registration_number != ''
+            #     AND m.company_registration_number is not null
+            #     AND m.company_registration_number != ''
+            #     AND f.name != ''
+            #     AND f.name is not null
+            #     AND c.registration_number is not null
+            #     AND c.registration_number != '';
+        """
+        query_args = []
+
+        cursor.execute(query_string, query_args)
+
+        company_contributors_procurements = []
+        rows = cursor.fetchall()
+        for row in rows:
+            ccp = cls()
+            ccp.company = row[0]
+            ccp.procurement = row[1]
+            ccp.contribution = row[2]
+
+            company_contributors_procurements.append(ccp)
+
+            if len(company_contributors_procurements) > 50:
+                cls.objects.bulk_create(company_contributors_procurements)
+                company_contributors_procurements = []
+
+        cls.objects.bulk_create(company_contributors_procurements)
+
+
+class ContributorIndividualProcurement(VeritzaBaseModel):
+    individual = models.ForeignKey('CompanyMember')
+    company = models.ForeignKey('Company')
+    procurement = models.ForeignKey('PublicProcurement')
+    contribution_record = models.ForeignKey('ElectionsContributions')
+
+    def __unicode__(self):
+        return u"{0} [{1}] / {2} - {3} {4}".format(
+            self.company.name,
+            self.company.identification_number,
+            self.procurement_number,
+            self.individual.first_name,
+            self.individual.last_name
+        )
+
+    @classmethod
+    def refresh(cls, delete_old=True, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
+        cursor = connection.cursor()
+
+        query_string = """
+            SELECT cm.id as individual, c.id as company, p.id as procurement, cn.id as contribution
+            # FROM core_company c
+            # JOIN core_companymember m
+            #     ON m.company_registration_number = c.registration_number
+            # JOIN core_familymember f
+            #     ON CONCAT(m.first_name, ' ', m.last_name) = f.name
+            # WHERE c.registration_number != ''
+            #     AND m.company_registration_number is not null
+            #     AND m.company_registration_number != ''
+            #     AND f.name != ''
+            #     AND f.name is not null
+            #     AND c.registration_number is not null
+            #     AND c.registration_number != '';
+        """
+        query_args = []
+
+        cursor.execute(query_string, query_args)
+
+        individuals_contributors_procurements = []
+        rows = cursor.fetchall()
+        for row in rows:
+            cip = cls()
+            cip.individual = row[0]
+            cip.company = row[1]
+            cip.procurement = row[2]
+            cip.contribution = row[3]
+
+            individuals_contributors_procurements.append(cip)
+
+            if len(individuals_contributors_procurements) > 50:
+                cls.objects.bulk_create(individuals_contributors_procurements)
+                individuals_contributors_procurements = []
+
+        cls.objects.bulk_create(individuals_contributors_procurements)
+
+
 class ElectionsContributions(VeritzaBaseModel):
     """
     From Elections commission database
@@ -375,6 +491,11 @@ class Company(VeritzaBaseModel):
 
     def __unicode__(self):
         return u"%s [%s]" % (self.full_name, self.identification_number)
+
+    def save(self, *args, **kwargs):
+        if not self.system_id:
+            self.system_id = int(self.link.split('=')[-1])
+        super(Company, self).save(*args, **kwargs)
 
     def from_dict(self, data, commit=True):
         self.registration_number = data.get('registarski_broj', "").strip()

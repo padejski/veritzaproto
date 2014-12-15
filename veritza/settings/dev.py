@@ -1,28 +1,27 @@
 """Development settings and globals."""
 
 
-from os.path import join, normpath
 import dj_database_url
 
 from common import *
 
 
-########## DEBUG CONFIGURATION
+# ######### DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
 TEMPLATE_DEBUG = DEBUG
-########## END DEBUG CONFIGURATION
+# ######### END DEBUG CONFIGURATION
 
 
-########## EMAIL CONFIGURATION
+# ######### EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-########## END EMAIL CONFIGURATION
+# ######### END EMAIL CONFIGURATION
 
 
-########## DATABASE CONFIGURATION
+# ######### DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
@@ -32,32 +31,35 @@ DATABASES = {
         'PASSWORD': 'veritza',
         'HOST': '',
         'PORT': '',
+        'OPTIONS': {
+            'autocommit': True
+        }
     },
     'heroku': dj_database_url.config(env='HEROKU_DATABASE_URL')
 }
-########## END DATABASE CONFIGURATION
+# ######### END DATABASE CONFIGURATION
 
 
-########## CACHE CONFIGURATION
+# ######### CACHE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
-########## END CACHE CONFIGURATION
+# ######### END CACHE CONFIGURATION
 
 
-########## CELERY CONFIGURATION
+# ######### CELERY CONFIGURATION
 # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
 CELERY_ALWAYS_EAGER = True
 
 # See: http://docs.celeryproject.org/en/latest/configuration.html#celery-eager-propagates-exceptions
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
-########## END CELERY CONFIGURATION
+# ######### END CELERY CONFIGURATION
 
 
-########## TOOLBAR CONFIGURATION
+# ######### TOOLBAR CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
     'debug_toolbar',
@@ -74,7 +76,7 @@ MIDDLEWARE_CLASSES += (
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
-########## END TOOLBAR CONFIGURATION
+# ######### END TOOLBAR CONFIGURATION
 
 
 REQUESTS_DELAY = 1  # seconds

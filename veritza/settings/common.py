@@ -319,8 +319,15 @@ AUTH_PROFILE_MODULE = 'core.UserProfile'
 ########## END USERENA CONFIGURATION
 
 
-########## GRAPPELLI CONFIGURATION
+# ######### GRAPPELLI CONFIGURATION
 GRAPPELLI_ADMIN_TITLE = "Veritza Administration"
 GRAPPELLI_SWITCH_USER = True
 # GRAPPELLI_INDEX_DASHBOARD = "grappelli_dashboard.VeritzaDashboard"
-########## END GRAPPELLI CONFIGURATION
+# ######### END GRAPPELLI CONFIGURATION
+
+
+# ######### SOUTH CONFIGURATION
+SOUTH_MIGRATION_MODULES = {
+    'easy_thumbnails': 'easy_thumbnails.south_migrations',
+}
+# ######### END SOUTH CONFIGURATION

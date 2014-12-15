@@ -6,7 +6,7 @@ import scrapy
 from scrapy import http
 
 
-from scraping.items import CompanyItem, CompanyMemberItem
+from scraping.items import CompanyItem, CompanyMemberItem, CompanyMemberTitleItem
 
 
 class CompaniesSpider(scrapy.Spider):
@@ -98,7 +98,10 @@ class CompaniesSpider(scrapy.Spider):
         """
         company = response.meta['company']
         members = []
+        member_titles = []
         member = CompanyMemberItem()
+        member_title = CompanyMemberTitleItem()
+
         elements = response.xpath('//div[@class="tabbertab"][2]/span | //div[@class="tabbertab"][2]/table')
         for element in elements:
             if element.extract().strip().startswith('<span'):
@@ -108,9 +111,13 @@ class CompaniesSpider(scrapy.Spider):
                         'company_registration_number': company.get('registration_number', ""),
                         'link': company['link'],
                     })
+                    member_title.update({
+                        'company_registration_number': company.get('registration_number', ""),
+                    })
                     members.append(member)
                     member = CompanyMemberItem()
-                    member.update({
+                    member_title = CompanyMemberTitleItem()
+                    member_title.update({
                         'title': ''.join(element.xpath('b/text()').extract()).strip(),
                     })
             elif element.extract().strip().startswith('<table'):
@@ -118,19 +125,24 @@ class CompaniesSpider(scrapy.Spider):
                 value = ''.join(element.xpath('descendant::td[2]/text()').extract()).strip()
                 if key in (u'ime', 'ime'):
                     key = u'first_name'
-                if key in (u'prezime', 'ime'):
+                elif key in (u'prezime', 'ime'):
                     key = u'last_name'
-                if key in (u'odgovornost', 'odgovornost'):
-                    key = u'title'
-                if key in (u'Udio u društvu'):
-                    key = u'company_share'
-                member[key] = value
+                elif key in (u'odgovornost', 'odgovornost'):
+                    member_title['title'] = value
+                elif key in (u'Udio u društvu'):
+                    member_title['company_share'] = value
+
+                if key in CompanyMemberItem.fields.keys():
+                    member[key] = value
 
         # add the last member, obviously there won't be <span> element at the and to designate member data end
         member.update({
             'company_registration_number': company.get('registration_number', ""),
             'link': company['link'],
         })
+        member_title['company_registration_number'] = company.get('registration_number', "")
+
         members.append(member)
+        member_titles.append(member_title)
 
         return members

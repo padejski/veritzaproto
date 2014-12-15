@@ -4,8 +4,8 @@ import dateutil
 import scrapy
 from scrapy.contrib.djangoitem import DjangoItem
 from veritza.apps.core.models import (
-    PublicOfficial, PublicOfficialReport, Company,
-    CompanyMember, PublicProcurement, ProcurementCompanyRaw, ContractingAuthority
+    PublicOfficial, PublicOfficialReport, Company, CompanyMember, CompanyMemberTitle,
+    PublicProcurement, ProcurementCompanyRaw, ContractingAuthority
 )
 
 
@@ -61,6 +61,18 @@ class CompanyItem(DjangoItem):
 
 class CompanyMemberItem(DjangoItem):
     django_model = CompanyMember
+
+    uuid = scrapy.Field()
+    created_by = scrapy.Field()
+    # modified_by = scrapy.Field()
+    created = scrapy.Field()
+    updated = scrapy.Field()
+    active = scrapy.Field()
+
+    # titles = []
+
+class CompanyMemberTitleItem(DjangoItem):
+    django_model = CompanyMemberTitle
 
     uuid = scrapy.Field()
     created_by = scrapy.Field()

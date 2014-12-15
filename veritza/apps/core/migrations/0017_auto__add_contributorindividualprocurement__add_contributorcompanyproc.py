@@ -8,15 +8,44 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Company.system_id'
-        db.add_column(u'core_company', 'system_id',
-                      self.gf('django.db.models.fields.CharField')(default=0, unique=True, max_length=40),
-                      keep_default=False)
+        # Adding model 'ContributorIndividualProcurement'
+        db.create_table(u'core_contributorindividualprocurement', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('is_ok', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
+            ('individual', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.CompanyMember'])),
+            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Company'])),
+            ('procurement', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PublicProcurement'])),
+            ('contribution_record', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.ElectionsContributions'])),
+        ))
+        db.send_create_signal(u'core', ['ContributorIndividualProcurement'])
+
+        # Adding model 'ContributorCompanyProcurement'
+        db.create_table(u'core_contributorcompanyprocurement', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
+            ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.User'], null=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('active', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('is_ok', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
+            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.Company'])),
+            ('procurement', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.PublicProcurement'])),
+            ('contribution_record', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['core.ElectionsContributions'])),
+        ))
+        db.send_create_signal(u'core', ['ContributorCompanyProcurement'])
 
 
     def backwards(self, orm):
-        # Deleting field 'Company.system_id'
-        db.delete_column(u'core_company', 'system_id')
+        # Deleting model 'ContributorIndividualProcurement'
+        db.delete_table(u'core_contributorindividualprocurement')
+
+        # Deleting model 'ContributorCompanyProcurement'
+        db.delete_table(u'core_contributorcompanyprocurement')
 
 
     models = {
@@ -141,6 +170,33 @@ class Migration(SchemaMigration):
             'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'}),
             'webpage': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True'})
+        },
+        u'core.contributorcompanyprocurement': {
+            'Meta': {'object_name': 'ContributorCompanyProcurement'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Company']"}),
+            'contribution_record': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.ElectionsContributions']"}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_ok': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
+            'procurement': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PublicProcurement']"}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
+        },
+        u'core.contributorindividualprocurement': {
+            'Meta': {'object_name': 'ContributorIndividualProcurement'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.Company']"}),
+            'contribution_record': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.ElectionsContributions']"}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'created_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.User']", 'null': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'individual': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.CompanyMember']"}),
+            'is_ok': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
+            'procurement': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['core.PublicProcurement']"}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'})
         },
         u'core.dataset': {
             'Meta': {'object_name': 'Dataset'},
