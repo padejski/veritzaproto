@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Company.system_id'
         db.add_column(u'core_company', 'system_id',
-                      self.gf('django.db.models.fields.CharField')(default=0, unique=True, max_length=40),
+                      self.gf('django.db.models.fields.CharField')(default=0, max_length=40),
                       keep_default=False)
 
 

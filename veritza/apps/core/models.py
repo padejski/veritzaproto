@@ -477,7 +477,7 @@ class Company(VeritzaBaseModel):
 
     registration_number = models.CharField(max_length=255, null=True, db_index=True)
     identification_number = models.CharField(max_length=255, null=True, db_index=True)
-    system_id = models.CharField(max_length=40, unique=True)
+    system_id = models.CharField(max_length=40)
     name = models.CharField(max_length=255, null=True)
     full_name = models.CharField(max_length=1024, null=True)
     address = models.CharField(max_length=1024, null=True)
