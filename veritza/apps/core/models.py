@@ -929,6 +929,7 @@ signals.pre_save.connect(parse_csv, sender=ElectionsContributions)
 def refresh_all_veritzas(delete_old=False):
     ProcurementCompany.refresh(delete_old=delete_old)
     BidderCompany.refresh(delete_old=delete_old)
+    PublicOfficialCompany.refresh(delete_old=delete_old)
     ConflictInterest.refresh(delete_old=delete_old)
     FamilyMember.refresh(delete_old=delete_old)
     FamilyMemberCompany.refresh(delete_old=delete_old)
