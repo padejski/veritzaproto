@@ -35,7 +35,7 @@ DATABASES = {
             'autocommit': True
         }
     },
-    'heroku': dj_database_url.config(env='HEROKU_DATABASE_URL')
+    'heroku': dj_database_url.config(env='VERITZA_HEROKU_DATABASE_URL')
 }
 # ######### END DATABASE CONFIGURATION
 
