@@ -1,0 +1,19 @@
+{% extends 'veritza_base.html' %}
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+
+{% block title %}{% trans "Signin" %}{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="col-md-4">
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Signin" %}</legend>
+    {{ form|as_bootstrap }}
+  </fieldset>
+  <input type="submit" value="{% trans "Signup"%}" />
+  <p class="forgot-password"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+</form>
+{% endblock %}

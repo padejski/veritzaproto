@@ -1,0 +1,16 @@
+{% extends 'veritza_base.html' %}
+{% load bootstrap_tags %}
+{% load i18n %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="col-md-4">
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Signup" %}</legend>
+    {{ form|as_bootstrap }}
+  </fieldset>
+  <input type="submit" value="{% trans "Signup"%}" />
+</form>
+{% endblock %}

@@ -208,6 +208,7 @@ THIRD_PARTY_APPS = (
     # 'compressor',
     'djcelery',
     'django_extensions',
+    'django_forms_bootstrap',
     'easy_thumbnails',
     'guardian',
     'userena',
