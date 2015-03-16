@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+from django.utils import timezone
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -12,7 +13,7 @@ class Migration(SchemaMigration):
         db.create_table(u'core_user', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('password', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=timezone.now)),
             ('is_superuser', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('username', self.gf('django.db.models.fields.CharField')(unique=True, max_length=30)),
             ('first_name', self.gf('django.db.models.fields.CharField')(max_length=30, blank=True)),
@@ -20,7 +21,7 @@ class Migration(SchemaMigration):
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, blank=True)),
             ('is_staff', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('date_joined', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('date_joined', self.gf('django.db.models.fields.DateTimeField')(default=timezone.now)),
             ('uuid', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
         ))
         db.send_create_signal(u'core', ['User'])
@@ -644,7 +645,7 @@ class Migration(SchemaMigration):
         },
         u'core.user': {
             'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'timezone.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
@@ -652,7 +653,7 @@ class Migration(SchemaMigration):
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'timezone.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'subscriptions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['core.Veritza']", 'symmetrical': 'False'}),

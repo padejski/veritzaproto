@@ -314,7 +314,8 @@ AUTHENTICATION_BACKENDS = (
 ANONYMOUS_USER_ID = -1
 LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
 LOGIN_URL = '/accounts/signin/'
-LOGOUT_URL = '/accounts/signout/'
+LOGOUT_URL = '/'
+USERENA_REDIRECT_ON_SIGNOUT = '/'
 USERENA_HTML_EMAIL = True
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 ########## END USERENA CONFIGURATION
