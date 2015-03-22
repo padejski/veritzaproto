@@ -235,7 +235,7 @@ class ElectionsContributionsAdmin(VeritzaBaseAdmin):
 
     list_filter = ('contributor_type',)
 
-    list_display = ('date', 'candidate', 'contributor_name', 'contributor_type', 'political_party')
+    list_display = ('date', 'candidate', 'contributor_name', 'contributor_type', 'political_party', 'election_type', 'amount')
 
     fieldsets = (
         ('File upload',

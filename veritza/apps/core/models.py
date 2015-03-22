@@ -243,12 +243,14 @@ class ElectionsContributions(VeritzaBaseModel):
     candidate = models.CharField(max_length=255, null=True, blank=True, db_index=True)
     contributor_type = models.CharField(max_length=255, null=True, blank=True)
     contributor_name = models.CharField(max_length=255, null=True, blank=True, db_index=True)
+    contributor_identification_number = models.CharField(max_length=255, null=True, db_index=True, help_text="ID of the company if contributor_type is 'company' ")
     contributor_address = models.CharField(max_length=255, null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     csv_file = models.FileField(storage=DummyStorage(), upload_to=settings.MEDIA_ROOT, null=True, blank=True)
 
     def __unicode__(self):
-        return u"{0} to {1}: {2}".format(self.candidate, self.contributor_name, self.amount)
+        candidate = self.candidate + ', ' if self.candidate else ''
+        return u"{0} to {1}{2}: {3}".format(self.contributor_name, candidate, self.political_party, self.amount)
 
     @classmethod
     def import_from_csv(cls, file, created_by=None):
@@ -633,9 +635,9 @@ class ProcurementCompanyRaw(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies (Raw)"
 
-    procurement_system_id = models.CharField(max_length=40, null=True)
-    procurement_number = models.CharField(max_length=255, db_index=True)
-    identification_number = models.CharField(max_length=255, db_index=True)
+    procurement_system_id = models.CharField(max_length=40, null=True, help_text="Internal ID in the database where the data is scraped from")
+    procurement_number = models.CharField(max_length=255, db_index=True, help_text="Procurement official number (ID). Not certain that it is unique!")
+    identification_number = models.CharField(max_length=255, db_index=True, help_text="ID number of the company which was awarded the procurement")
     name = models.CharField(max_length=1024)
     town = models.CharField(max_length=255, null=True)
     email = models.EmailField(max_length=255, null=True)
@@ -666,7 +668,7 @@ class ProcurementCompany(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Procurement Companies"
 
-    procurement_system_id = models.CharField(max_length=40, null=True)
+    procurement_system_id = models.CharField(max_length=40, null=True, help_text="Internal ID in the database where the data is scraped from")
     procurement_number = models.CharField(max_length=255, db_index=True)
     identification_number = models.CharField(max_length=255, db_index=True)
     name = models.CharField(max_length=1024)
@@ -707,7 +709,7 @@ class ContractingAuthority(VeritzaBaseModel):
     class Meta:
         verbose_name_plural = "Contracting Authorities"
 
-    procurement_system_id = models.CharField(max_length=40, null=True)
+    procurement_system_id = models.CharField(max_length=40, null=True, help_text="Internal ID in the database where the data is scraped from")
     procurement_number = models.CharField(max_length=255)
     identification_number = models.CharField(max_length=40, db_index=True)
     name = models.CharField(max_length=255)
@@ -732,7 +734,7 @@ class PublicProcurement(VeritzaBaseModel):
         verbose_name_plural = "Public procurements"
 
     number = models.CharField(max_length=40, null=True)
-    system_id = models.CharField(max_length=40, null=True)
+    system_id = models.CharField(max_length=40, null=True, help_text="Internal ID in the database where the data is scraped from")
     title = models.CharField(max_length=255, null=True)
     subject = models.CharField(max_length=255, null=True)
     value = models.DecimalField(max_digits=10, decimal_places=2, null=True)
