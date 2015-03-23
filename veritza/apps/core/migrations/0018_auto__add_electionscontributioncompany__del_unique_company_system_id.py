@@ -8,9 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Removing unique constraint on 'Company', fields ['system_id']
-        db.delete_unique(u'core_company', ['system_id'])
-
         # Adding model 'ElectionsContributionCompany'
         db.create_table(u'core_electionscontributioncompany', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -29,9 +26,6 @@ class Migration(SchemaMigration):
     def backwards(self, orm):
         # Deleting model 'ElectionsContributionCompany'
         db.delete_table(u'core_electionscontributioncompany')
-
-        # Adding unique constraint on 'Company', fields ['system_id']
-        db.create_unique(u'core_company', ['system_id'])
 
 
     models = {
