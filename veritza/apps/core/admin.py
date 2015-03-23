@@ -8,8 +8,8 @@ from django.contrib import admin
 from veritza.apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
     Company, ProcurementCompany, ProcurementCompanyRaw, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
-    ConflictInterest, ConflictInterestFamilyMember, PublicOfficialCompany, ElectionsContributions,
-    FamilyMember, FamilyMemberCompany
+    ConflictInterest, ConflictInterestFamilyMember, PublicOfficialCompany, FamilyMember, FamilyMemberCompany,
+    ElectionsContributions, ElectionsContributionCompany, ElectionsContributionCompanyMember
 )
 
 logger = logging.getLogger('debug')
@@ -246,6 +246,19 @@ class ElectionsContributionsAdmin(VeritzaBaseAdmin):
                         'contributor_address', 'amount', 'created_by']})
     )
 
+class ElectionsContributionCompanyAdmin(VeritzaBaseAdmin):
+    list_display = ('company', 'election_contribution')
+    readonly_fields = ('company', 'election_contribution')
+
+    fields = ('company', 'election_contribution')
+
+
+class ElectionsContributionCompanyMemberAdmin(VeritzaBaseAdmin):
+    list_display = ('company_member', 'company', 'election_contribution')
+    readonly_fields = ('company_member', 'company', 'election_contribution')
+
+    fields = ('company_member', 'company', 'election_contribution')
+
 
 class PublicOfficialReportAdmin(VeritzaBaseAdmin, OfficialLinkAdminMixin):
     list_display = ('id', 'system_id', 'name', 'year', 'official_type', 'salary',
@@ -470,6 +483,8 @@ admin.site.register(Dataset, DatasetAdmin)
 admin.site.register(Veritza, VeritzaAdmin)
 admin.site.register(Person)
 admin.site.register(ElectionsContributions, ElectionsContributionsAdmin)
+admin.site.register(ElectionsContributionCompany, ElectionsContributionCompanyAdmin)
+admin.site.register(ElectionsContributionCompanyMember, ElectionsContributionCompanyMemberAdmin)
 admin.site.register(PublicOfficial, PublicOfficialAdmin)
 admin.site.register(PublicOfficialReport, PublicOfficialReportAdmin)
 admin.site.register(PublicOfficialCompany, PublicOfficialCompanyAdmin)
