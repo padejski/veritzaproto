@@ -243,7 +243,6 @@ class ElectionsContributions(VeritzaBaseModel):
     candidate = models.CharField(max_length=255, null=True, blank=True, db_index=True)
     contributor_type = models.CharField(max_length=255, null=True, blank=True)
     contributor_name = models.CharField(max_length=255, null=True, blank=True, db_index=True)
-    contributor_identification_number = models.CharField(max_length=255, null=True, db_index=True, help_text="ID of the company if contributor_type is 'company' ")
     contributor_address = models.CharField(max_length=255, null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     csv_file = models.FileField(storage=DummyStorage(), upload_to=settings.MEDIA_ROOT, null=True, blank=True)
@@ -272,6 +271,114 @@ class ElectionsContributions(VeritzaBaseModel):
             else:
                 records.append(ElectionsContributions(created_by=created_by, **data))
         cls.objects.bulk_create(records)
+
+
+class ElectionsContributionCompanyMember(VeritzaBaseModel):
+    """
+    Veritza: Individuals  which have contributed  to political parties on elections
+             and which are company members in companies which were awarded public procurements
+    """
+    company_member = models.ForeignKey('CompanyMember')
+    company = models.ForeignKey('Company', null=True, blank=True)
+    election_contribution = models.ForeignKey('ElectionsContributions')
+
+    class Meta:
+        verbose_name_plural = "Elections Contribution Company Members"
+
+    def __unicode__(self):
+        return u"Member ID: {0} (Company: {1}), Contribution: {2}".format(self.company_member_id, self.company_id, self.election_contribution_id)
+
+    @classmethod
+    def refresh(cls, delete_old=True, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
+        cursor = connection.cursor()
+
+        query_string = """
+            SELECT
+                cm.id as company_member_id,
+                c.id as company_id,
+                e.id as election_contribution_id
+            FROM
+                core_electionscontributions e
+            JOIN
+                core_companymember cm
+                ON LOWER(e.contributor_name) = LOWER(CONCAT(cm.first_name, ' ', cm.last_name))
+            JOIN
+                core_company c
+                ON cm.company_id = c.id
+            JOIN
+                core_procurementcompany p
+                ON p.identification_number = c.identification_number
+            WHERE
+                e.contributor_type = 'individual';
+        """
+        query_args = []
+
+        cursor.execute(query_string, query_args)
+
+        objects = []
+        for row in cursor.fetchall():
+            obj = ElectionsContributionCompanyMember()
+            obj.company_member_id = row[0]
+            obj.company_id = row[1]
+            obj.election_contribution_id = row[2]
+            objects.append(obj)
+        ElectionsContributionCompanyMember.objects.bulk_create(objects)
+        return len(objects)
+
+
+class ElectionsContributionCompany(VeritzaBaseModel):
+    """
+    Veritza: Companies which have contributed to political parties on elections
+             and which were awarded public procurements
+    """
+    company = models.ForeignKey('Company')
+    election_contribution = models.ForeignKey('ElectionsContributions')
+
+    class Meta:
+        verbose_name_plural = "Elections Contribution Companies"
+
+    def __unicode__(self):
+        return u"Company ID: {0}, Contribution ID: {1}".format(self.company_id, self.election_contribution_id)
+
+    @classmethod
+    def refresh(cls, delete_old=True, **kwargs):
+
+        if delete_old:
+            cls.objects.all().delete()
+
+        cursor = connection.cursor()
+
+        query_string = """
+            SELECT
+                c.id as company_id,
+                e.id as election_contribution_id
+            FROM
+                core_electionscontributions e
+            JOIN
+                core_company c
+                ON e.contributor_name = c.name
+            JOIN
+                core_procurementcompany p
+                ON p.identification_number = c.identification_number
+            WHERE
+                e.contributor_type = 'company';
+        """
+        query_args = []
+
+        cursor.execute(query_string, query_args)
+
+        objects = []
+        for row in cursor.fetchall():
+            obj = ElectionsContributionCompany()
+            obj.company_id = row[0]
+            obj.election_contribution_id = row[1]
+            objects.append(obj)
+        ElectionsContributionCompany.objects.bulk_create(objects)
+        return len(objects)
 
 
 class PublicOfficial(VeritzaBaseModel):
@@ -936,3 +1043,5 @@ def refresh_all_veritzas(delete_old=False):
     FamilyMember.refresh(delete_old=delete_old)
     FamilyMemberCompany.refresh(delete_old=delete_old)
     ConflictInterestFamilyMember.refresh(delete_old=delete_old)
+    ElectionsContributionCompany.refresh(delete_old=delete_old)
+    ElectionsContributionCompanyMember.refresh(delete_old=delete_old)
