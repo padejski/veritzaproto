@@ -1,3 +1,130 @@
 {% extends "veritza_base.html" %}
+{% load veritza_utils %}
+{% load humanize %}
 
-{% block content %}Veritza{% endblock %}
+{% block content %}
+<div class="row">
+
+    <!-- LEFT PANE -->
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">Datasets</div>
+            <div class="panel-body">
+
+            <div class="row">
+                <a href="{% url 'public-officials' %}">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/public-official-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Public Officials ({{ 'Public officials'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="row">
+                <a href="{% url 'companies' %}">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/company-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Companies ({{ 'Companies'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="row">
+                <a href="/admin/core/publicprocurement/">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/public-procurement-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="text" style="font-size: 12pt">Public Procurements ({{ 'Public procurements'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="row">
+                <a href="/admin/core/publicprocurement/">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/bidder-company-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="text" style="font-size: 12pt">Bidder Companies ({{ 'Bidder companies'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="row">
+                <a href="/admin/core/publicprocurement/">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/elections-contributions-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="text" style="font-size: 12pt">Elections Contributions ({{ 'Elections contributions'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RIGHT PANE -->
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">Veritzas</div>
+            <div class="panel-body">
+
+            <div class="row">
+                <a href="/admin/core/company/">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/official-company-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Public Official Companies ({{ 'Public officials companies'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="row">
+                <a href="{% url 'conflict-interests' %}">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/conflict-interest-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Conflicts of Interest ({{ 'Conflicts of interest'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="row">
+                <a href="/admin/core/publicprocurement/">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/family-member-company-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="text" style="font-size: 12pt">Family Member Companies ({{ 'Family member companies'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="row">
+                <a href="/admin/core/publicprocurement/">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/conflict-interest-family-member-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="text" style="font-size: 12pt">Conflict of Interest (Family Members) ({{ 'Conflicts of interest (Family Members)'|count_objects|intcomma }})</div>
+                    </div>
+                </a>
+            </div>
+
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -212,6 +212,7 @@ THIRD_PARTY_APPS = (
     'easy_thumbnails',
     'guardian',
     'userena',
+    'django_tables2'
 )
 
 LOCAL_APPS = (
