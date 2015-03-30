@@ -85,3 +85,15 @@ DEBUG_TOOLBAR_CONFIG = {
 
 
 REQUESTS_DELAY = 1  # seconds
+
+LOGGING['handlers']['debug_file'] = {
+    'level': 'WARNING',
+    'class': 'logging.handlers.RotatingFileHandler',
+    'filename': normpath(join(DJANGO_ROOT, '../scraping.log'))
+}
+
+LOGGING['loggers']['debug'] = {
+    'handlers': ['debug_file'],
+    'level': 'DEBUG',
+    'propagate': True,
+}

@@ -244,21 +244,11 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler'
         },
-        # 'debug_file': {
-        #     'level': 'WARNING',
-        #     'class': 'logging.handlers.RotatingFileHandler',
-        #     'filename': normpath(join(DJANGO_ROOT, '../scraping.log'))
-        # }
     },
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
-            'propagate': True,
-        },
-        'debug': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
             'propagate': True,
         },
     }

@@ -24,6 +24,7 @@ dev_local.py
 *.log
 *.csv
 *.sqlite
+*.todo
 
 migrations_old/
 
