@@ -17,9 +17,15 @@ urlpatterns = patterns('',
 
     url(r'^$', core_views.HomeView.as_view(), name='home'),
     url(r'^datasets/$', core_views.DatasetsView.as_view(), name='datasets'),
-    url(r'^datasets/companies/$', core_views.CompaniesView.as_view(), name='companies'),
     url(r'^datasets/public-officials/$', core_views.PublicOfficialsView.as_view(), name='public-officials'),
+    url(r'^datasets/companies/$', core_views.CompaniesView.as_view(), name='companies'),
+    url(r'^datasets/public-procurements/$', core_views.ConflictInterestsView.as_view(), name='public-procurements'),
+    url(r'^datasets/bidder-companies/$', core_views.BidderCompaniesView.as_view(), name='bidder-companies'),
+    url(r'^datasets/elections-contributions/$', core_views.ElectionsContributionsView.as_view(), name='elections-contributions'),
+    url(r'^datasets/public-official-companies/$', core_views.PublicOfficialCompaniesView.as_view(), name='public-official-companies'),
     url(r'^datasets/conflict-interests/$', core_views.ConflictInterestsView.as_view(), name='conflict-interests'),
+    url(r'^datasets/family-member-companies/$', core_views.FamilyMemberCompaniesView.as_view(), name='family-member-companies'),
+    url(r'^datasets/conflict-interest-family-members/$', core_views.ConflictInterestFamilyMembersView.as_view(), name='conflict-interest-family-members'),
 
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

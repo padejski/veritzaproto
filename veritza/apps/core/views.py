@@ -39,6 +39,36 @@ class CompaniesView(DatasetView):
 	table_class = CompanyTable
 
 
+class PublicProcurementsView(DatasetView):
+	model = PublicProcurement
+	table_class = PublicProcurementTable
+
+
+class BidderCompaniesView(DatasetView):
+	model = BidderCompany
+	table_class = BidderCompanyTable
+
+
+class ElectionsContributionsView(DatasetView):
+	model = ElectionsContributions
+	table_class = ElectionsContributionsTable
+
+
+class PublicOfficialCompaniesView(DatasetView):
+	model = PublicOfficialCompany
+	table_class = PublicOfficialCompanyTable
+
+
 class ConflictInterestsView(DatasetView):
 	model = ConflictInterest
 	table_class = ConflictInterestTable
+
+
+class FamilyMemberCompaniesView(DatasetView):
+	model = FamilyMemberCompany
+	table_class = FamilyMemberCompanyTable
+
+
+class ConflictInterestFamilyMembersView(DatasetView):
+	model = ConflictInterestFamilyMember
+	table_class = ConflictInterestFamilyMemberTable
