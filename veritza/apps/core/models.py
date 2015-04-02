@@ -536,6 +536,16 @@ class FamilyMember(VeritzaBaseModel):
         return len(members)
 
 
+    @classmethod
+    def stats(cls):
+        data = {}
+        # data = cls.objects.aggregate(Min('amount'), Avg('amount'), Max('amount'))
+        # data.update(cls.objects.aggregate(Min('date'), Max('date')))
+        # data['min_amount_contributions'] = cls.objects.select_related().filter(amount__lte=data['amount__min'])
+        # data['max_amount_contributions'] = cls.objects.select_related().filter(amount__gte=data['amount__max'])
+
+        return data
+
 class FamilyMemberCompany(VeritzaBaseModel):
 
     class Meta:
@@ -633,6 +643,12 @@ class Company(VeritzaBaseModel):
         if commit:
             self.save()
         return self
+
+    @classmethod
+    def stats(cls):
+        data = {}
+        data.update(cls.objects.aggregate(Min('registration_date'), Max('registration_date')))
+        return data
 
 
 class CompanyMember(VeritzaBaseModel):

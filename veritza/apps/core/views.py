@@ -44,6 +44,7 @@ class DatasetView(SingleTableView):
             context['report'] = self.report
         return context
 
+
 class PublicOfficialsView(DatasetView):
     model = PublicOfficial
     table_class = PublicOfficialTable
@@ -56,6 +57,8 @@ class PublicOfficialDetailsView(TemplateView):
 class CompaniesView(DatasetView):
     model = Company
     table_class = CompanyTable
+    stats_template = 'core/stats/companies.html'
+    report = CompaniesReport()
 
 
 class CompanyDetailsView(DatasetView):
@@ -79,9 +82,11 @@ class CompanyMemberDetailsView(DatasetView):
 class FamilyMembersView(DatasetView):
     model = FamilyMember
     table_class = FamilyMemberTable
+    stats_template = 'core/stats/family_members.html'
+    report = FamilyMembersReport()
 
 
-class FamilyMemberDetailsView(DatasetView):
+class FamilyMemberDetailsView(DatasetView, ReportView):
     model = FamilyMember
 
 

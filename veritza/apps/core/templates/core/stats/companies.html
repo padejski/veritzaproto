@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-12">
+	    Total records: {{ table.paginator.count }}<br/>
+	    Registration date range: {{ stats.registration_date__min|date }} - {{ stats.registration_date__max|date }}
+	</div>
+</div>
+
+<hr/>
+
+<div class="row">
+	<div class="col-md-6">
+	      <h4 class="chart-header">{{ report.company_type_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.company_type_chart }}
+	      </div>
+	</div>
+</div>
