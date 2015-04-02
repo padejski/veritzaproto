@@ -6,7 +6,7 @@
 	Minimum amount: {{ stats.amount__min }} &euro; [ {% for p in stats.min_amount_contributions %}<a href="{% url 'elections-contributions-details' p.id %}">{{ p.contributor_name }} ({{ p.id }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
 	Average amount: {{ stats.amount__avg }} &euro;<br/>
 	Maximum amount: {{ stats.amount__max }} &euro; [ {% for p in stats.max_amount_contributions %}<a href="{% url 'elections-contributions-details' p.id %}">{{ p.contributor_name }} ({{ p.id }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
-<div/>
+</div>
 
 <hr/>
 
@@ -42,6 +42,4 @@
 	          {{ report.political_party_amount_chart }}
 	      </div>
 	</div>
-</div>
-
 </div>

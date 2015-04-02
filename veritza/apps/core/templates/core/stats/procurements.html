@@ -7,7 +7,7 @@
 		Average value: {{ stats.value__avg }} &euro;<br/>
 		Maximum value: {{ stats.value__max }} &euro; [ {% for p in stats.max_value_procurements	 %}<a href="{% url 'public-procurement-details' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
 	</div>
-<div/>
+</div>
 
 <hr/>
 
@@ -34,6 +34,4 @@
 	          {{ report.location_chart }}
 	      </div>
 	</div>
-</div>
-
 </div>
