@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Sum
 
 from report_tools.reports import Report
 from report_tools.chart_data import ChartData
@@ -18,6 +18,12 @@ class ProcurementsReport(Report):
 
     subject_chart = charts.PieChart(
         title="By subject",
+        width=500,
+        height=300
+    )
+
+    procurements_total_chart = charts.ColumnChart(
+        title="Top 5 municipalities by total value of procurements",
         width=500,
         height=300
     )
@@ -58,5 +64,16 @@ class ProcurementsReport(Report):
 
         for row in PublicProcurement.objects.values_list('record_type').annotate(count=Count('id')):
             data.add_row(row)
+
+        return data
+
+    def get_data_for_procurements_total_chart(self):
+        data = ChartData()
+
+        data.add_column("Municipality")
+        data.add_column("Total amount")
+
+        for row in PublicProcurement.objects.values_list('location').annotate(amount=Sum('value')).order_by('-amount')[:5]:
+            data.add_row([row[0], int(row[1])])
 
         return data
