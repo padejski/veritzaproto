@@ -1,4 +1,8 @@
 <div class="row">
+    Total records: {{ table.paginator.count }}<br/>
+    Time range: {{ stats.date__min|date }} - {{ stats.date__max|date }}
+  	<hr/>
+
 	Minimum amount: {{ stats.amount__min }} &euro; [ {% for p in stats.min_amount_contributions %}<a href="{% url 'elections-contributions-details' p.id %}">{{ p.contributor_name }} ({{ p.id }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
 	Average amount: {{ stats.amount__avg }} &euro;<br/>
 	Maximum amount: {{ stats.amount__max }} &euro; [ {% for p in stats.max_amount_contributions %}<a href="{% url 'elections-contributions-details' p.id %}">{{ p.contributor_name }} ({{ p.id }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>

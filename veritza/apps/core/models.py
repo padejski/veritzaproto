@@ -276,7 +276,7 @@ class ElectionsContributions(VeritzaBaseModel):
     def stats(cls):
         data = {}
         data = cls.objects.aggregate(Min('amount'), Avg('amount'), Max('amount'))
-
+        data.update(cls.objects.aggregate(Min('date'), Max('date')))
         data['min_amount_contributions'] = cls.objects.select_related().filter(amount__lte=data['amount__min'])
         data['max_amount_contributions'] = cls.objects.select_related().filter(amount__gte=data['amount__max'])
 
@@ -881,7 +881,7 @@ class PublicProcurement(VeritzaBaseModel):
     def stats(cls):
         data = {}
         data = cls.objects.aggregate(Min('value'), Avg('value'), Max('value'))
-
+        data.update(cls.objects.aggregate(Min('creation_date'), Max('creation_date')))
         data['min_value_procurements'] = cls.objects.select_related().filter(value__lte=data['value__min'])
         data['max_value_procurements'] = cls.objects.select_related().filter(value__gte=data['value__max'])
 

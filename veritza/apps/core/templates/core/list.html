@@ -19,8 +19,6 @@
         </div>
         <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
-              Total records: {{ table.paginator.count }}
-              <hr/>
               {% include stats_template with stats=table.Meta.model.stats %}
           </div>
         </div>

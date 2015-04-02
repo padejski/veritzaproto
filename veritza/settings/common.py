@@ -52,6 +52,8 @@ DATE_INPUT_FORMATS = (
     '%d %B %Y', '%d %B, %Y',            # '25 October 2006', '25 October, 2006'
 )
 
+DATE_FORMAT = "d M Y"
+
 ########## DATABASE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
