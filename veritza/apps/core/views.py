@@ -1,6 +1,10 @@
 from django.views.generic import TemplateView
-from django_tables2 import SingleTableView
+from django.shortcuts import render
 
+from django_tables2 import SingleTableView
+from report_tools.views import ReportView
+
+from veritza.apps.core.reports import ProcurementsReport
 from veritza.apps.core.models import *
 from veritza.apps.core.tables import *
 
@@ -26,66 +30,118 @@ class ContactView(TemplateView):
 
 
 class DatasetView(SingleTableView):
-	template_name = 'core/list.html'
+    template_name = 'core/list.html'
 
-	def get_queryset(self):
-		return self.model.objects.select_related().all()
+    def get_queryset(self):
+        return self.model.objects.select_related().all()
 
 class PublicOfficialsView(DatasetView):
-	model = PublicOfficial
-	table_class = PublicOfficialTable
+    model = PublicOfficial
+    table_class = PublicOfficialTable
+
+
+class PublicOfficialDetailsView(TemplateView):
+    model = PublicOfficial
 
 
 class CompaniesView(DatasetView):
-	model = Company
-	table_class = CompanyTable
+    model = Company
+    table_class = CompanyTable
+
+
+class CompanyDetailsView(DatasetView):
+    model = Company
 
 
 class CompanyMembersView(DatasetView):
-	model = CompanyMember
-	table_class = CompanyMemberTable
+    model = CompanyMember
+    table_class = CompanyMemberTable
 
-	def get_queryset(self):
-		# 'company' field needs to be explicitly requested here as
-		# it is null=True and not select_related by default
-		return self.model.objects.select_related('company').all()
+    def get_queryset(self):
+        # 'company' field needs to be explicitly requested here as
+        # it is null=True and not select_related by default
+        return self.model.objects.select_related('company').all()
+
+
+class CompanyMemberDetailsView(DatasetView):
+    model = CompanyMember
 
 
 class FamilyMembersView(DatasetView):
-	model = FamilyMember
-	table_class = FamilyMemberTable
+    model = FamilyMember
+    table_class = FamilyMemberTable
 
 
-class PublicProcurementsView(DatasetView):
-	model = PublicProcurement
-	table_class = PublicProcurementTable
+class FamilyMemberDetailsView(DatasetView):
+    model = FamilyMember
+
+
+class PublicProcurementsView(DatasetView, ReportView):
+    model = PublicProcurement
+    table_class = PublicProcurementTable
+
+    def get_report(self, request):
+        return ProcurementsReport()
+
+    def get_context_data(self, **kwargs):
+        context = super(PublicProcurementsView, self).get_context_data(**kwargs)
+        context['report'] = self.get_report(None)
+        return context
+
+
+class PublicProcurementDetailsView(DatasetView):
+    model = PublicProcurement
 
 
 class BidderCompaniesView(DatasetView):
-	model = BidderCompany
-	table_class = BidderCompanyTable
+    model = BidderCompany
+    table_class = BidderCompanyTable
+
+
+class BidderCompanyDetailsView(DatasetView):
+    model = BidderCompany
 
 
 class ElectionsContributionsView(DatasetView):
-	model = ElectionsContributions
-	table_class = ElectionsContributionsTable
+    model = ElectionsContributions
+    table_class = ElectionsContributionsTable
+
+
+class ElectionsContributionsDetailsView(DatasetView):
+    model = ElectionsContributions
 
 
 class PublicOfficialCompaniesView(DatasetView):
-	model = PublicOfficialCompany
-	table_class = PublicOfficialCompanyTable
+    model = PublicOfficialCompany
+    table_class = PublicOfficialCompanyTable
+
+
+class PublicOfficialCompanyDetailsView(DatasetView):
+    model = PublicOfficialCompany
 
 
 class ConflictInterestsView(DatasetView):
-	model = ConflictInterest
-	table_class = ConflictInterestTable
+    model = ConflictInterest
+    table_class = ConflictInterestTable
+
+
+class ConflictInterestDetailsView(DatasetView):
+    model = ConflictInterest
 
 
 class FamilyMemberCompaniesView(DatasetView):
-	model = FamilyMemberCompany
-	table_class = FamilyMemberCompanyTable
+    model = FamilyMemberCompany
+    table_class = FamilyMemberCompanyTable
+
+
+class FamilyMemberCompanyDetailsView(DatasetView):
+    model = FamilyMemberCompany
 
 
 class ConflictInterestFamilyMembersView(DatasetView):
-	model = ConflictInterestFamilyMember
-	table_class = ConflictInterestFamilyMemberTable
+    model = ConflictInterestFamilyMember
+    table_class = ConflictInterestFamilyMemberTable
+
+
+class ConflictInterestFamilyMemberDetailsView(DatasetView):
+    model = ConflictInterestFamilyMember

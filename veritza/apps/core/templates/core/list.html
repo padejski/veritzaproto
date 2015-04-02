@@ -3,11 +3,59 @@
 {% load django_tables2 %}
 {% load i18n %}
 
-{% block content %}
-    <div class="list-toolbar">
-    {% block list_toolbar %}
+{% block js %}<script type="text/javascript" src="https://www.google.com/jsapi"></script>{% endblock %}
 
-    {% endblock %}
+{% block content %}
+    <div class="page-header"><h3>{{ table.data.verbose_name_plural }}</h3></div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Dataset Stats
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+          Total records: {{ table.paginator.count }}
+          <hr/>
+          {% with table.Meta.model.stats as stats %}
+          Minimum value: {{ stats.value__min }} &euro; [ {% for p in stats.min_value_procurement %}<a href="{% url 'public-procurement-details' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
+          Average value: {{ stats.value__avg }} &euro;<br/>
+          Maximum value: {{ stats.value__max }} &euro; [ {% for p in stats.max_value_procurement %}<a href="{% url 'public-procurement-details' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
+          {% endwith %}
+
+          <hr/>
+          <div class="row">
+            <div class="col-lg-6">
+                  <h4 class="chart-header">{{ report.subject_chart.title }}</h4>
+                  <div class="chart-container">
+                      {{ report.subject_chart }}
+                  </div>
+            </div>
+
+            <div class="col-lg-6">
+                  <h4 class="chart-header">{{ report.notice_type_chart.title }}</h4>
+                  <div class="chart-container">
+                      {{ report.notice_type_chart }}
+                  </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+                  <h4 class="chart-header">{{ report.location_chart.title }}</h4>
+                  <div class="chart-container">
+                      {{ report.location_chart }}
+                  </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
     </div>
 
     {% if table.page %}
@@ -54,6 +102,10 @@
     &nbsp;
     <ul class="pagination">
         {% nospaceless %}<li class="cardinality"><a>{{ table.paginator.count }} Total</a></li>{% endnospaceless %}
+    </ul>
+
+    <ul class="pagination">
+        <li><input style="display: inline; float:left;" class="form-control" type="text" placeholder="Search dataset ..."></li>
     </ul>
     {% endif %}
 

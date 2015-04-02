@@ -6,7 +6,7 @@ import dateutil
 from datetime import datetime
 
 from django.conf import settings
-from django.db.models import signals
+from django.db.models import signals, Avg, Min, Max, Sum, Count
 from django.db import models, connection
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
@@ -866,6 +866,16 @@ class PublicProcurement(VeritzaBaseModel):
         if commit:
             self.save()
         return self
+
+    @classmethod
+    def stats(cls):
+        data = {}
+        data = PublicProcurement.objects.aggregate(Min('value'), Avg('value'), Max('value'))
+
+        data['min_value_procurement'] = PublicProcurement.objects.select_related().filter(value__lte=data['value__min'])
+        data['max_value_procurement'] = PublicProcurement.objects.select_related().filter(value__gte=data['value__max'])
+
+        return data
 
 
 class PublicOfficialCompany(models.Model):
