@@ -27,9 +27,33 @@ class CompanyTable(VeritzaTable):
         model = Company
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
+            'mail_address', 'name',  'status', 'system_id', 'link'
+        )
+
+
+class CompanyMemberTable(VeritzaTable):
+
+    class Meta:
+        model = CompanyMember
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = (
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
+            'mail_address', 'name',  'status', 'system_id', 'link'
+        )
+        sequence = ['first_name', 'last_name', 'company_registration_number', 'company']
+
+
+class FamilyMemberTable(VeritzaTable):
+
+    class Meta:
+        model = FamilyMember
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = (
         	'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
         	'mail_address', 'name',  'status', 'system_id', 'link'
         )
+        # sequence = ['first_name', 'last_name', 'company_registration_number', 'company']
 
 
 class PublicProcurementTable(VeritzaTable):

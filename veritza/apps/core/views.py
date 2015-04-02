@@ -28,6 +28,8 @@ class ContactView(TemplateView):
 class DatasetView(SingleTableView):
 	template_name = 'core/list.html'
 
+	def get_queryset(self):
+		return self.model.objects.select_related().all()
 
 class PublicOfficialsView(DatasetView):
 	model = PublicOfficial
@@ -37,6 +39,21 @@ class PublicOfficialsView(DatasetView):
 class CompaniesView(DatasetView):
 	model = Company
 	table_class = CompanyTable
+
+
+class CompanyMembersView(DatasetView):
+	model = CompanyMember
+	table_class = CompanyMemberTable
+
+	def get_queryset(self):
+		# 'company' field needs to be explicitly requested here as
+		# it is null=True and not select_related by default
+		return self.model.objects.select_related('company').all()
+
+
+class FamilyMembersView(DatasetView):
+	model = FamilyMember
+	table_class = FamilyMemberTable
 
 
 class PublicProcurementsView(DatasetView):
