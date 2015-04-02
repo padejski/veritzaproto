@@ -32,6 +32,7 @@ class ContactView(TemplateView):
 class DatasetView(SingleTableView):
     template_name = 'core/list.html'
     stats_template = 'core/stats/empty.html'
+    report = None
 
     def get_queryset(self):
         return self.model.objects.select_related().all()
@@ -39,7 +40,8 @@ class DatasetView(SingleTableView):
     def get_context_data(self, **kwargs):
         context = super(DatasetView, self).get_context_data(**kwargs)
         context['stats_template'] = self.stats_template
-        context['report'] = self.report
+        if self.report:
+            context['report'] = self.report
         return context
 
 class PublicOfficialsView(DatasetView):
