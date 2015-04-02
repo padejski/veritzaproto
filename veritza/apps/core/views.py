@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django_tables2 import SingleTableView
 from report_tools.views import ReportView
 
-from veritza.apps.core.reports import ProcurementsReport
+from veritza.apps.core.reports import *
 from veritza.apps.core.models import *
 from veritza.apps.core.tables import *
 
@@ -31,9 +31,16 @@ class ContactView(TemplateView):
 
 class DatasetView(SingleTableView):
     template_name = 'core/list.html'
+    stats_template = 'core/stats/empty.html'
 
     def get_queryset(self):
         return self.model.objects.select_related().all()
+
+    def get_context_data(self, **kwargs):
+        context = super(DatasetView, self).get_context_data(**kwargs)
+        context['stats_template'] = self.stats_template
+        context['report'] = self.report
+        return context
 
 class PublicOfficialsView(DatasetView):
     model = PublicOfficial
@@ -79,14 +86,8 @@ class FamilyMemberDetailsView(DatasetView):
 class PublicProcurementsView(DatasetView, ReportView):
     model = PublicProcurement
     table_class = PublicProcurementTable
-
-    def get_report(self, request):
-        return ProcurementsReport()
-
-    def get_context_data(self, **kwargs):
-        context = super(PublicProcurementsView, self).get_context_data(**kwargs)
-        context['report'] = self.get_report(None)
-        return context
+    stats_template = 'core/stats/procurements.html'
+    report = ProcurementsReport()
 
 
 class PublicProcurementDetailsView(DatasetView):
@@ -102,10 +103,11 @@ class BidderCompanyDetailsView(DatasetView):
     model = BidderCompany
 
 
-class ElectionsContributionsView(DatasetView):
+class ElectionsContributionsView(DatasetView, ReportView):
     model = ElectionsContributions
     table_class = ElectionsContributionsTable
-
+    stats_template = 'core/stats/elections_contributions.html'
+    report = ElectionsContributionsReport()
 
 class ElectionsContributionsDetailsView(DatasetView):
     model = ElectionsContributions

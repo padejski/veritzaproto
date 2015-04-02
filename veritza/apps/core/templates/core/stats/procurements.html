@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-md-12">
+	Minimum value: {{ stats.value__min }} &euro; [ {% for p in stats.min_value_procurements	 %}<a href="{% url 'public-procurement-details' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
+	Average value: {{ stats.value__avg }} &euro;<br/>
+	Maximum value: {{ stats.value__max }} &euro; [ {% for p in stats.max_value_procurements	 %}<a href="{% url 'public-procurement-details' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
+	</div>
+<div/>
+
+<hr/>
+
+<div class="row">
+	<div class="col-md-6">
+	      <h4 class="chart-header">{{ report.subject_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.subject_chart }}
+	      </div>
+	</div>
+
+	<div class="col-md-6">
+	      <h4 class="chart-header">{{ report.notice_type_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.notice_type_chart }}
+	      </div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+	      <h4 class="chart-header">{{ report.location_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.location_chart }}
+	      </div>
+	</div>
+</div>

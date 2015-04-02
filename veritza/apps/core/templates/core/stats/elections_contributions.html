@@ -1,0 +1,41 @@
+<div class="row">
+	Minimum amount: {{ stats.amount__min }} &euro; [ {% for p in stats.min_amount_contributions %}<a href="{% url 'elections-contributions-details' p.id %}">{{ p.contributor_name }} ({{ p.id }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
+	Average amount: {{ stats.amount__avg }} &euro;<br/>
+	Maximum amount: {{ stats.amount__max }} &euro; [ {% for p in stats.max_amount_contributions %}<a href="{% url 'elections-contributions-details' p.id %}">{{ p.contributor_name }} ({{ p.id }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
+<div/>
+
+<hr/>
+
+<div class="row">
+	<div class="col-lg-6">
+	      <h4 class="chart-header">{{ report.location_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.location_chart }}
+	      </div>
+	</div>
+
+	<div class="col-lg-6">
+	      <h4 class="chart-header">{{ report.contributor_type_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.contributor_type_chart }}
+	      </div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+	      <h4 class="chart-header">{{ report.political_party_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.political_party_chart }}
+	      </div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+	      <h4 class="chart-header">{{ report.political_party_amount_chart.title }}</h4>
+	      <div class="chart-container">
+	          {{ report.political_party_amount_chart }}
+	      </div>
+	</div>
+</div>

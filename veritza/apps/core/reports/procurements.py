@@ -18,13 +18,13 @@ class ProcurementsReport(Report):
 
     subject_chart = charts.PieChart(
         title="By subject",
-        width=400,
+        width=500,
         height=300
     )
 
     notice_type_chart = charts.PieChart(
         title="By notice type",
-        width=400,
+        width=500,
         height=300
     )
 

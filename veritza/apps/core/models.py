@@ -272,6 +272,16 @@ class ElectionsContributions(VeritzaBaseModel):
                 records.append(ElectionsContributions(created_by=created_by, **data))
         cls.objects.bulk_create(records)
 
+    @classmethod
+    def stats(cls):
+        data = {}
+        data = cls.objects.aggregate(Min('amount'), Avg('amount'), Max('amount'))
+
+        data['min_amount_contributions'] = cls.objects.select_related().filter(amount__lte=data['amount__min'])
+        data['max_amount_contributions'] = cls.objects.select_related().filter(amount__gte=data['amount__max'])
+
+        return data
+
 
 class ElectionsContributionCompanyMember(VeritzaBaseModel):
     """
@@ -870,10 +880,10 @@ class PublicProcurement(VeritzaBaseModel):
     @classmethod
     def stats(cls):
         data = {}
-        data = PublicProcurement.objects.aggregate(Min('value'), Avg('value'), Max('value'))
+        data = cls.objects.aggregate(Min('value'), Avg('value'), Max('value'))
 
-        data['min_value_procurement'] = PublicProcurement.objects.select_related().filter(value__lte=data['value__min'])
-        data['max_value_procurement'] = PublicProcurement.objects.select_related().filter(value__gte=data['value__max'])
+        data['min_value_procurements'] = cls.objects.select_related().filter(value__lte=data['value__min'])
+        data['max_value_procurements'] = cls.objects.select_related().filter(value__gte=data['value__max'])
 
         return data
 
