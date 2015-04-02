@@ -1,7 +1,62 @@
 {% extends 'core/dataset_base.html' %}
 {% load render_table from django_tables2 %}
-
+{% load django_tables2 %}
+{% load i18n %}
 
 {% block content %}
-	{% render_table table %}
+    <div class="list-toolbar">
+    {% block list_toolbar %}
+
+    {% endblock %}
+    </div>
+
+    {% if table.page %}
+    <ul class="pagination">
+        {% if table.page.has_previous %}
+            {% nospaceless %}<li class="previous-button"><a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}">&laquo;</a></li>{% endnospaceless %}
+        {% endif %}
+
+        {% if table.page.number != 1 %}
+            {% nospaceless %}<li class="first"><a href="{% querystring table.prefixed_page_field=1 %}">1</a></li>{% endnospaceless %}
+        {% endif %}
+
+        {% if table.page.has_previous or table.page.has_next %}
+
+            {% if table.page.number > 3 %}
+                <li><a href="">...</a></li>
+            {% endif %}
+
+            {% if table.page.has_previous and table.page.previous_page_number > 1 %}
+                {% nospaceless %}<li class="previous"><a href="{% querystring table.prefixed_page_field=table.page.previous_page_number %}">{{ table.page.previous_page_number }}</a></li>{% endnospaceless %}
+            {% endif %}
+
+            {% nospaceless %}<li class="current"><a href="#" style="background: #eee">{{ table.page.number }}</a></li>{% endnospaceless %}
+
+            {% if table.page.has_next and table.page.next_page_number < table.paginator.num_pages %}
+                {% nospaceless %}<li class="next"><a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}">{{ table.page.next_page_number }}</a></li>{% endnospaceless %}
+            {% endif %}
+
+            {% if table.page.number < table.paginator.num_pages|add:"-2" %}
+                <li><a href="">...</a></li>
+            {% endif %}
+
+        {% endif %}
+
+        {% if table.page.number != table.paginator.num_pages %}
+            {% nospaceless %}<li class="last"><a href="{% querystring table.prefixed_page_field=table.paginator.num_pages %}">{{ table.paginator.num_pages }}</a></li>{% endnospaceless %}
+        {% endif %}
+
+        {% if table.page.has_next %}
+            {% nospaceless %}<li class="next-button"><a href="{% querystring table.prefixed_page_field=table.page.next_page_number %}">&raquo;</a></li>{% endnospaceless %}
+        {% endif %}
+
+    </ul>
+    &nbsp;
+    <ul class="pagination">
+        {% nospaceless %}<li class="cardinality"><a>{{ table.paginator.count }} Total</a></li>{% endnospaceless %}
+    </ul>
+    {% endif %}
+
+    {% render_table table %}
+
 {% endblock %}

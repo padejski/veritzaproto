@@ -35,6 +35,7 @@
             <li{% if current_page == 'faq' %} class="active"{% endif %}><a href="{% url 'faq' %}">FAQ</a></li>
             <li{% if current_page == 'about' %} class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
             <li{% if current_page == 'contact' %} class="active"{% endif %}><a href="{% url 'contact' %}">Contact</a></li>
+            <li><form style="padding-top: 8px;"><input class="form-control" type="text" placeholder="Search..."></form></li>
           </ul>
           {% if user.is_authenticated %}
           <ul class="nav navbar-nav pull-right">
