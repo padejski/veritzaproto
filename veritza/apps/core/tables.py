@@ -207,7 +207,7 @@ class ConflictInterestTable(VeritzaTable):
         model = ConflictInterest
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-        	'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
+        	'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
         	'mail_address', 'name',  'status', 'system_id', 'link'
         )
 
@@ -239,7 +239,7 @@ class FamilyMemberCompanyTable(VeritzaTable):
         model = FamilyMemberCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-            'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
         )
 
     def render_id(self, record, value):
@@ -265,7 +265,7 @@ class ConflictInterestFamilyMemberTable(VeritzaTable):
         model = ConflictInterestFamilyMember
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-            'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
         )
 
     def render_id(self, record, value):
