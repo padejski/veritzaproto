@@ -1,0 +1,55 @@
+{% extends 'core/dataset_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+	<ol class="breadcrumb">
+	  <li><a href="{% url 'home' %}">Home</a></li>
+	  <li><a href="{% url 'public-procurements' %}">Public procurements</a></li>
+	  <li>{{ object.id }}</li>
+	</ol>
+
+	<h3>Public procurement profile</h3>
+	<div class="page-header">{{ object.title }}</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Basic information</div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<tr> <td>Number</td> <td>{{ object.number }}</td> </tr>
+				<tr> <td>Title</td> <td>{{ object.title }}</td> </tr>
+				<tr> <td>Subject</td> <td>{{ object.subject }}</td> </tr>
+				<tr> <td>Value</td> <td>{{ object.value }} &euro;</td> </tr>
+				<tr> <td>Location</td> <td>{{ object.location }}</td> </tr>
+				<tr> <td>Description</td> <td>{{ object.description }}</td> </tr>
+				<tr> <td>Notice type</td> <td>{{ object.record_type }}</td> </tr>
+				<tr> <td>Creation date</td> <td>{{ object.creation_date }}</td> </tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-info">
+		<div class="panel-heading">Companies awarded ({{ object.winners|length }})</div>
+		{% if object.winners %}
+		<div class="panel-body">
+			<table class="table table-bordered">
+			<tr>
+				<th>Registration number</th>
+				<th>Name</th>
+				<th>Registration date</th>
+				<th>Location</th>
+			</tr>
+			{% for winner in object.winners %}
+				<tr>
+					<td><a href="{% url 'company-details' winner.company.id %}">{{ winner.company.registration_number }}</a></td>
+					<td>{{ winner.company.full_name }}</td>
+					<td>{{ winner.company.registration_date }}</td>
+					<td>{{ winner.company.location }}</td>
+				</tr>
+			{% endfor %}
+			</table>
+		</div>
+		{% endif %}
+	</div>
+{% endblock %}

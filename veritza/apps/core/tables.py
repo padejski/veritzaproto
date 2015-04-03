@@ -139,7 +139,7 @@ class BidderCompanyTable(VeritzaTable):
         model = BidderCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-            'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
         )
 
     def render_id(self, record, value):
@@ -182,7 +182,7 @@ class PublicOfficialCompanyTable(VeritzaTable):
         model = PublicOfficialCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-            'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
         )
 
     def render_id(self, record, value):

@@ -126,8 +126,14 @@ class PublicProcurementsView(DatasetView, ReportView):
     report = ProcurementsReport()
 
 
-class PublicProcurementDetailsView(DatasetView):
+class PublicProcurementDetailsView(DetailView):
     model = PublicProcurement
+    template_name = 'core/details/public_procurement.html'
+
+    def get_object(self, **kwargs):
+        obj = super(PublicProcurementDetailsView, self).get_object(**kwargs)
+        obj.winners = BidderCompany.objects.select_related('company').filter(procurement_id=obj.id)
+        return obj
 
 
 class BidderCompaniesView(DatasetView):
@@ -145,8 +151,14 @@ class ElectionsContributionsView(DatasetView, ReportView):
     stats_template = 'core/stats/elections_contributions.html'
     report = ElectionsContributionsReport()
 
-class ElectionsContributionsDetailsView(DatasetView):
+
+class ElectionsContributionsDetailsView(DetailView):
     model = ElectionsContributions
+    template_name = 'core/details/elections_contributions.html'
+
+    def get_object(self, **kwargs):
+        obj = super(self.__class__, self).get_object(**kwargs)
+        return obj
 
 
 class PublicOfficialCompaniesView(DatasetView):
@@ -154,7 +166,7 @@ class PublicOfficialCompaniesView(DatasetView):
     table_class = PublicOfficialCompanyTable
 
 
-class PublicOfficialCompanyDetailsView(DatasetView):
+class PublicOfficialCompanyDetailsView(DetailView):
     model = PublicOfficialCompany
 
 
@@ -163,7 +175,7 @@ class ConflictInterestsView(DatasetView):
     table_class = ConflictInterestTable
 
 
-class ConflictInterestDetailsView(DatasetView):
+class ConflictInterestDetailsView(DetailView):
     model = ConflictInterest
 
 

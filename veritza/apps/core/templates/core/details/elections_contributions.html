@@ -1,0 +1,32 @@
+{% extends 'core/dataset_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+	<ol class="breadcrumb">
+	  <li><a href="{% url 'home' %}">Home</a></li>
+	  <li><a href="{% url 'elections-contributions' %}">Elections contribution</a></li>
+	  <li>{{ object.id }}</li>
+	</ol>
+
+	<h3>Elections contribution profile</h3>
+	<div class="page-header">{{ object.contributor_name }} to {{ object.political_party }}</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Basic information</div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<tr> <td>Date</td> <td>{{ object.date }}</td> </tr>
+				<tr> <td>Election type</td> <td>{{ object.election_type }}</td> </tr>
+				<tr> <td>Election place</td> <td>{{ object.election_place }}</td> </tr>
+				<tr> <td>Political party</td> <td>{{ object.political_party }}</td> </tr>
+				<tr> <td>Candidate</td> <td>{{ object.cadidate }}</td> </tr>
+				<tr> <td>Contributor_type</td> <td>{{ object.contributor_type }}</td> </tr>
+				<tr> <td>Contributor name</td> <td>{{ object.contributor_name }}</td> </tr>
+				<tr> <td>Contributor address</td> <td>{{ object.contributor_address }}</td> </tr>
+				<tr> <td>Amount</td> <td>{{ object.amount }} &euro;</td> </tr>
+			</table>
+		</div>
+	</div>
+{% endblock %}
