@@ -46,9 +46,11 @@ class DatasetView(SingleTableView):
         return context
 
 
-class PublicOfficialsView(DatasetView):
+class PublicOfficialsView(DatasetView, ReportView):
     model = PublicOfficial
     table_class = PublicOfficialTable
+    stats_template = 'core/stats/public_officials.html'
+    report = PublicOfficialsReport()
 
     def get_queryset(self):
         return self.model.objects.prefetch_related('publicofficialreport_set').all()

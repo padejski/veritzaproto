@@ -18,6 +18,7 @@ class VeritzaTable(tables.Table):
 class PublicOfficialTable(VeritzaTable):
 
     reports = tables.Column(accessor='publicofficialreport_set')
+    type = tables.Column(accessor='publicofficialreport_set')
 
     class Meta:
         model = PublicOfficial
@@ -34,6 +35,11 @@ class PublicOfficialTable(VeritzaTable):
 
     def render_reports(self, record, value):
         return len(value.all())
+
+    def render_type(self, record, value):
+        if len(value.all()) > 0:
+            return value.all()[0].official_type
+        return ""
 
 
 class CompanyTable(VeritzaTable):

@@ -2,3 +2,4 @@ from .procurements import ProcurementsReport
 from .elections_contributions import ElectionsContributionsReport
 from .family_members import FamilyMembersReport
 from .companies import CompaniesReport
+from .public_officials import PublicOfficialsReport
