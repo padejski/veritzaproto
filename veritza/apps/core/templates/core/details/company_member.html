@@ -1,0 +1,68 @@
+{% extends 'core/dataset_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+	<ol class="breadcrumb">
+	  <li><a href="{% url 'home' %}">Home</a></li>
+	  <li><a href="{% url 'company-members' %}">Company member</a></li>
+	  <li>{{ object.id }}</li>
+	</ol>
+
+	<h3>Company member profile</h3>
+	<div class="page-header">{{ object.full_name }}</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Basic information</div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<tr> <td>First name</td> <td>{{ object.first_name }}</td> </tr>
+				<tr> <td>Last name</td> <td>{{ object.last_name }}</td> </tr>
+				<tr> <td>Company registration number</td> <td>{{ object.company_registration_number }}</td> </tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">Company</div>
+			{% if object.company %}
+			<div class="panel-body">
+				<table class="table table-bordered">
+				<tr>
+					<th>Registration number</th>
+					<th>Name</th>
+					<th>Registration date</th>
+					<th>Location</th>
+				</tr>
+					<tr>
+						<td><a href="{% url 'company-details' object.company.id %}">{{ object.company.registration_number }}</a></td>
+						<td>{{ object.company.full_name }}</td>
+						<td>{{ object.company.registration_date }}</td>
+						<td>{{ object.company.location }}</td>
+					</tr>
+				</table>
+			</div>
+			{% endif %}
+	</div>
+
+	<div class="panel panel-info">
+		<div class="panel-heading">Company member details</div>
+			{% if object.titles %}
+			<div class="panel-body">
+				<table class="table table-bordered">
+					<tr>
+						<th>Title</th>
+						<th>Share</th>
+					</tr>
+					{% for title in object.titles %}
+					<tr>
+						<td>{{ title.title|default:"" }}</td>
+						<td>{{ title.share|default:"" }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			{% endif %}
+	</div>
+{% endblock %}

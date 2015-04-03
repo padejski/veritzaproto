@@ -97,18 +97,24 @@ class CompanyMembersView(DatasetView):
         return self.model.objects.select_related('company').all()
 
 
-class CompanyMemberDetailsView(DatasetView):
+class CompanyMemberDetailsView(DetailView):
     model = CompanyMember
+    template_name = 'core/details/company_member.html'
+
+    def get_object(self, **kwargs):
+        obj = super(self.__class__, self).get_object(**kwargs)
+        obj.titles = CompanyMemberTitle.objects.filter(company_member_id=obj.id)
+        return obj
 
 
-class FamilyMembersView(DatasetView):
+class FamilyMembersView(DatasetView, ReportView):
     model = FamilyMember
     table_class = FamilyMemberTable
     stats_template = 'core/stats/family_members.html'
     report = FamilyMembersReport()
 
 
-class FamilyMemberDetailsView(DatasetView, ReportView):
+class FamilyMemberDetailsView(DetailView):
     model = FamilyMember
 
 
