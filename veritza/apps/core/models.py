@@ -57,6 +57,9 @@ class VeritzaBaseModel(models.Model):
     #         return getattr(self, 'title')
     #     return repr(self)
 
+    def get_class(self):
+        return self.__class__
+
 
 class UserProfile(UserenaBaseProfile):
     """
@@ -643,6 +646,9 @@ class Company(VeritzaBaseModel):
         if commit:
             self.save()
         return self
+
+    def get_class(self):
+        return self.__class__
 
     @classmethod
     def stats(cls):

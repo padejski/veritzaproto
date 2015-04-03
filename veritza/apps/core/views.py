@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
 from django.shortcuts import render
 
 from django_tables2 import SingleTableView
@@ -49,9 +50,18 @@ class PublicOfficialsView(DatasetView):
     model = PublicOfficial
     table_class = PublicOfficialTable
 
+    def get_queryset(self):
+        return self.model.objects.prefetch_related('publicofficialreport_set').all()
 
-class PublicOfficialDetailsView(TemplateView):
+
+class PublicOfficialDetailsView(DetailView):
     model = PublicOfficial
+    template_name = 'core/details/public_official.html'
+
+    def get_object(self, **kwargs):
+        obj = super(PublicOfficialDetailsView, self).get_object(**kwargs)
+        obj.reports = PublicOfficialReport.objects.filter(official_id=obj.id)
+        return obj
 
 
 class CompaniesView(DatasetView):
@@ -60,9 +70,19 @@ class CompaniesView(DatasetView):
     stats_template = 'core/stats/companies.html'
     report = CompaniesReport()
 
+    def get_queryset(self):
+        return self.model.objects.prefetch_related('companymember_set', 'biddercompany_set').all()
 
-class CompanyDetailsView(DatasetView):
+
+class CompanyDetailsView(DetailView):
     model = Company
+    template_name = 'core/details/company.html'
+
+    def get_object(self, **kwargs):
+        obj = super(self.__class__, self).get_object(**kwargs)
+        obj.company_members = CompanyMemberTitle.objects.select_related('company_member').filter(company_registration_number=obj.registration_number)
+        obj.company_procurements = [bidder_company.procurement for bidder_company in BidderCompany.objects.select_related().filter(company_id=obj.id)]
+        return obj
 
 
 class CompanyMembersView(DatasetView):

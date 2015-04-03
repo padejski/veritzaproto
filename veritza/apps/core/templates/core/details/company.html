@@ -1,0 +1,80 @@
+{% extends 'core/dataset_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+	<ol class="breadcrumb">
+	  <li><a href="{% url 'home' %}">Home</a></li>
+	  <li><a href="{% url 'companies' %}">Companies</a></li>
+	  <li>{{ object.id }}</li>
+	</ol>
+
+	<h3>Company profile</h3>
+	<div class="page-header">{{ object.name }}</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Basic information</div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<tr> <td>Registration number</td> <td>{{ object.registration_number }}</td> </tr>
+				<tr> <td>Identification number</td> <td>{{ object.identification_number }}</td> </tr>
+				<tr> <td>Full name</td> <td>{{ object.full_name }}</td> </tr>
+				<tr> <td>Company type</td> <td>{{ object.economic_activity }}</td> </tr>
+				<tr> <td>Address</td> <td>{{ object.address }}</td> </tr>
+				<tr> <td>Mail address</td> <td>{{ object.mail_address }}</td> </tr>
+				<tr> <td>Registration date</td> <td>{{ object.registration_date }}</td> </tr>
+				<tr> <td>Location</td> <td>{{ object.location }}</td> </tr>
+				<tr> <td>Activity</td> <td>{{ object.activity }}</td> </tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">Company Members ({{ object.company_members|length }})</div>
+			{% if object.company_members %}
+			<div class="panel-body">
+				<table class="table table-bordered">
+				<tr>
+					<th>Name</th>
+					<th>Title</th>
+					<th>Share</th>
+				</tr>
+				{% for member in object.company_members %}
+					<tr>
+						<td><a href="{% url 'company-member-details' member.id %}">{{ member.company_member.full_name }}</a></td>
+						<td>{{ member.title|default:"" }}</td>
+						<td>{{ member.share|default:"" }}</td>
+					</tr>
+				{% endfor %}
+				</table>
+			</div>
+			{% endif %}
+	</div>
+
+	<div class="panel panel-info">
+		<div class="panel-heading">Public Procurements ({{ object.company_procurements|length }})</div>
+			{% if object.company_procurements %}
+			<div class="panel-body">
+				<table class="table table-bordered">
+					<tr>
+						<th>Number</th>
+						<th>Title</th>
+						<th>Subject</th>
+						<th>Value</th>
+						<th>Notice</th>
+					</tr>
+					{% for procurement in object.company_procurements %}
+					<tr>
+						<td><a href="{% url 'public-procurement-details' procurement.id %}">{{ procurement.number }}</a></td>
+						<td>{{ procurement.title }}</td>
+						<td>{{ procurement.subject }}</td>
+						<td>{{ procurement.value }} &euro;</td>
+						<td>{{ procurement.record_type }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			{% endif %}
+	</div>
+{% endblock %}

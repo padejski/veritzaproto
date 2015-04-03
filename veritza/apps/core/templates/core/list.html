@@ -6,6 +6,11 @@
 {% block js %}<script type="text/javascript" src="https://www.google.com/jsapi"></script>{% endblock %}
 
 {% block content %}
+    <ol class="breadcrumb">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li>{{ table.data.verbose_name_plural }}</li>
+    </ol>
+
     <div class="page-header"><h3>{{ table.data.verbose_name_plural }}</h3></div>
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

@@ -1,0 +1,50 @@
+{% extends 'core/dataset_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+	<ol class="breadcrumb">
+	  <li><a href="{% url 'home' %}">Home</a></li>
+	  <li><a href="{% url 'public-officials' %}">Public officials</a></li>
+	  <li>{{ object.id }}</li>
+	</ol>
+
+	<h3>Public official profile</h3>
+	<div class="page-header">{{ object.name }}</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Basic information</div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<tr> <td>Name</td> <td>{{ object.name }}</td> </tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">Reports ({{ object.reports|length }})</div>
+			{% if object.reports %}
+			<div class="panel-body">
+				<table class="table table-bordered">
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Year</th>
+					<th>Public office</th>
+					<th>Official type</th>
+				</tr>
+				{% for report in object.reports %}
+					<tr>
+						<td>{{ report.report_name }}</a></td>
+						<td>{{ report.official_type|default:"" }}</td>
+						<td>{{ report.year|default:"" }}</td>
+						<td>{{ report.report_type|default:"" }}</td>
+						<td>{{ report.public_office|default:"" }}</td>
+					</tr>
+				{% endfor %}
+				</table>
+			</div>
+			{% endif %}
+	</div>
+{% endblock %}

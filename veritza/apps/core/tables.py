@@ -17,6 +17,8 @@ class VeritzaTable(tables.Table):
 
 class PublicOfficialTable(VeritzaTable):
 
+    reports = tables.Column(accessor='publicofficialreport_set')
+
     class Meta:
         model = PublicOfficial
         attrs = {"class": "paleblue table table-striped table-bordered"}
@@ -30,8 +32,14 @@ class PublicOfficialTable(VeritzaTable):
             reverse('public-official-details', args=[record.id]), escape(value)
         ))
 
+    def render_reports(self, record, value):
+        return len(value.all())
+
 
 class CompanyTable(VeritzaTable):
+
+    members = tables.Column(accessor='companymember_set')
+    procurements = tables.Column(accessor='biddercompany_set')
 
     class Meta:
         model = Company
@@ -45,6 +53,12 @@ class CompanyTable(VeritzaTable):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
             reverse('company-details', args=[record.id]), escape(value)
         ))
+
+    def render_members(self, record, value):
+        return len(value.all())
+
+    def render_procurements(self, record, value):
+        return len(value.all())
 
 
 class CompanyMemberTable(VeritzaTable):

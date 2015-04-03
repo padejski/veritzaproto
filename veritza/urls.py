@@ -18,10 +18,10 @@ urlpatterns = patterns('',
     url(r'^datasets/$', core_views.DatasetsView.as_view(), name='datasets'),
 
     url(r'^datasets/public-officials/$', core_views.PublicOfficialsView.as_view(), name='public-officials'),
-    url(r'^datasets/public-officials/(\d+)/$', core_views.PublicOfficialDetailsView.as_view(), name='public-official-details'),
+    url(r'^datasets/public-officials/(?P<pk>\d+)/$', core_views.PublicOfficialDetailsView.as_view(), name='public-official-details'),
 
     url(r'^datasets/companies/$', core_views.CompaniesView.as_view(), name='companies'),
-    url(r'^datasets/companies/(\d+)/$', core_views.CompanyDetailsView.as_view(), name='company-details'),
+    url(r'^datasets/companies/(?P<pk>\d+)/$', core_views.CompanyDetailsView.as_view(), name='company-details'),
 
     url(r'^datasets/company-members/$', core_views.CompanyMembersView.as_view(), name='company-members'),
     url(r'^datasets/company-members/(\d+)/$', core_views.CompanyMemberDetailsView.as_view(), name='company-member-details'),
