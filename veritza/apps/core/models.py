@@ -917,8 +917,8 @@ class PublicOfficialCompany(models.Model):
         verbose_name_plural = "Public officials companies"
         # unique_together = ('official', 'company')
 
-    official = models.ForeignKey(PublicOfficial)
-    company = models.ForeignKey(Company)
+    official = models.ForeignKey('PublicOfficial')
+    company = models.ForeignKey('Company')
 
     def __unicode__(self):
         return u"{0} - {1}".format(self.official.name, self.company.full_name)

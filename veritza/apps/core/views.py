@@ -63,6 +63,7 @@ class PublicOfficialDetailsView(DetailView):
     def get_object(self, **kwargs):
         obj = super(PublicOfficialDetailsView, self).get_object(**kwargs)
         obj.reports = PublicOfficialReport.objects.filter(official_id=obj.id)
+        obj.official_companies = PublicOfficialCompany.objects.select_related('company').filter(official_id=obj.id)
         return obj
 
 
