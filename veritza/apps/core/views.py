@@ -10,6 +10,15 @@ from veritza.apps.core.models import *
 from veritza.apps.core.tables import *
 
 
+from django.contrib.auth.decorators import login_required
+
+class LoginRequiredMixin(object):
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view)
+
+
 class HomeView(TemplateView):
     template_name = 'home.html'
 
@@ -30,6 +39,10 @@ class ContactView(TemplateView):
     template_name = 'contact.html'
 
 
+class DatasetsView(LoginRequiredMixin, TemplateView):
+    template_name = 'datasets.html'
+
+
 class DatasetView(SingleTableView):
     template_name = 'core/list.html'
     stats_template = 'core/stats/empty.html'
@@ -46,7 +59,7 @@ class DatasetView(SingleTableView):
         return context
 
 
-class PublicOfficialsView(DatasetView, ReportView):
+class PublicOfficialsView(LoginRequiredMixin, DatasetView, ReportView):
     model = PublicOfficial
     table_class = PublicOfficialTable
     stats_template = 'core/stats/public_officials.html'
@@ -56,7 +69,7 @@ class PublicOfficialsView(DatasetView, ReportView):
         return self.model.objects.prefetch_related('publicofficialreport_set').all()
 
 
-class PublicOfficialDetailsView(DetailView):
+class PublicOfficialDetailsView(LoginRequiredMixin, DetailView):
     model = PublicOfficial
     template_name = 'core/details/public_official.html'
 
@@ -67,7 +80,7 @@ class PublicOfficialDetailsView(DetailView):
         return obj
 
 
-class CompaniesView(DatasetView):
+class CompaniesView(LoginRequiredMixin, DatasetView):
     model = Company
     table_class = CompanyTable
     stats_template = 'core/stats/companies.html'
@@ -77,7 +90,7 @@ class CompaniesView(DatasetView):
         return self.model.objects.prefetch_related('companymember_set', 'biddercompany_set').all()
 
 
-class CompanyDetailsView(DetailView):
+class CompanyDetailsView(LoginRequiredMixin, DetailView):
     model = Company
     template_name = 'core/details/company.html'
 
@@ -88,7 +101,7 @@ class CompanyDetailsView(DetailView):
         return obj
 
 
-class CompanyMembersView(DatasetView):
+class CompanyMembersView(LoginRequiredMixin, DatasetView):
     model = CompanyMember
     table_class = CompanyMemberTable
 
@@ -98,7 +111,7 @@ class CompanyMembersView(DatasetView):
         return self.model.objects.select_related('company').all()
 
 
-class CompanyMemberDetailsView(DetailView):
+class CompanyMemberDetailsView(LoginRequiredMixin, DetailView):
     model = CompanyMember
     template_name = 'core/details/company_member.html'
 
@@ -108,25 +121,25 @@ class CompanyMemberDetailsView(DetailView):
         return obj
 
 
-class FamilyMembersView(DatasetView, ReportView):
+class FamilyMembersView(LoginRequiredMixin, DatasetView, ReportView):
     model = FamilyMember
     table_class = FamilyMemberTable
     stats_template = 'core/stats/family_members.html'
     report = FamilyMembersReport()
 
 
-class FamilyMemberDetailsView(DetailView):
+class FamilyMemberDetailsView(LoginRequiredMixin, DetailView):
     model = FamilyMember
 
 
-class PublicProcurementsView(DatasetView, ReportView):
+class PublicProcurementsView(LoginRequiredMixin, DatasetView, ReportView):
     model = PublicProcurement
     table_class = PublicProcurementTable
     stats_template = 'core/stats/procurements.html'
     report = ProcurementsReport()
 
 
-class PublicProcurementDetailsView(DetailView):
+class PublicProcurementDetailsView(LoginRequiredMixin, DetailView):
     model = PublicProcurement
     template_name = 'core/details/public_procurement.html'
 
@@ -136,16 +149,16 @@ class PublicProcurementDetailsView(DetailView):
         return obj
 
 
-class BidderCompaniesView(DatasetView):
+class BidderCompaniesView(LoginRequiredMixin, DatasetView):
     model = BidderCompany
     table_class = BidderCompanyTable
 
 
-class BidderCompanyDetailsView(DatasetView):
+class BidderCompanyDetailsView(LoginRequiredMixin, DatasetView):
     model = BidderCompany
 
 
-class ElectionsContributionsView(DatasetView, ReportView):
+class ElectionsContributionsView(LoginRequiredMixin, DatasetView, ReportView):
     model = ElectionsContributions
     table_class = ElectionsContributionsTable
     stats_template = 'core/stats/elections_contributions.html'
@@ -161,37 +174,37 @@ class ElectionsContributionsDetailsView(DetailView):
         return obj
 
 
-class PublicOfficialCompaniesView(DatasetView):
+class PublicOfficialCompaniesView(LoginRequiredMixin, DatasetView):
     model = PublicOfficialCompany
     table_class = PublicOfficialCompanyTable
 
 
-class PublicOfficialCompanyDetailsView(DetailView):
+class PublicOfficialCompanyDetailsView(LoginRequiredMixin, DetailView):
     model = PublicOfficialCompany
 
 
-class ConflictInterestsView(DatasetView):
+class ConflictInterestsView(LoginRequiredMixin, DatasetView):
     model = ConflictInterest
     table_class = ConflictInterestTable
 
 
-class ConflictInterestDetailsView(DetailView):
+class ConflictInterestDetailsView(LoginRequiredMixin, DetailView):
     model = ConflictInterest
 
 
-class FamilyMemberCompaniesView(DatasetView):
+class FamilyMemberCompaniesView(LoginRequiredMixin, DatasetView):
     model = FamilyMemberCompany
     table_class = FamilyMemberCompanyTable
 
 
-class FamilyMemberCompanyDetailsView(DatasetView):
+class FamilyMemberCompanyDetailsView(LoginRequiredMixin, DatasetView):
     model = FamilyMemberCompany
 
 
-class ConflictInterestFamilyMembersView(DatasetView):
+class ConflictInterestFamilyMembersView(LoginRequiredMixin, DatasetView):
     model = ConflictInterestFamilyMember
     table_class = ConflictInterestFamilyMemberTable
 
 
-class ConflictInterestFamilyMemberDetailsView(DatasetView):
+class ConflictInterestFamilyMemberDetailsView(LoginRequiredMixin, DatasetView):
     model = ConflictInterestFamilyMember
