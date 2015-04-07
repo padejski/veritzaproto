@@ -23,7 +23,7 @@ class ProcurementsReport(Report):
     )
 
     procurements_total_chart = charts.ColumnChart(
-        title="Top 5 cities by total procurement value",
+        title="Top 5 cities by total procurements",
         width=500,
         height=300
     )
