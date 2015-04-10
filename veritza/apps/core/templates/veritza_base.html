@@ -66,7 +66,12 @@
         {% block content_title %}{% endblock %}
       </div>
     </div>
-    {% block content %}test {% endblock %}
+    {% block content %}<h1>You've found Veritza platform website!</h1>
+<p>We' re not quite there yet - but we're getting there - and we really want you to know when we're ready.</p>    
+    <div class="progress progress-striped active">
+  <div class="bar" style="width: 40%;"></div>
+</div>
+<p>Sign up <a href="{% url 'userena_signup' %}">here</a> to get notified! or get in touch with us <a href="mailto:info@veritza.org" target="_top">info@veritza.org</a></p> {% endblock %}
     {% endblock %}
   </div>
 </body>
