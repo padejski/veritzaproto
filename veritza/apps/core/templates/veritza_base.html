@@ -7,7 +7,7 @@
   {% block meta %}{% endblock %}
 
   {% load staticfiles %}
-  <!-- <link rel="stylesheet" href="{% static "core/css/lib/bootstrap.min.css" %}"> --> 
+  <link rel="stylesheet" href="{% static "core/css/lib/bootstrap.min.css" %}">
   <link rel="stylesheet" href="{% static "core/css/lib/font-awesome.min.css" %}">
   <link rel="stylesheet" href="{% static "core/css/veritza.css" %}">
   <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css">
@@ -67,12 +67,16 @@
         {% block content_title %}{% endblock %}
       </div>
     </div>
-    {% block content %}<h1>You've found Veritza platform website!</h1>
-<h2>We' re not quite there yet - but we're getting there - and we really want you to know when we're ready.</h2>    
+    {% block content %} <input class="input-xxlarge" type="text" placeholder="Global Search - individual names, company names, locations...">
+    
+    <p class="text-center"><h1>You've found Veritza platform website!</h1></p>
+    <div class="text-center">
+    <em>We' re not quite there yet - but we're getting there - and we really want you to know when we're ready.</em></div>   
     <div class="progress progress-striped active">
-  <div class="bar" style="width: 40%;"></div>
-</div>
-<h1>Sign up <a href="{% url 'userena_signup' %}">here</a> to get notified! or get in touch with us <a href="mailto:info@veritza.org" target="_top">info@veritza.org</a></h1> {% endblock %}
+  	<div class="bar" style="width: 40%;">40%</div>
+	</div>
+	<div></div>
+	<h2>Sign up <a href="{% url 'userena_signup' %}">here</a> to get notified! or get in touch with us <a href="mailto:info@veritza.org" target="_top">info@veritza.org</a></h2> {% endblock %}
     {% endblock %}
   </div>
 </body>
