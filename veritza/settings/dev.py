@@ -35,10 +35,7 @@ DATABASES = {
         'USER': 'veritza',
         'PASSWORD': 'veritza',
         'HOST': '',
-        'PORT': '',
-        'OPTIONS': {
-            'autocommit': True
-        }
+        'PORT': ''
     },
     'heroku': dj_database_url.config(env='VERITZA_HEROKU_DATABASE_URL')
 }

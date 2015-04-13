@@ -97,7 +97,7 @@ class Dataset(VeritzaBaseModel):
     source = models.CharField(_("Source"), max_length=512)
     description = models.TextField(_("Description"), null=True, blank=True)
     notes = models.TextField(_("Notes"), null=True, blank=True)
-    tags = models.ManyToManyField("Tag", null=True, blank=True)
+    tags = models.ManyToManyField("Tag", blank=True)
 
     def __unicode__(self):
         return self.name

@@ -206,9 +206,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'apptemplates',
-    'south',
-    # 'compressor',
-    'djcelery',
+    # 'djcelery',
     'django_extensions',
     'django_forms_bootstrap',
     'easy_thumbnails',
@@ -268,7 +266,7 @@ CELERY_TASK_RESULT_EXPIRES = timedelta(minutes=30)
 CELERY_CHORD_PROPAGATES = True
 
 # See: http://celery.github.com/celery/django/
-setup_loader()
+# setup_loader()
 ########## END CELERY CONFIGURATION
 
 
