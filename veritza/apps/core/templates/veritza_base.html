@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{% static "core/css/lib/font-awesome.min.css" %}">
   <link rel="stylesheet" href="{% static "core/css/veritza.css" %}">
   <!-- <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css"> -->
-  
+
   <script src="{% static "core/js/lib/jquery/jquery.min.js" %}"></script>
   <script src="{% static "core/js/lib/jquery/jquery.form.min.js" %}"></script>
   <script src="{% static "core/js/lib/underscore-min.js" %}"></script>
@@ -36,7 +36,7 @@
             <li{% if current_page == 'faq' %} class="active"{% endif %}><a href="{% url 'faq' %}">Community</a></li>
             <li{% if current_page == 'about' %} class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
             <li{% if current_page == 'contact' %} class="active"{% endif %}><a href="{% url 'contact' %}">Contact</a></li>
-            <li><form style="padding-top: 8px;"><input class="form-control" type="text" placeholder="Global search ..."></form></li>
+            <li><form style="padding-top: 8px;" action="{% url 'search' %}"><input class="form-control" name="search" type="text" placeholder="Global search ..."></form></li>
           </ul>
           {% if user.is_authenticated %}
           <ul class="nav navbar-nav pull-right">
@@ -70,7 +70,7 @@
     {% block content %}
      </br></br></br><div class="text-center"><h1>You've found Veritza platform!</h1></p>
      <img src="{{ MEDIA_URL }}images/coming_soon.png"></img>
-   	<h1><em>We' re not quite there yet - but we're getting there - and we really want you to know when we're ready.</em></h1></br></br>   
+   	<h1><em>We' re not quite there yet - but we're getting there - and we really want you to know when we're ready.</em></h1></br></br>
   	<h2>Sign up <a href="{% url 'userena_signup' %}">here</a> to get notified! or get in touch with us <a href="mailto:info@veritza.org" target="_top">info@veritza.org</a></h2></div> {% endblock %}
     {% endblock %}
   </div>

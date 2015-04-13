@@ -60,6 +60,10 @@ class VeritzaBaseModel(models.Model):
     def get_class(self):
         return self.__class__
 
+    @classmethod
+    def get_url_name(cls):
+        return cls._meta.verbose_name_plural.replace(' ', '-').lower()
+
 
 class UserProfile(UserenaBaseProfile):
     """
@@ -910,7 +914,7 @@ class PublicProcurement(VeritzaBaseModel):
         return data
 
 
-class PublicOfficialCompany(models.Model):
+class PublicOfficialCompany(VeritzaBaseModel):
 
     class Meta:
         verbose_name = "Public official's company"
@@ -963,7 +967,7 @@ class PublicOfficialCompany(models.Model):
         cls.objects.bulk_create(official_companies)
 
 
-class ConflictInterestFamilyMember(models.Model):
+class ConflictInterestFamilyMember(VeritzaBaseModel):
     class Meta:
         verbose_name = "Conflict of Interest (Family Members)"
         verbose_name_plural = "Conflicts of interest (Family Members)"
@@ -974,6 +978,10 @@ class ConflictInterestFamilyMember(models.Model):
 
     def __unicode__(self):
         return u"{0} - {1} [{2}]".format(self.member.name, self.company.full_name, self.public_procurement.title)
+
+    @classmethod
+    def get_url_name(cls):
+        return 'conflict-interests-family-members'
 
     @classmethod
     def refresh(cls, delete_old=False, **kwargs):
@@ -1004,7 +1012,7 @@ class ConflictInterestFamilyMember(models.Model):
         return len(conflit_interests)
 
 
-class ConflictInterest(models.Model):
+class ConflictInterest(VeritzaBaseModel):
 
     class Meta:
         verbose_name = "Conflict of Interest"
@@ -1021,6 +1029,10 @@ class ConflictInterest(models.Model):
     def official_title(self):
         return ""
         return u"{0} [{1}]".format(self.official.public_office, self.official.official_type)
+
+    @classmethod
+    def get_url_name(cls):
+        return 'conflict-interests'
 
     @classmethod
     def refresh(cls, delete_old=False, start=0, end=100000, **kwargs):

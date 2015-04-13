@@ -42,7 +42,7 @@
 				</tr>
 				{% for member in object.company_members %}
 					<tr>
-						<td><a href="{% url 'company-member-details' member.id %}">{{ member.company_member.full_name }}</a></td>
+						<td><a href="{% url 'company-members' member.id %}">{{ member.company_member.full_name }}</a></td>
 						<td>{{ member.title|default:"" }}</td>
 						<td>{{ member.share|default:"" }}</td>
 					</tr>
@@ -66,7 +66,7 @@
 					</tr>
 					{% for procurement in object.company_procurements %}
 					<tr>
-						<td><a href="{% url 'public-procurement-details' procurement.id %}">{{ procurement.number }}</a></td>
+						<td><a href="{% url 'public-procurements' procurement.id %}">{{ procurement.number }}</a></td>
 						<td>{{ procurement.title }}</td>
 						<td>{{ procurement.subject }}</td>
 						<td>{{ procurement.value }} &euro;</td>

@@ -35,7 +35,7 @@
 				</tr>
 				{% for company in object.official_companies %}
 					<tr>
-						<td><a href="{% url 'company-details' company.company.id %}">{{ company.company.registration_number }}</a></td>
+						<td><a href="{% url 'companies' company.company.id %}">{{ company.company.registration_number }}</a></td>
 						<td>{{ company.company.full_name }}</td>
 						<td>{{ company.company.registration_date }}</td>
 						<td>{{ company.company.location }}</td>

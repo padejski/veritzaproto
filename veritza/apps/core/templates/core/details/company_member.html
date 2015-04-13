@@ -36,7 +36,7 @@
 					<th>Location</th>
 				</tr>
 					<tr>
-						<td><a href="{% url 'company-details' object.company.id %}">{{ object.company.registration_number }}</a></td>
+						<td><a href="{% url 'companies' object.company.id %}">{{ object.company.registration_number }}</a></td>
 						<td>{{ object.company.full_name }}</td>
 						<td>{{ object.company.registration_date }}</td>
 						<td>{{ object.company.location }}</td>

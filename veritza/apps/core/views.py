@@ -1,4 +1,6 @@
-from django.views.generic import TemplateView
+from django.db.models import Q
+
+from django.views.generic import View, TemplateView
 from django.views.generic.detail import DetailView
 from django.shortcuts import render
 
@@ -43,10 +45,54 @@ class DatasetsView(LoginRequiredMixin, TemplateView):
     template_name = 'datasets.html'
 
 
+class SearchView(LoginRequiredMixin, TemplateView):
+    template_name = 'search_results.html'
+    searched_classes = [
+        PublicOfficial, Company, CompanyMember, PublicProcurement, ElectionsContributions,
+        FamilyMember,
+    ]
+
+    # TODO: search term need to be at least 3 chars long
+    def get(self, request, *args, **kwargs):
+        search = request.GET.get('search')
+        context = self.get_context_data(**kwargs)
+        context['search'] = search
+        context['results_count'] = 0
+
+        # Don't search at all if search term is not at least 3 chars long
+        if len(search) >= 3:
+            datasets = []
+
+            for model in self.searched_classes:
+
+                filters = [
+                    Q(**{field.name + '__icontains': search})
+                    for field in model._meta.fields if isinstance(field, models.CharField)
+                ]
+
+                query = filters.pop()
+                for item in filters:
+                    query |= item
+
+                objects = model.objects.select_related().filter(query)
+                datasets.append({
+                    'model': model,
+                    'model_meta': model._meta,
+                    'model_name': model.__name__,
+                    'objects': objects
+                })
+                context['results_count'] += len(objects)
+
+            context['datasets'] = datasets
+
+        return self.render_to_response(context)
+
+
 class DatasetView(SingleTableView):
     template_name = 'core/list.html'
     stats_template = 'core/stats/empty.html'
     report = None
+    filter_class = None
 
     def get_queryset(self):
         return self.model.objects.select_related().all()

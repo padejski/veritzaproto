@@ -42,7 +42,7 @@
 			</tr>
 			{% for winner in object.winners %}
 				<tr>
-					<td><a href="{% url 'company-details' winner.company.id %}">{{ winner.company.registration_number }}</a></td>
+					<td><a href="{% url 'companies' winner.company.id %}">{{ winner.company.registration_number }}</a></td>
 					<td>{{ winner.company.full_name }}</td>
 					<td>{{ winner.company.registration_date }}</td>
 					<td>{{ winner.company.location }}</td>
