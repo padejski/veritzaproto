@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import uuid
 import csv
 import logging
 import dateutil
@@ -42,7 +42,7 @@ class VeritzaBaseModel(models.Model):
     class Meta:
         abstract = True
 
-    uuid = UUIDField()
+    uuid = UUIDField(uuid.uuid4)
     created_by = models.ForeignKey('User', null=True)
     # modified_by = models.ForeignKey('User', related_name='modified_veritzas')
     created = models.DateTimeField(_("Created Timestamp"), auto_now_add=True)
@@ -252,7 +252,8 @@ class ElectionsContributions(VeritzaBaseModel):
     contributor_name = models.CharField(max_length=255, null=True, blank=True, db_index=True)
     contributor_address = models.CharField(max_length=255, null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    csv_file = models.FileField(storage=DummyStorage(), upload_to=settings.MEDIA_ROOT, null=True, blank=True)
+    # csv_file = models.FileField(storage=DummyStorage(), upload_to=settings.MEDIA_ROOT, null=True, blank=True)
+    csv_file = models.FileField(upload_to=settings.MEDIA_ROOT, null=True, blank=True)
 
     def __unicode__(self):
         candidate = self.candidate + ', ' if self.candidate else ''
