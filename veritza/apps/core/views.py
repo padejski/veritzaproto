@@ -212,6 +212,11 @@ class FamilyMembersView(LoginRequiredMixin, DatasetView, ReportView):
 
 class FamilyMemberDetailsView(LoginRequiredMixin, DetailView):
     model = FamilyMember
+    template_name = 'core/details/family_member.html'
+
+    def get_queryset(self):
+        queryset = super(FamilyMemberDetailsView, self).get_queryset()
+        return queryset.select_related()
 
 
 class PublicProcurementsView(LoginRequiredMixin, DatasetView, ReportView):

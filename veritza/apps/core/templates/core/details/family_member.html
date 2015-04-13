@@ -1,0 +1,38 @@
+{% extends 'core/dataset_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+	<ol class="breadcrumb">
+	  <li><a href="{% url 'home' %}">Home</a></li>
+	  <li><a href="{% url 'family-members' %}">Public official's family member</a></li>
+	  <li>{{ object.id }}</li>
+	</ol>
+
+	<h3>Family member profile</h3>
+	<div class="page-header">{{ object.name }}</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Basic information</div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<tr> <td>Name</td> <td>{{ object.name }}</td> </tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">Public official</div>
+			<div class="panel-body">
+				<table class="table table-bordered">
+				<tr>
+					<th>Name</th>
+				</tr>
+					<tr>
+						<td><a href="{% url 'public-officials' object.public_official.id %}">{{ object.public_official.name }}</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
