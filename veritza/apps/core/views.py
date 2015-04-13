@@ -54,6 +54,20 @@ class SearchView(LoginRequiredMixin, TemplateView):
 
     # TODO: search term need to be at least 3 chars long
     def get(self, request, *args, **kwargs):
+        """
+        Search all char and text fields of all the models in self.searched_classes.
+        Return the search results in the follwing form:
+        [
+            {
+                'model': ' model itself ',
+                'model_meta': ' model options ',
+                'model_name': ' model name ',
+                'objects': 'filtered query set by the search term'
+            },
+            {...},
+            {...}
+        ]
+        """
         search = request.GET.get('search')
         context = self.get_context_data(**kwargs)
         context['search'] = search
@@ -63,18 +77,21 @@ class SearchView(LoginRequiredMixin, TemplateView):
         if len(search) >= 3:
             datasets = []
 
+            # Prepare filters for every searched class and execute the queries
+            # by searching in all char/text fields
             for model in self.searched_classes:
-
                 filters = [
                     Q(**{field.name + '__icontains': search})
-                    for field in model._meta.fields if isinstance(field, models.CharField)
+                    for field in model._meta.fields if isinstance(field, (models.CharField, models.TextField))
                 ]
-
                 query = filters.pop()
                 for item in filters:
                     query |= item
 
+                # Execute SQL query to get the results for this model
                 objects = model.objects.select_related().filter(query)
+
+                # Add info for this class in the data returned
                 datasets.append({
                     'model': model,
                     'model_meta': model._meta,
@@ -95,11 +112,27 @@ class DatasetView(SingleTableView):
     filter_class = None
 
     def get_queryset(self):
-        return self.model.objects.select_related().all()
+        queryset = super(DatasetView, self).get_queryset()
+        queryset = queryset.select_related().all()
+
+        search = self.request.GET.get('search')
+        if search:
+            filters = [
+                Q(**{field.name + '__icontains': search})
+                for field in queryset.model._meta.fields if isinstance(field, (models.CharField, models.TextField))
+            ]
+            query = filters.pop()
+            for item in filters:
+                query |= item
+
+            queryset = queryset.filter(query)
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(DatasetView, self).get_context_data(**kwargs)
         context['stats_template'] = self.stats_template
+        context['search'] = self.request.GET.get('search', '')
         if self.report:
             context['report'] = self.report
         return context
@@ -112,7 +145,8 @@ class PublicOfficialsView(LoginRequiredMixin, DatasetView, ReportView):
     report = PublicOfficialsReport()
 
     def get_queryset(self):
-        return self.model.objects.prefetch_related('publicofficialreport_set').all()
+        queryset = super(PublicOfficialsView, self).get_queryset()
+        return queryset.prefetch_related('publicofficialreport_set').all()
 
 
 class PublicOfficialDetailsView(LoginRequiredMixin, DetailView):
@@ -120,7 +154,7 @@ class PublicOfficialDetailsView(LoginRequiredMixin, DetailView):
     template_name = 'core/details/public_official.html'
 
     def get_object(self, **kwargs):
-        obj = super(PublicOfficialDetailsView, self).get_object(**kwargs)
+        obj = super(self.__class__, self).get_object(**kwargs)
         obj.reports = PublicOfficialReport.objects.filter(official_id=obj.id)
         obj.official_companies = PublicOfficialCompany.objects.select_related('company').filter(official_id=obj.id)
         return obj
@@ -133,7 +167,8 @@ class CompaniesView(LoginRequiredMixin, DatasetView):
     report = CompaniesReport()
 
     def get_queryset(self):
-        return self.model.objects.prefetch_related('companymember_set', 'biddercompany_set').all()
+        queryset = super(self.__class__, self).get_queryset()
+        return queryset.prefetch_related('companymember_set', 'biddercompany_set').all()
 
 
 class CompanyDetailsView(LoginRequiredMixin, DetailView):
@@ -152,9 +187,10 @@ class CompanyMembersView(LoginRequiredMixin, DatasetView):
     table_class = CompanyMemberTable
 
     def get_queryset(self):
+        queryset = super(self.__class__, self).get_queryset()
         # 'company' field needs to be explicitly requested here as
         # it is null=True and not select_related by default
-        return self.model.objects.select_related('company').all()
+        return queryset.select_related('company').all()
 
 
 class CompanyMemberDetailsView(LoginRequiredMixin, DetailView):
