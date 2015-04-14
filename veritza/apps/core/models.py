@@ -1152,7 +1152,7 @@ def send_notification(sender, instance=None, created=None, **kwargs):
 
         subject = '"{0}" dataset updated'.format(instance.get_class_name())
         body = mark_safe('New record has been added in the "{0}" dataset.'
-            'You can check it here: <a href="{1}">{1}</a>'.format(instance.get_class_name(), record_url))
+            'You can check it here: {1}'.format(instance.get_class_name(), record_url))
         recipients = [subscription.user.email for subscription in subscriptions]
 
         print(recipients)
