@@ -71,6 +71,32 @@ class SubscriptionView(View):
         return redirect(request.META.get('HTTP_REFERER'))
 
 
+class ScrapersView(LoginRequiredMixin, TemplateView):
+    template_name  = 'scrapers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ScrapersView, self).get_context_data(**kwargs)
+        # context['scrapers'] = Scraper.objects.all()
+        context['scrapers'] = [
+            {
+                'name': 'Companies',
+                'status': 'running',
+                'last_run': '2015/14/04 16:32'
+            },
+            {
+                'name': 'Procurements',
+                'status': 'finished',
+                'last_run': '2015/14/04 15:17'
+            },
+            {
+                'name': 'Public officials',
+                'status': 'finished',
+                'last_run': '2015/14/04 12:02'
+            },
+        ]
+        return context
+
+
 class SearchView(LoginRequiredMixin, TemplateView):
     template_name = 'search_results.html'
     searched_classes = [

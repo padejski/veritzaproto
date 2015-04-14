@@ -1,0 +1,37 @@
+{% extends "veritza_base.html" %}
+{% load veritza_utils %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+    <h3 class="page-header">Scrapers management</h3>
+
+    <div class="row">
+    {% if user.is_authenticated and user.is_superuser %}
+        <table class="table table-bordered table-stripped">
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Last Run</th>
+                <th>Action</th>
+            </tr>
+            {% for scraper in scrapers %}
+                <tr>
+                    <td>{{ scraper.name }}</td>
+                    <td><span class="label {% if scraper.status == 'running' %}label-success{% else %}label-primary{% endif %}">{{ scraper.status }}</td>
+                    <td>{{ scraper.last_run }}</td>
+                    <td>
+                        {% if scraper.status == 'running' %}
+                            <button class="btn btn-danger btn-xs">Stop</button>
+                        {% else %}
+                            <button class="btn btn-success btn-xs">Run</button>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>You are not authorized to view this page.</p>
+    {% endif %}
+    </div>
+{% endblock %}

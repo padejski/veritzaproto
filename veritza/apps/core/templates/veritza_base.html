@@ -40,6 +40,9 @@
           </ul>
           {% if user.is_authenticated %}
           <ul class="nav navbar-nav pull-right">
+            {% if user.is_superuser %}
+              <li><a href="{% url 'scrapers' %}">Scrapers</a></li>
+            {% endif %}
             <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.username }} <b class="caret"></b></a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
