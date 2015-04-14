@@ -11,7 +11,12 @@
       <li>{{ table.data.verbose_name_plural }}</li>
     </ol>
 
-    <div class="page-header"><h3>{{ table.data.verbose_name_plural }}</h3></div>
+    <div class="page-header"><h3>{{ table.data.verbose_name_plural }}&nbsp;&nbsp;
+        {% if subscribed %}
+            <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+        {% else %}
+            <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+        {% endif %}</h3></div>
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
@@ -77,6 +82,7 @@
     <ul class="pagination">
         <li><form action="" method="get"><input name="search" style="display: inline; float:left;" class="form-control" type="text" placeholder="Search dataset ..." value="{{ search }}"></form></li>
     </ul>
+
     {% endif %}
 
     {% render_table table %}

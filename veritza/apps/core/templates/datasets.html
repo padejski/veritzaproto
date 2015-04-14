@@ -1,6 +1,7 @@
 {% extends "veritza_base.html" %}
 {% load veritza_utils %}
 {% load humanize %}
+{% load i18n %}
 
 {% block content %}
 <div class="row">
@@ -19,6 +20,14 @@
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Public Officials ({{ 'Public officials'|count_objects|intcomma }})</div></a>
 						<div style="font-size: 9pt">Names and titles of all the public officials in Montenegro - public record registry of Montenegrin public officials obtained from the Commission for the Prevention of Conflict of Interest in Montenegro <a href="http://www.konfliktinteresa.me" target="_top">www.konfliktinteresa.me</a>.</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
 
             </div>
@@ -31,6 +40,14 @@
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Family Members ({{ 'Family members'|count_objects|intcomma }})</div></a>
                         <div style="font-size: 9pt">Family Members Names of all the public officials in Montenegro - public record registry of Montenegrin public officials obtained from the Commission for the Prevention of Conflict of Interest in Montenegro <a href="http://www.konfliktinteresa.me" target="_top">www.konfliktinteresa.me</a>.</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
 
             </div>
@@ -43,6 +60,14 @@
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Companies ({{ 'Companies'|count_objects|intcomma }})</div></a>
                         <div style="font-size: 9pt">List of all the companies in Montenegro - public record registry of Montenegrin Central Registry of Business Entities<a href="http://www.crps.me/" target="_top">www.crps.me</a>.</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
 
             </div>
@@ -55,6 +80,14 @@
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Company Owners ({{ 'Company members'|count_objects|intcomma }})</div></a>
                         <div style="font-size: 9pt">List of all the company owners in Montenegro - public record registry of Montenegrin Central Registry of Business Entities<a href="http://www.crps.me/" target="_top">www.crps.me</a>.</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
 
             </div>
@@ -68,6 +101,14 @@
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Public Procurements ({{ 'Public procurements'|count_objects|intcomma }})</div></a>
                         <div style="font-size: 9pt">List of all the public procurements in Montenegro - public record registry of Public Procurement Administration of Montenegro <a href="http://portal.ujn.gov.me/" target="_top">www.ujn.gov.me</a>.</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
             </div>
 
@@ -79,6 +120,14 @@
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Vendors & Suppliers ({{ 'Bidder companies'|count_objects|intcomma }})</div> </a>
                          <div style="font-size: 9pt">List of all the companies in Montenegro that have been contracted by the governments - public record registry of Public Procurement Administration of Montenegro <a href="http://portal.ujn.gov.me/" target="_top">www.ujn.gov.me</a>.</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
             </div>
 
@@ -90,6 +139,14 @@
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Elections Contributions ({{ 'Elections contributions'|count_objects|intcomma }})</div></a>
                         <div style="font-size: 9pt">List of all the election contributions in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
 
             </div>
@@ -112,6 +169,14 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Public Official Companies ({{ 'Public officials companies'|count_objects|intcomma }})</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
             </div>
@@ -123,6 +188,14 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Public Official Companies in Procurement ({{ 'Conflicts of interest'|count_objects|intcomma }})</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
             </div>
@@ -135,6 +208,14 @@
                     </div>
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Family Member Companies ({{ 'Family member companies'|count_objects|intcomma }})</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
             </div>
@@ -146,6 +227,14 @@
                     </div>
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Family Member Companies in Procurement ({{ 'Conflicts of interest (Family Members)'|count_objects|intcomma }})</div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </a>
             </div>
@@ -158,6 +247,14 @@
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Political funders companies in Procurement({{ 'Elections contributions'|count_objects|intcomma }})</div></a>
                         <div style="font-size: 9pt">List of all the procurements of companies owned by individuals that contributed to political party in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
 
             </div>
@@ -169,6 +266,14 @@
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Companies political funders in procurement({{ 'Elections contributions'|count_objects|intcomma }})</div></a>
                         <div style="font-size: 9pt">List of all the procurements of companies that contributed to political party in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
+                        <br/>
+                        <div>
+                            {% if subscribed %}
+                                <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
+                            {% else %}
+                                <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
+                            {% endif %}
+                        </div>
                     </div>
 
             </div>
