@@ -7,8 +7,10 @@ from datetime import datetime
 
 from django.conf import settings
 from django.db.models import signals, Avg, Min, Max, Sum, Count
+from django.db.models.loading import get_model
 from django.db import models, connection
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import UUIDField
 
@@ -26,13 +28,24 @@ class User(AbstractUser):
         verbose_name_plural = "Users"
 
     uuid = UUIDField()
-    subscriptions = models.ManyToManyField("Veritza")
 
-    def subscribe(self, veritza):
-        self.subscriptions.add(veritza)
+    def subscribe(self, dataset):
+        if isinstance(dataset, basestring):
+            dataset = get_model('core', dataset)
+        content_type = ContentType.objects.get_for_model(dataset)
+        self.subscription_set.add(Subscription(user=self, dataset=content_type))
 
-    def unsubscribe(self, veritza):
-        self.subscriptions.remove(veritza)
+    def unsubscribe(self, dataset):
+        if isinstance(dataset, basestring):
+            dataset = get_model('core', dataset)
+        content_type = ContentType.objects.get_for_model(dataset)
+        Subscription.objects.filter(user=self, dataset=content_type).delete()
+
+    def is_subscribed(self, dataset):
+        if isinstance(dataset, basestring):
+            dataset = get_model('core', dataset)
+        content_type = ContentType.objects.get_for_model(dataset)
+        return bool(Subscription.objects.filter(user=self, dataset=content_type).count())
 
 
 class VeritzaBaseModel(models.Model):
@@ -59,6 +72,9 @@ class VeritzaBaseModel(models.Model):
 
     def get_class(self):
         return self.__class__
+
+    def get_class_name(self):
+        return self.__class__.__name__
 
     @classmethod
     def get_url_name(cls):
@@ -527,7 +543,10 @@ class FamilyMember(VeritzaBaseModel):
     relationship = models.CharField(max_length=40, choices=FAMILY_RELATION_CHOICES.items())
 
     def __unicode__(self):
-        return u"{0} ({1} of {2})".format(self.name, self.FAMILY_RELATION_CHOICES[self.relationship], self.public_official.name)
+        value = self.name
+        if self.public_official:
+            value += u" ({0} of {1})".format(self.FAMILY_RELATION_CHOICES.get(self.relationship, ""), self.public_official.name)
+        return value
 
     @classmethod
     def refresh(cls, delete_old=False, **kwargs):
@@ -1075,6 +1094,17 @@ class UserSettings(models.Model):
 class Alert(models.Model):
     user = models.ForeignKey("User")
     veritza = models.ForeignKey("Veritza", null=True, blank=True)
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey("User")
+    dataset = models.ForeignKey(ContentType, null=True, blank=True)
+
+    class Meta:
+        unique_together = ['user', 'dataset']
+
+    def __unicode__(self):
+        return u"{0} - {1}".format(self.user.username, self.dataset)
 
 
 class Tag(models.Model):

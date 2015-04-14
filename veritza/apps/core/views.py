@@ -1,8 +1,9 @@
 from django.db.models import Q
-
+from django.db import IntegrityError
 from django.views.generic import View, TemplateView
 from django.views.generic.detail import DetailView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseBadRequest
 
 from django_tables2 import SingleTableView
 from report_tools.views import ReportView
@@ -43,6 +44,31 @@ class ContactView(TemplateView):
 
 class DatasetsView(LoginRequiredMixin, TemplateView):
     template_name = 'datasets.html'
+
+
+class SubscriptionView(View):
+
+    def post(self, request, **kwargs):
+        user = request.user
+        dataset = request.POST.get('dataset', '')
+        action = request.POST.get('action', '')
+        message = ''
+
+        if action == 'subscribe':
+            try:
+                user.subscribe(dataset)
+                message = 'Successfully subscribed for {0}'.format(dataset)
+            except IntegrityError as e:
+                return redirect(request.path)
+
+        elif action == 'unsubscribe':
+            user.unsubscribe(dataset)
+            message = 'Successfully unsubscribed from {0}'.format(dataset)
+
+        else:
+            return redirect(request.META.get('HTTP_REFERER'))
+
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
 class SearchView(LoginRequiredMixin, TemplateView):

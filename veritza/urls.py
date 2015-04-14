@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^contact/$', core_views.ContactView.as_view(), name='contact'),
     url(r'^datasets/$', core_views.DatasetsView.as_view(), name='datasets'),
     url(r'^search', core_views.SearchView.as_view(), name='search'),
+    url(r'^subscription/', core_views.SubscriptionView.as_view(), name='subscription'),
 
     url(r'^datasets/public-officials/$', core_views.PublicOfficialsView.as_view(), name='public-officials'),
     url(r'^datasets/public-officials/(?P<pk>\d+)/$', core_views.PublicOfficialDetailsView.as_view(), name='public-officials'),

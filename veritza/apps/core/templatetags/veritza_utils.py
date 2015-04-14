@@ -12,3 +12,7 @@ def count_objects(model_name_verbose, app_label='core'):
             return model.objects.all().count()
             break
     return "-"
+
+@register.filter
+def is_subscribed(user, dataset):
+	return user.is_subscribed(dataset)

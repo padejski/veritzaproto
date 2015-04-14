@@ -10,13 +10,8 @@
       <li><a href="{% url 'home' %}">Home</a></li>
       <li>{{ table.data.verbose_name_plural }}</li>
     </ol>
-
     <div class="page-header"><h3>{{ table.data.verbose_name_plural }}&nbsp;&nbsp;
-        {% if subscribed %}
-            <a href="#" class="btn btn-danger btn-xs">{% trans 'Unsubscribe' %}</a>
-        {% else %}
-            <a href="#" class="btn btn-success btn-xs">{% trans 'Subscribe' %}</a>
-        {% endif %}</h3></div>
+    {% include 'core/subscription_form_include.html' with dataset_name=table.Meta.model.get_class_name %}</div>
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
