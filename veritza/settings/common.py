@@ -3,6 +3,7 @@
 
 from datetime import timedelta
 from os.path import abspath, basename, dirname, join, normpath
+from os import environ
 from sys import path
 
 from djcelery import setup_loader
@@ -43,6 +44,8 @@ ADMINS = (
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 ########## END MANAGER CONFIGURATION
+
+DEFAULT_FROM_EMAIL = environ.get('DEFAULT_FROM_EMAIL', 'admin@veritza.org')
 
 DATE_INPUT_FORMATS = (
     '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y', '%d.%m.%Y', # '2006-10-25', '10/25/2006', '10/25/06', '25.10.2006'

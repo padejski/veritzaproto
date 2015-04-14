@@ -5,12 +5,16 @@ import logging
 import dateutil
 from datetime import datetime
 
+from django.utils.safestring import mark_safe
+from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import signals, Avg, Min, Max, Sum, Count
 from django.db.models.loading import get_model
 from django.db import models, connection
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import UUIDField
 
@@ -1112,14 +1116,6 @@ class Tag(models.Model):
     description = models.CharField(max_length=255)
 
 
-# SIGNALS CONNECTING ############################################
-def parse_csv(sender, instance=None, created=None, **kwargs):
-    if instance.csv_file:
-        sender.import_from_csv(instance.csv_file, created_by=instance.created_by)
-
-signals.pre_save.connect(parse_csv, sender=ElectionsContributions)
-
-
 def refresh_all_veritzas(delete_old=False):
     ProcurementCompany.refresh(delete_old=delete_old)
     BidderCompany.refresh(delete_old=delete_old)
@@ -1130,3 +1126,38 @@ def refresh_all_veritzas(delete_old=False):
     ConflictInterestFamilyMember.refresh(delete_old=delete_old)
     ElectionsContributionCompany.refresh(delete_old=delete_old)
     ElectionsContributionCompanyMember.refresh(delete_old=delete_old)
+
+
+# SIGNALS CONNECTING ############################################
+def parse_csv(sender, instance=None, created=None, **kwargs):
+    if instance.csv_file:
+        sender.import_from_csv(instance.csv_file, created_by=instance.created_by)
+
+signals.pre_save.connect(parse_csv, sender=ElectionsContributions)
+
+
+def send_notification(sender, instance=None, created=None, **kwargs):
+    print('send_notification')
+    if sender not in [PublicOfficial, FamilyMember, Company, CompanyMember,
+            PublicProcurement, BidderCompany, ElectionsContributions, PublicOfficialCompany,
+            ConflictInterest, FamilyMemberCompany, ConflictInterestFamilyMember]:
+        return
+
+    # Send notifications only when new records are added
+    if created:
+        content_type = ContentType.objects.get_for_model(sender)
+        subscriptions = Subscription.objects.select_related().filter(dataset=content_type)
+
+        record_url = 'http://{0}{1}'.format(Site.objects.get_current().domain, reverse(instance.get_url_name(), args=[instance.id]))
+
+        subject = '"{0}" dataset updated'.format(instance.get_class_name())
+        body = mark_safe('New record has been added in the "{0}" dataset.'
+            'You can check it here: <a href="{1}">{1}</a>'.format(instance.get_class_name(), record_url))
+        recipients = [subscription.user.email for subscription in subscriptions]
+
+        print(recipients)
+        print(body)
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, recipients)
+
+
+signals.post_save.connect(send_notification)
