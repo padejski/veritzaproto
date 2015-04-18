@@ -3,10 +3,10 @@
 	    Total records: {{ table.paginator.count }}<br/>
 	    Time range: {{ stats.creation_date__min|date }} - {{ stats.creation_date__max|date }}
 	  	<hr/>
+		<h4>Maximum value: {{ stats.value__max }} &euro;</h4> [ {% for p in stats.max_value_procurements	 %}<a href="{% url 'public-procurements' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
 		Minimum value: {{ stats.value__min }} &euro; [ {% for p in stats.min_value_procurements	 %}<a href="{% url 'public-procurements' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
 		Average value: {{ stats.value__avg }} &euro;<br/>
-		Maximum value: {{ stats.value__max }} &euro; [ {% for p in stats.max_value_procurements	 %}<a href="{% url 'public-procurements' p.id %}">{{ p.number }} ({{ p.location }})</a>{% if not forloop.last %}, {% endif %}{% endfor %} ]<br/>
-	</div>
+		</div>
 </div>
 
 <hr/>

@@ -36,7 +36,7 @@
             <li{% if current_page == 'faq' %} class="active"{% endif %}><a href="{% url 'faq' %}">Community</a></li>
             <li{% if current_page == 'about' %} class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
             <li{% if current_page == 'contact' %} class="active"{% endif %}><a href="{% url 'contact' %}">Contact</a></li>
-            <li><form style="padding-top: 8px;" action="{% url 'search' %}"><input class="form-control" name="search" type="text" placeholder="Global search ..."></form></li>
+            <li><form style="padding-top: 8px;" action="{% url 'search' %}"><input class="form-control" name="search" type="text" size="35" placeholder="Global search ..."></form></li>
           </ul>
           {% if user.is_authenticated %}
           <ul class="nav navbar-nav pull-right">

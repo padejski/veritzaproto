@@ -19,11 +19,9 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Public Officials ({{ 'Public officials'|count_objects|intcomma }})</div></a>
+						<div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficial' %}</div>
 						<div style="font-size: 9pt">Names and titles of all the public officials in Montenegro - public record registry of Montenegrin public officials obtained from the Commission for the Prevention of Conflict of Interest in Montenegro <a href="http://www.konfliktinteresa.me" target="_top">www.konfliktinteresa.me</a>.</div>
-                        <br/>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficial' %}</div>
                     </div>
-
             </div>
 
             <div class="row">
@@ -33,9 +31,8 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Family Members ({{ 'Family members'|count_objects|intcomma }})</div></a>
-                        <div style="font-size: 9pt">Family Members Names of all the public officials in Montenegro - public record registry of Montenegrin public officials obtained from the Commission for the Prevention of Conflict of Interest in Montenegro <a href="http://www.konfliktinteresa.me" target="_top">www.konfliktinteresa.me</a>.</div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='FamilyMember' %}</div>
+                        <div style="font-size: 9pt">Family Members Names of all the public officials in Montenegro - public record registry of Montenegrin public officials obtained from the Commission for the Prevention of Conflict of Interest in Montenegro <a href="http://www.konfliktinteresa.me" target="_top">www.konfliktinteresa.me</a>.</div>
                     </div>
 
             </div>
@@ -47,9 +44,8 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Companies ({{ 'Companies'|count_objects|intcomma }})</div></a>
-                        <div style="font-size: 9pt">List of all the companies in Montenegro - public record registry of Montenegrin Central Registry of Business Entities<a href="http://www.crps.me/" target="_top">www.crps.me</a>.</div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">List of all the companies in Montenegro - public record registry of Montenegrin Central Registry of Business Entities <a href="http://www.crps.me/" target="_top">www.crps.me</a>.</div> 
                     </div>
 
             </div>
@@ -61,11 +57,10 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Company Owners ({{ 'Company members'|count_objects|intcomma }})</div></a>
-                        <div style="font-size: 9pt">List of all the company owners in Montenegro - public record registry of Montenegrin Central Registry of Business Entities<a href="http://www.crps.me/" target="_top">www.crps.me</a>.</div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='CompanyMember' %}</div>
+                        <div style="font-size: 9pt">List of all the company owners in Montenegro - public record registry of Montenegrin Central Registry of Business Entities <a href="http://www.crps.me/" target="_top">www.crps.me</a>.</div>
+                        <br/>
                     </div>
-
             </div>
 
 
@@ -76,9 +71,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Public Procurements ({{ 'Public procurements'|count_objects|intcomma }})</div></a>
-                        <div style="font-size: 9pt">List of all the public procurements in Montenegro - public record registry of Public Procurement Administration of Montenegro <a href="http://portal.ujn.gov.me/" target="_top">www.ujn.gov.me</a>.</div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicProcurement' %}</div>
+                        <div style="font-size: 9pt">List of all the public procurements in Montenegro - public record registry of Public Procurement Administration of Montenegro <a href="http://portal.ujn.gov.me/" target="_top">www.ujn.gov.me</a>.</div>
                     </div>
             </div>
 
@@ -89,9 +83,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Vendors & Suppliers ({{ 'Bidder companies'|count_objects|intcomma }})</div> </a>
-                         <div style="font-size: 9pt">List of all the companies in Montenegro that have been contracted by the governments - public record registry of Public Procurement Administration of Montenegro <a href="http://portal.ujn.gov.me/" target="_top">www.ujn.gov.me</a>.</div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='BidderCompany' %}</div>
+                        <div style="font-size: 9pt">List of all the companies in Montenegro that have been contracted by the governments - public record registry of Public Procurement Administration of Montenegro <a href="http://portal.ujn.gov.me/" target="_top">www.ujn.gov.me</a>.</div>
                     </div>
             </div>
 
@@ -102,9 +95,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Elections Contributions ({{ 'Elections contributions'|count_objects|intcomma }})</div></a>
-                        <div style="font-size: 9pt">List of all the election contributions in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='ElectionsContributions' %}</div>
+                        <div style="font-size: 9pt">List of all the election contributions in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me</a></div>
                     </div>
 
             </div>
@@ -126,11 +118,10 @@
                         <img src="{{ MEDIA_URL }}images/official-company-small.png"></img>
                     </div>
                     <div class="col-md-8">
-                        <div style="font-size: 12pt">Public Official Companies ({{ 'Public officials companies'|count_objects|intcomma }})</div>
-                        <br/>
+                        <div style="font-size: 12pt">Public Official Companies ({{ 'Public officials companies'|count_objects|intcomma }})</div></a>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                        <div style="font-size: 9pt">List of all the Montenegrin companies that have a public official name in the list of founders, directors or board members - combined public record registry.</div>
                     </div>
-                </a>
             </div>
 
             <div class="row">
@@ -139,11 +130,10 @@
                         <img src="{{ MEDIA_URL }}images/conflict-interest-small.png"></img>
                     </div>
                     <div class="col-md-8">
-                        <div style="font-size: 12pt">Public Official Companies in Procurement ({{ 'Conflicts of interest'|count_objects|intcomma }})</div>
-                        <br/>
+                        <div style="font-size: 12pt">Public Official Companies in Procurement ({{ 'Conflicts of interest'|count_objects|intcomma }})</div></a>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='ConflictInterest' %}</div>
+                        <div style="font-size: 9pt">List of all the government procurements in Montenegro where the winning company has a public official as a founder, director or board member - combined public record registry.</div>
                     </div>
-                </a>
             </div>
 
 
@@ -153,11 +143,10 @@
                         <img src="{{ MEDIA_URL }}images/family-member-company-small.png"></img>
                     </div>
                     <div class="col-md-8">
-                        <div class="text" style="font-size: 12pt">Family Member Companies ({{ 'Family member companies'|count_objects|intcomma }})</div>
-                        <br/>
+                        <div class="text" style="font-size: 12pt">Family Member Companies ({{ 'Family member companies'|count_objects|intcomma }})</div></a>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='FamilyMemberCompany' %}</div>
+                        <div style="font-size: 9pt">List of all the Montenegrin companies that have a family member of a public in the list of founders, directors or board members - combined public record registry.</div>
                     </div>
-                </a>
             </div>
 
             <div class="row">
@@ -166,11 +155,10 @@
                         <img src="{{ MEDIA_URL }}images/conflict-interest-family-member-small.png"></img>
                     </div>
                     <div class="col-md-8">
-                        <div class="text" style="font-size: 12pt">Family Member Companies in Procurement ({{ 'Conflicts of interest (Family Members)'|count_objects|intcomma }})</div>
-                        <br/>
+                        <div class="text" style="font-size: 12pt">Family Member Companies in Procurement ({{ 'Conflicts of interest (Family Members)'|count_objects|intcomma }})</div></a>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='ConflictInterestFamilyMember' %}</div>
+  						<div style="font-size: 9pt">List of all the government procurements in Montenegro where the winning company has a family member of a public official as a founder, director or board member - combined public record registry.</div>                  
                     </div>
-                </a>
             </div>
 
             <div class="row">
@@ -180,9 +168,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Political funders companies in Procurement({{ 'Elections contributions'|count_objects|intcomma }})</div></a>
-                        <div style="font-size: 9pt">List of all the procurements of companies owned by individuals that contributed to political party in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='ElectionsContributions' %}</div>
+                        <div style="font-size: 9pt">List of all the procurements of companies owned by individuals that contributed to political party in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
                     </div>
 
             </div>
@@ -193,9 +180,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="text" style="font-size: 12pt">Companies political funders in procurement({{ 'Elections contributions'|count_objects|intcomma }})</div></a>
-                        <div style="font-size: 9pt">List of all the procurements of companies that contributed to political party in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
-                        <br/>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='ElectionsContributions' %}</div>
+                        <div style="font-size: 9pt">List of all the procurements of companies that contributed to political party in Montenegro - public record registry of State Election Commision of Montenegro <a href="http://rik.co.me/" target="_top">www.rik.co.me/</a></div>
                     </div>
 
             </div>
