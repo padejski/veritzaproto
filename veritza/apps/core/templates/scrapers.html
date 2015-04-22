@@ -1,37 +1,56 @@
 {% extends "veritza_base.html" %}
 {% load veritza_utils %}
 {% load humanize %}
+{% load staticfiles %}
 {% load i18n %}
+
+
+{% block js %}
+    <script type="text/javascript" src={% static 'core/js/scrapers.js' %}></script>
+{% endblock %}
 
 {% block content %}
     <h3 class="page-header">Scrapers management</h3>
 
-    <div class="row">
     {% if user.is_authenticated and user.is_superuser %}
-        <table class="table table-bordered table-stripped">
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Last Run</th>
-                <th>Action</th>
-            </tr>
-            {% for scraper in scrapers %}
+        {% for project in projects %}
+        <div class="row">
+            <h3>{{ project.name|capfirst }} {% trans 'spiders' %}</h3>
+            <table id="project-{{ project.name }}" class="table table-bordered table-stripped">
                 <tr>
-                    <td>{{ scraper.name }}</td>
-                    <td><span class="label {% if scraper.status == 'running' %}label-success{% else %}label-primary{% endif %}">{{ scraper.status }}</td>
-                    <td>{{ scraper.last_run }}</td>
-                    <td>
-                        {% if scraper.status == 'running' %}
-                            <button class="btn btn-danger btn-xs">Stop</button>
-                        {% else %}
-                            <button class="btn btn-success btn-xs">Run</button>
-                        {% endif %}
-                    </td>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Last Run</th>
+                    <th>Action</th>
                 </tr>
-            {% endfor %}
-        </table>
+                <tbody id="scrapers-{{ project.name }}">
+                {% for spider in project.spiders %}
+                    <tr id="spider-{{ spider.name }}">
+                        <td>{{ spider.name|capfirst }}</td>
+                        <td><span id="spider-status"
+                            class="label
+                                {% if spider.status == 'running' %}
+                                    label-success
+                                {% elif spider.status == 'pending' %}
+                                    label-warning
+                                {% else %}
+                                    label-primary
+                                {% endif %}">{{ spider.status }}</td>
+                        <td><span id="spider-last-run">{{ spider.last_run|date:"M dS Y, h:m A" }}</span></td>
+                        <td>
+                            {% if spider.status == 'running' or spider.status == 'pending' %}
+                                <button id="spider-action" class="btn btn-danger btn-xs" onclick="manager.cancel('{{ spider.jobid }}', '{{ project.name }}')">Stop</button>
+                            {% else %}
+                                <button id="spider-action" class="btn btn-success btn-xs" onclick="manager.schedule('{{ spider.name }}', '{{ project.name }}'')">Run</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
     {% else %}
         <p>You are not authorized to view this page.</p>
     {% endif %}
-    </div>
 {% endblock %}

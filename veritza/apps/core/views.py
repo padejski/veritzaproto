@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db.models import Q
 from django.db import IntegrityError
 from django.views.generic import View, TemplateView
@@ -76,22 +78,30 @@ class ScrapersView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ScrapersView, self).get_context_data(**kwargs)
-        # context['scrapers'] = Scraper.objects.all()
-        context['scrapers'] = [
+        context['projects'] = [
             {
-                'name': 'Companies',
+                'name': 'montenegro',
+                'spiders': []
+            }
+        ]
+
+        # TODO: remove the static data
+        #       and get the data from scrapyd (through its API)
+        context['projects'][0]['spiders'] = [
+            {
+                'name': 'companies',
                 'status': 'running',
-                'last_run': '2015/14/04 16:32'
+                'last_run': datetime(2015, 04, 14, 16, 32)
             },
             {
-                'name': 'Procurements',
-                'status': 'finished',
-                'last_run': '2015/14/04 15:17'
+                'name': 'procurements',
+                'status': 'pending',
+                'last_run': datetime(2015, 04, 14, 15, 17)
             },
             {
-                'name': 'Public officials',
+                'name': 'public-officials',
                 'status': 'finished',
-                'last_run': '2015/14/04 12:02'
+                'last_run': datetime(2015, 04, 14, 12, 02)
             },
         ]
         return context
