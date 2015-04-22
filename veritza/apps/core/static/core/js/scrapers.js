@@ -8,7 +8,7 @@ $(function() {
 		var instance = {
 
 			// SCRAPYD_BASE_URL: 'http://localhost:6800/',
-			SCRAPYD_BASE_URL: 'http://veritza.heprokuapp.com:6800/',
+			SCRAPYD_BASE_URL: 'http://veritza.herokuapp.com:6800/',
 
 			defaultAJAXOptions: {
 				method: 'GET',
