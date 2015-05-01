@@ -169,6 +169,8 @@ TEMPLATE_DIRS = (
 MIDDLEWARE_CLASSES = (
     # Use GZip compression to reduce bandwidth.
     'django.middleware.gzip.GZipMiddleware',
+    
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     # Default Django middleware.
     'django.middleware.common.CommonMiddleware',
@@ -178,6 +180,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'userena.middleware.UserenaLocaleMiddleware',
+    
 )
 ########## END MIDDLEWARE CONFIGURATION
 
@@ -217,7 +220,6 @@ THIRD_PARTY_APPS = (
     'userena',
     'django_tables2',
     'report_tools',
-    'debug_toolbar'
 )
 
 LOCAL_APPS = (
