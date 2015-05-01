@@ -216,7 +216,8 @@ THIRD_PARTY_APPS = (
     'guardian',
     'userena',
     'django_tables2',
-    'report_tools'
+    'report_tools',
+    'debug_toolbar'
 )
 
 LOCAL_APPS = (
