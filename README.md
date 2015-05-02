@@ -1,4 +1,4 @@
 VERITZA
 =======
 
-https://veritza.herokuapp.com
+https://veritza-wip.herokuapp.com/
