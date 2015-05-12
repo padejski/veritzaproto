@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.conf.urls.static import static
 from veritza.apps.core import views as core_views
+import serbia.views
 
 admin.autodiscover()
 
@@ -10,6 +11,7 @@ urlpatterns = patterns('',
     (r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('userena.urls')),
+    url(r'^serbia/', include('serbia.urls', namespace='serbia')),
 
     url(r'^$', core_views.HomeView.as_view(), name='home'),
     url(r'^faq/$', core_views.FaqView.as_view(), name='faq'),
@@ -52,6 +54,8 @@ urlpatterns = patterns('',
 
     url(r'^datasets/conflict-interest-family-members/$', core_views.ConflictInterestFamilyMembersView.as_view(), name='conflict-interest-family-members'),
     url(r'^datasets/conflict-interest-family-members/(?P<pk>\d+)/$', core_views.ConflictInterestFamilyMemberDetailsView.as_view(), name='conflict-interest-family-members'),
+    
+    
 
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
