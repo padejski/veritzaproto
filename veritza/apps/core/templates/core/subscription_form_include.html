@@ -2,6 +2,7 @@
 {% load i18n %}
 
 <form action="{% url 'subscription' %}" method="post" style="display: inline">
+{% if not user.is_anonymous  %}
     {% if user|is_subscribed:dataset_name %}
         <input class="btn btn-danger btn-xs" type="submit" value="{% trans 'Follow' %}">
         <input type="hidden" name="action" value="unsubscribe">
@@ -11,4 +12,5 @@
     {% endif %}
         <input type="hidden" name="dataset" value="{{ dataset_name }}">
         {% csrf_token %}
+{% endif %}
 </form>
