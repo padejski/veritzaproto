@@ -28,3 +28,17 @@ dev_local.py
 
 migrations_old/
 
+.DS_Store
+.idea
+.ropeproject
+*.txt
+*.pyc
+*.db
+*.xml
+*.swp
+*.pdf
+*.log
+*.cpy
+venv
+data
+__pycache__
