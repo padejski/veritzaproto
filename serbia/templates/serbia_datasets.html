@@ -17,7 +17,7 @@
               <img src="{{ MEDIA_URL }}images/public-official-small.png"></img>
             </div>
             <div class="col-md-8">
-              <div style="font-size: 12pt">Public Officials ({{ 'Public officials'|count_objects|intcomma }})</div>
+              <div style="font-size: 12pt">Public Officials ({{ officials_no }})</div>
           </a>
         	  <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficial' %}</div>
         	  <div style="font-size: 9pt">
@@ -34,7 +34,7 @@
                         <img src="{{ MEDIA_URL }}images/company-small.png"></img>
                     </div>
                     <div class="col-md-8">
-                        <div style="font-size: 12pt">Companies ({{ 'Companies'|count_objects|intcomma }})</div></a>
+                        <div style="font-size: 12pt">Companies ({{ companies_no }})</div></a>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
                         <div style="font-size: 9pt">
                             List of all the companies in Serbia - public record registry of Serbian Central Registry of Business Entities.
