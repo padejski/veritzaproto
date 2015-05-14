@@ -32,6 +32,13 @@ class CompanyDetail():
 class DatasetsView(TemplateView):
     template_name = 'serbia_datasets.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(DatasetsView, self).get_context_data(**kwargs)
+        context['officials_no'] = models.Official.objects.count()
+        context['companies_no'] = models.Company.objects.count()
+
+        return context
+
 
 class IndexView(TemplateView):
     template_name = 'serbia_home.html'
