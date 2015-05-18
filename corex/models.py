@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class UnsavedForeignKey(models.ForeignKey):
     """An FK which can point to a unsaved obj"""
     allow_unsaved_instance_assignment = True
@@ -21,18 +22,18 @@ class BaseModel(models.Model):
 class CompanyBaseModel(BaseModel):
     """Company base model"""
     name = models.CharField(max_length=255)
-    alt_name = models.CharField(max_length=255, verbose_name='name', blank=True)
-    founders = models.CharField(max_length=255, blank=True)
-    directors = models.CharField(max_length=255, blank=True)
-    type = models.CharField(max_length=255, blank=True)
-    industry = models.CharField(max_length=255, blank=True)
-    address = models.CharField(max_length=255, blank=True)
-    alt_address = models.CharField(max_length=255, blank=True)
-    registration_date = models.CharField(max_length=255, blank=True)
-    status = models.CharField(max_length=255, blank=True)
-    duns_num = models.CharField(max_length=255, blank=True)
-    other = models.CharField(max_length=255, blank=True)
-    url = models.CharField(max_length=255, blank=True)
+    alt_name = models.CharField(max_length=255, verbose_name='name', null=True)
+    founders = models.CharField(max_length=255, null=True)
+    directors = models.CharField(max_length=255, null=True)
+    type = models.CharField(max_length=255, null=True)
+    industry = models.CharField(max_length=255, null=True)
+    address = models.CharField(max_length=255, null=True)
+    alt_address = models.CharField(max_length=255, null=True)
+    reg_date = models.DateField(null=True)
+    status = models.CharField(max_length=255, null=True)
+    duns_num = models.CharField(max_length=255, null=True)
+    other = models.CharField(max_length=255, null=True)
+    url = models.CharField(max_length=255, null=True)
 
 
 class OfficialBaseModel(BaseModel):
@@ -75,6 +76,26 @@ class OfficialRealEstate(BaseModel):
 
 class OfficialSalary(BaseModel):
     """public official salary model"""
+
+
+class ProcurementBaseModel(BaseModel):
+    """Procurement base model
+
+    """
+    contact_person = models.CharField(max_length=255, blank=True)
+    contracting_auth = models.CharField(max_length=255, blank=True, verbose_name='Authority')
+    date = models.DateField(null=True)
+    desc = models.CharField(max_length=255, blank=True, verbose_name='Description')
+    year = models.CharField(max_length=255, blank=True)
+    place = models.CharField(max_length=255, blank=True)
+    price = models.CharField(max_length=255, blank=True)
+    transaction_id = models.CharField(max_length=255, blank=True)
+    type = models.CharField(max_length=255, blank=True)
+    url = models.CharField(max_length=255, blank=True)
+    vendor = UnsavedForeignKey('CompanyBaseModel', null=True)
+    other = models.CharField(max_length=255, blank=True)
+
+
 # ============================================================================
 # EOF
 # ============================================================================

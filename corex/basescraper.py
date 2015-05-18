@@ -10,6 +10,7 @@ Desc      : Veritza base scraper abstract class
 # necessary imports
 # ============================================================================
 from hashlib import md5
+from datetime import datetime as dt
 
 import utils
 import requests
@@ -59,6 +60,16 @@ class BaseScraper(object):
         res = self.session.post(*args, **kwargs)
 
         return res
+
+    @staticmethod
+    def str2date(datestr, fmt, sep=None):
+        """Convert datestr to date
+
+        """
+        if sep:
+            datestr = datestr.split(sep)[0]
+
+        return dt.strptime(datestr, fmt).date()
 
     @staticmethod
     def update_model(new, old):
