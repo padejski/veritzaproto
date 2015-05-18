@@ -5,12 +5,15 @@ Serbia tables
 # necessary imports
 # ============================================================================
 import django_tables2 as tables
+from django_tables2.utils import A
 
 from . import models
 
 
 class CompanyTable(tables.Table):
     """companies data table"""
+    alt_name = tables.LinkColumn('serbia:company', args=[A('pk')])
+
     class Meta:
         model = models.Company
         attrs = {"class": "paleblue table table-striped table-bordered"}
@@ -21,6 +24,8 @@ class CompanyTable(tables.Table):
 
 class OfficialTable(tables.Table):
     """public officials table"""
+    name = tables.LinkColumn('serbia:official', args=[A('pk')])
+
     class Meta:
         model = models.Official
         attrs = {"class": "paleblue table table-striped table-bordered"}

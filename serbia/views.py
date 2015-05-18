@@ -9,7 +9,8 @@ Desc      : Veritza serbia views
 # ============================================================================
 # necessary imports
 # ============================================================================
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
+# from django.shortcuts import get_object_or_404
 from django_tables2 import SingleTableView
 
 from . import models, tables
@@ -25,8 +26,10 @@ class CompaniesView(SingleTableView):
     template_name = 'serbia_companies.html'
 
 
-class CompanyDetail():
-    pass
+class CompanyDetailView(DetailView):
+
+    model = models.Company
+    template_name = 'serbia_company.html'
 
 
 class DatasetsView(TemplateView):
@@ -50,6 +53,10 @@ class OfficialsView(SingleTableView):
     table_class = tables.OfficialTable
     template_name = 'serbia_officials.html'
 
+
+class OffcialDetailView(DetailView):
+    model = models.Official
+    template_name = 'serbia_official.html'
 # ============================================================================
 # EOF
 # ============================================================================

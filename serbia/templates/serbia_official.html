@@ -1,0 +1,55 @@
+{% extends 'official_base.html' %}
+
+{% block path %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'serbia:index' %}">Home</a></li>
+    <li><a href="{% url 'serbia:officials' %}">Officials</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+  {% endblock path %}
+
+{% block extrarows %}
+	<tr> <td>Salaries</td> 
+		<td>
+			{% for x in object.salaries.all %}
+				{{ x.net_income }}
+			{% endfor %}
+		</td>
+	</tr>
+
+    <tr> <td>Real Estates</td>
+    	<td>
+			{% for x in object.real_estates.all %}
+				{{ x.place }}
+			{% endfor %}
+		</td>
+    </tr>
+
+    <tr> <td>Movables</td> 
+    	<td>
+			{% for x in object.movables.all %}
+				{{ x.acquisition_basis }}
+			{% endfor %}
+		</td>
+    </tr>
+
+     <tr> <td>Companies</td> 
+    	<td>
+			{% for x in object.companies.all %}
+				{{ x.name }}
+			{% endfor %}
+		</td>
+    </tr>
+
+     <tr> <td>Children</td> 
+    	<td>
+			{% for x in object.children.all %}
+				{{ x.name }}
+			{% endfor %}
+		</td>
+    </tr>
+
+	<tr> <td>Deposit Savings</td> <td>{{ object.deposit_savings }}</td> </tr>
+	<tr> <td>Place</td> <td>{{ object.place }}</td> </tr>
+	<tr> <td>Date</td> <td>{{ object.date }}</td> </tr>
+{% endblock %}

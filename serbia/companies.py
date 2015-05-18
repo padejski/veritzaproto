@@ -11,6 +11,7 @@ __date__ = April 2015
 # Make necessary imports
 # ============================================================================
 import os
+import datetime
 from itertools import chain
 
 from bs4 import BeautifulSoup as bs
@@ -42,7 +43,7 @@ MAPPING = [(u'Седиште', 'city'),
            (u'Скраћено пословно име', 'alt_name'),
            (u'Статус', 'status'),
            (u'Датум брисања', 'termination_date'),
-           (u'Датум оснивања', 'registration_date'),
+           (u'Датум оснивања', 'reg_date'),
            (u'ПИБ', 'tax_number'),
            (u'Правна форма', 'form'),
            (u'Тип', 'type')]
@@ -186,6 +187,7 @@ class SerbiaCompanyScraper(BaseScraper):
                 continue
 
         ret['url'] = url
+        ret['reg_date'] = datetime.datetime.strptime(ret['reg_date'], "%d.%m.%Y").date()
 
         ret[u'area'], ret[u'place'], ret[u'address'] = [
             x.split(':')[1] for x in ret['city'].split('|')]

@@ -25,12 +25,20 @@ class Company(cmodels.CompanyBaseModel):
     tax_number = models.CharField(max_length=255)
     termination_date = models.CharField(max_length=255)
 
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Companies'
+
 
 class Official(cmodels.OfficialBaseModel):
     """Serbia public official model."""
     deposits_savings = models.NullBooleanField()
     place = models.CharField(max_length=255, blank=True)
     date = models.DateField(max_length=255, null=True)
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Public Officials'
 
 
 class FixedAsset(cmodels.OfficialMovable):
