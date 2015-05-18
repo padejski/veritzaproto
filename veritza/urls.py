@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('userena.urls')),
     url(r'^serbia/', include('serbia.urls', namespace='serbia')),
+    url(r'^usa/', include('usa.urls', namespace='usa')),
 
     url(r'^$', core_views.HomeView.as_view(), name='home'),
     url(r'^faq/$', core_views.FaqView.as_view(), name='faq'),

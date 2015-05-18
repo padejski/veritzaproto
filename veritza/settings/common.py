@@ -226,7 +226,8 @@ LOCAL_APPS = (
     'veritza.apps.core',
     'veritza.apps.stats',
     'corex',
-    'serbia'
+    'serbia',
+    'usa'
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

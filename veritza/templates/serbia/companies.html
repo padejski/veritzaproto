@@ -1,0 +1,31 @@
+{% extends 'veritza_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block js %}<script type="text/javascript" src="https://www.google.com/jsapi"></script>{% endblock %}
+
+{% block content %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">Home</a></li>
+  <li>{{ table.data.verbose_name_plural }}</li>
+</ol>
+<div class="page-header"><h3>{{ table.data.verbose_name_plural }}&nbsp;&nbsp;</div>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Statistics &amp; Charts</a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">{% include stats_template with stats=table.Meta.model.stats %}</div>
+    </div>
+  </div>
+</div>
+
+
+{% render_table table %}
+
+{% endblock %}
