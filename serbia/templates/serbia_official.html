@@ -11,7 +11,7 @@
 {% block extrarows %}
 	<tr> <td>Salaries</td> 
 		<td>
-			{% for x in object.salaries.all %}
+			{% for x in object.salary_set.all %}
 				{{ x.net_income }}
 			{% endfor %}
 		</td>
@@ -19,16 +19,24 @@
 
     <tr> <td>Real Estates</td>
     	<td>
-			{% for x in object.real_estates.all %}
+			{% for x in object.realestate_set.all %}
 				{{ x.place }}
 			{% endfor %}
 		</td>
     </tr>
 
-    <tr> <td>Movables</td> 
+    <tr> <td>Fixed Assets</td> 
     	<td>
-			{% for x in object.movables.all %}
+			{% for x in object.fixedasset_set.all %}
 				{{ x.acquisition_basis }}
+			{% endfor %}
+		</td>
+    </tr>
+
+    <tr> <td>Transport</td> 
+    	<td>
+			{% for x in object.transport_set.all %}
+				{{ x.brand }}
 			{% endfor %}
 		</td>
     </tr>
