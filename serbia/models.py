@@ -10,6 +10,7 @@ Desc      : Veritza serbia models
 # ============================================================================
 from django.db import models
 from corex import models as cmodels
+from corex.models import UnsavedForeignKey, UnsavedManyToManyField
 
 
 # ============================================================================
@@ -24,6 +25,7 @@ class Company(cmodels.CompanyBaseModel):
     place = models.CharField(max_length=255)
     tax_number = models.CharField(max_length=255)
     termination_date = models.CharField(max_length=255)
+    officials = UnsavedManyToManyField('Official')
 
     class Meta:
         """extra options"""
@@ -43,6 +45,7 @@ class Official(cmodels.OfficialBaseModel):
 
 class FixedAsset(cmodels.OfficialMovable):
     """Serbia public official fixed asset"""
+    official = UnsavedForeignKey('Official', null=True)
     acquisition_basis = models.CharField(max_length=255)
     ownership_stake = models.CharField(max_length=255)
     type_size = models.CharField(max_length=255)
@@ -50,6 +53,7 @@ class FixedAsset(cmodels.OfficialMovable):
 
 class RealEstate(cmodels.OfficialRealEstate):
     """Serbia public official real estate asset"""
+    official = UnsavedForeignKey('Official', null=True)
     place = models.CharField(max_length=255)
     structure = models.CharField(max_length=255)
     allocation_basis = models.CharField(max_length=255)
@@ -58,6 +62,7 @@ class RealEstate(cmodels.OfficialRealEstate):
 
 class Salary(cmodels.OfficialSalary):
     """Serbia public official salary"""
+    official = UnsavedForeignKey('Official', null=True)
     authority = models.CharField(max_length=255)
     currency = models.CharField(max_length=255)
     income_source = models.CharField(max_length=255)
@@ -69,6 +74,7 @@ class Salary(cmodels.OfficialSalary):
 
 class Transport(cmodels.OfficialMovable):
     """Serbia public offcial transport"""
+    official = UnsavedForeignKey('Official', null=True)
     acquisition_basis = models.CharField(max_length=255)
     brand = models.CharField(max_length=255)
     type = models.CharField(max_length=255)

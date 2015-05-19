@@ -13,6 +13,7 @@ from . import models
 class CompanyTable(tables.Table):
     """companies data table"""
     alt_name = tables.LinkColumn('serbia:company', args=[A('pk')])
+    url = tables.URLColumn()
 
     class Meta:
         model = models.Company
@@ -25,6 +26,7 @@ class CompanyTable(tables.Table):
 class OfficialTable(tables.Table):
     """public officials table"""
     name = tables.LinkColumn('serbia:official', args=[A('pk')])
+    url = tables.URLColumn()
 
     class Meta:
         model = models.Official
