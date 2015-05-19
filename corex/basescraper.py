@@ -66,6 +66,9 @@ class BaseScraper(object):
         """Convert datestr to date
 
         """
+        if not datestr:
+            return None
+
         if sep:
             datestr = datestr.split(sep)[0]
 
