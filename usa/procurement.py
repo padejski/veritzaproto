@@ -103,13 +103,7 @@ class FedContractsScraper(BaseScraper):
         """
         for contract, vendor in self.fetch_data():
             self.save_models(contract, vendor)
-            for item in contract.items():
-                print(item)
-            print('\n')
-            for item in vendor.items():
-                print(item)
-            print('\n\n')
-            break
+            yield
 
     def save_models(self, contract, vendor):
         """Make and save models to database
