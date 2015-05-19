@@ -12,7 +12,7 @@
   </ol>
   {% endblock path %}
 
-  <h3>Company profile</h3>
+  <h3>Public Official profile</h3>
     <div class="page-header">{{ object.name }}</div>
 
     <div class="panel panel-default">
@@ -23,7 +23,7 @@
           <tr> <td>Title</td> <td>{{ object.title }}</td> </tr>
           <tr> <td>Year</td> <td>{{ object.year }}</td> </tr>
           <tr> <td>Spouse</td> <td>{{ object.spouse }}</td> </tr>
-          <tr> <td>URL</td> <td>{{ object.url }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
           {% block extrarows %} {% endblock %}
         </table>
 

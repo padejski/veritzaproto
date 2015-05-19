@@ -30,7 +30,7 @@
           <tr> <td>Registration Date</td> <td>{{ object.reg_date }}</td> </tr>
           <tr> <td>Status</td> <td>{{ object.status }}</td> </tr>
           <tr> <td>DUNS Number</td> <td>{{ object.duns_number }}</td> </tr>
-          <tr> <td>URL</td> <td>{{ object.url }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
           {% block extrarows %} {% endblock %}
         </table>
 
