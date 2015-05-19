@@ -33,7 +33,7 @@ class CompanyBaseModel(BaseModel):
     status = models.CharField(max_length=255, null=True)
     duns_num = models.CharField(max_length=255, null=True)
     other = models.CharField(max_length=255, null=True)
-    url = models.CharField(max_length=255, null=True)
+    url = models.URLField(max_length=255, null=True)
 
 
 class OfficialBaseModel(BaseModel):
@@ -41,14 +41,14 @@ class OfficialBaseModel(BaseModel):
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255, blank=True)
     year = models.CharField(max_length=255, blank=True)
-    salaries = UnsavedManyToManyField('OfficialSalary')
-    real_estates = UnsavedManyToManyField('OfficialRealEstate')
-    movables = UnsavedManyToManyField('OfficialMovable')
-    companies = UnsavedManyToManyField('CompanyBaseModel')
-    spouse = UnsavedForeignKey('OfficialSpouse', null=True)
-    children = UnsavedManyToManyField('OfficialChild')
+    # salaries = UnsavedManyToManyField('OfficialSalary')
+    # real_estates = UnsavedManyToManyField('OfficialRealEstate')
+    # movables = UnsavedManyToManyField('OfficialMovable')
+    # companies = UnsavedManyToManyField('CompanyBaseModel')
+    # spouse = UnsavedForeignKey('OfficialSpouse', null=True)
+    # children = UnsavedManyToManyField('OfficialChild')
     other = models.CharField(max_length=255, blank=True)
-    url = models.CharField(max_length=255, blank=True)
+    url = models.URLField(max_length=255, blank=True)
 
 
 class OfficialSpouse(BaseModel):
@@ -91,7 +91,7 @@ class ProcurementBaseModel(BaseModel):
     price = models.CharField(max_length=255, blank=True)
     transaction_id = models.CharField(max_length=255, blank=True)
     type = models.CharField(max_length=255, blank=True)
-    url = models.CharField(max_length=255, blank=True)
+    url = models.URLField(max_length=255, blank=True)
     vendor = UnsavedForeignKey('CompanyBaseModel', null=True)
     other = models.CharField(max_length=255, blank=True)
 
