@@ -11,12 +11,12 @@ __date__ = April 2015
 # ============================================================================
 import re
 import datetime
-from itertools import ifilter
+from itertools import chain
 
 from django.db.utils import IntegrityError
 
 from corex.basescraper import BaseScraper
-from . import models
+from .. import models
 
 
 # ============================================================================
@@ -195,12 +195,13 @@ class SerbiaOfficialsScraper(BaseScraper):
                 print('continuing')
                 continue
 
-            off.movables = list(ifilter(None, map(self.save_model, trp + asst)))
-            off.salaries = list(ifilter(None, map(self.save_model, sal)))
-            off.real_estates = list(ifilter(None, map(self.save_model, est)))
+            for mov in chain(est, sal, trp, asst):
+                mov.official = off
 
             for mod in self.utils.flatten_list([est, sal, asst, trp, [off]]):
                 self.save_model(mod)
+
+            yield
 
     @staticmethod
     def save_model(model):
@@ -210,6 +211,7 @@ class SerbiaOfficialsScraper(BaseScraper):
             return model
         except IntegrityError as err:
             print(err)
+            print(model)
             return None
 
     def scrape_url(self, url):
@@ -237,10 +239,14 @@ class SerbiaOfficialsScraper(BaseScraper):
     @staticmethod
     def yield_data_urls(json_gen):
         """parse json data for ids and generate data urls based on ids"""
+        URLS = [off.url for off in models.Official.objects.all()]
         for json in json_gen:
             for data in json[u'aaData']:
                 idx = re.findall('\\d+', data[2].split(';', 1)[0])[0]
-                yield DATA_URL.format(idx)
+                url = DATA_URL.format(idx)
+                if url in URLS:
+                    continue
+                yield url
 
 
 if __name__ == '__main__':

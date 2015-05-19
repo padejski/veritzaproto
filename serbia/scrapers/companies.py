@@ -18,7 +18,7 @@ from bs4 import BeautifulSoup as bs
 from django.db.utils import IntegrityError
 
 from corex.basescraper import BaseScraper
-from models import Company
+from ..models import Company
 
 
 # ============================================================================
@@ -246,7 +246,8 @@ class SerbiaCompanyScraper(BaseScraper):
                 # try and update data
                 old_model = Company.objects.get(company_id=model.company_id)
                 self.update_model(model, old_model)
-            break
+
+            yield
 
 
 # ============================================================================
