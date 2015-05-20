@@ -61,6 +61,12 @@ class BaseScraper(object):
 
         return res
 
+    def post_soup(self, *args, **kwargs):
+        """get post response as beautifulsoup"""
+        soup = bs(self.session.post(*args, **kwargs).content)
+
+        return soup
+
     @staticmethod
     def str2date(datestr, fmt, sep=None):
         """Convert datestr to date
