@@ -7,6 +7,7 @@ from collections import deque
 from django.core.management.base import BaseCommand
 from serbia.scrapers.companies import SerbiaCompanyScraper as Scc
 from serbia.scrapers.officials import SerbiaOfficialsScraper as Sos
+from serbia.scrapers.procurement import SerbiaProcurementScraper as Sps
 from usa.procurement import FedContractsScraper as Fcs
 
 
@@ -50,6 +51,7 @@ class Command(BaseCommand):
         sched.scraping_task(Fcs().run())
         sched.scraping_task(Sos().run())
         sched.scraping_task(Scc().run())
+        sched.scraping_task(Sps().run())
 
         # run scheduler
         sched.run()
