@@ -35,6 +35,25 @@ class OfficialTable(tables.Table):
                    'movables', 'companies',  'children', 'spouse', 'url',
                    'basemodel_ptr', 'officialbasemodel_ptr', 'other')
 
+
+class ProcurementTable(tables.Table):
+    """public procurement table"""
+    contracting_auth = tables.LinkColumn('serbia:procurement', args=[A('pk')])
+    url = tables.URLColumn()
+
+    class Meta:
+        model = models.Procurement
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'contact_person',
+                   'contracting_auth_address', 'contracting_auth_id',
+                   'default_reason', 'modifications', 'cases_types',
+                   'transaction_id', 'url', 'subject', 'supplier_id',
+                   'supplier_country', 'preparing_bids_cost', 'eq_price',
+                   'vendor', 'lpp_basis', 'ppo_reviews', 'orn_code',
+                   'purchases_val_contract', 'purchases_val_estimate',
+                   'offers', 'execution_date', 'execution_value',
+                   'basemodel_ptr', 'procurementbasemodel_ptr', 'other')
+
 # ============================================================================
 # EOF
 # ============================================================================
