@@ -39,6 +39,7 @@ class DatasetsView(TemplateView):
         context = super(DatasetsView, self).get_context_data(**kwargs)
         context['officials_no'] = models.Official.objects.count()
         context['companies_no'] = models.Company.objects.count()
+        context['procurements_no'] = models.Procurement.objects.count()
 
         return context
 
@@ -54,9 +55,21 @@ class OfficialsView(SingleTableView):
     template_name = 'serbia_officials.html'
 
 
-class OffcialDetailView(DetailView):
+class OfficialDetailView(DetailView):
     model = models.Official
     template_name = 'serbia_official.html'
+
+
+class ProcurementsView(SingleTableView):
+    """list of procurement view"""
+    model = models.Procurement
+    table_class = tables.ProcurementTable
+    template_name = 'serbia_procurements.html'
+
+
+class ProcurementDetailView(DetailView):
+    model = models.Procurement
+    template_name = 'serbia_procurement.html'
 # ============================================================================
 # EOF
 # ============================================================================

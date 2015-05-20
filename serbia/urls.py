@@ -21,7 +21,9 @@ urlpatterns = [
     url(r'^companies/(?P<pk>\d+)/$', views.CompanyDetailView.as_view(), name='company'),
     url(r'^datasets/$', views.DatasetsView.as_view(), name='datasets'),
     url(r'^officials/$', views.OfficialsView.as_view(), name='officials'),
-    url(r'^offcials/(?P<pk>\d+)/$', views.OffcialDetailView.as_view(), name='official')
+    url(r'^officials/(?P<pk>\d+)/$', views.OfficialDetailView.as_view(), name='official'),
+    url(r'^procurements/$', views.ProcurementsView.as_view(), name='procurements'),
+    url(r'^procurements/(?P<pk>\d+)/$', views.ProcurementDetailView.as_view(), name='procurement')
 ]
 
 # ============================================================================
