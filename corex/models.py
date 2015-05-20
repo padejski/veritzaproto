@@ -83,8 +83,8 @@ class ProcurementBaseModel(BaseModel):
 
     """
     contact_person = models.CharField(max_length=255, blank=True)
-    contracting_auth = models.CharField(max_length=255, blank=True, verbose_name='Authority')
-    date = models.DateField(null=True)
+    contracting_auth = models.CharField(max_length=255, blank=True, verbose_name='Contracting Authority')
+    date = models.DateField(null=True, verbose_name='Contract Date')
     desc = models.CharField(max_length=255, blank=True, verbose_name='Description')
     year = models.CharField(max_length=255, blank=True)
     place = models.CharField(max_length=255, blank=True)
