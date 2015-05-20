@@ -1,0 +1,86 @@
+{% extends 'veritza_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+  {% block path %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+  {% endblock path %}
+
+  <h3>Public Procurement</h3>
+    <div class="page-header">{{ object.id }}</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Basic information</div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr> <td>Contracting Authority</td> <td>{{ object.contracting_auth }}</td> </tr>
+          <tr> <td>Contact Person</td> <td>{{ object.contact_person }}</td> </tr>
+          <tr> <td>Contract Date</td> <td>{{ object.date }}</td> </tr>
+          <tr> <td>Contract Description</td> <td>{{ object.desc }}</td> </tr>
+          <tr> <td>Contract Year</td> <td>{{ object.year }}</td> </tr>
+          <tr> <td>Contract Place</td> <td>{{ object.place }}</td> </tr>
+          <tr> <td>Contract Price</td> <td>{{ object.price }}</td> </tr>
+          <tr> <td>Contract Transaction ID</td> <td>{{ object.transaction_id }}</td> </tr>
+          <tr> <td>Procurement Type</td> <td>{{ object.type }}</td> </tr>
+          <tr> <td>Vendor</td> <td>{{ object.vendor }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+          {% block extrarows %} {% endblock %}
+        </table>
+
+      </div>
+    </div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">Company Members ({{ object.company_members|length }})</div>
+			{% if object.company_members %}
+			<div class="panel-body">
+				<table class="table table-bordered">
+				<tr>
+					<th>Name</th>
+					<th>Title</th>
+					<th>Share</th>
+				</tr>
+				{% for member in object.company_members %}
+					<tr>
+						<td><a href="{% url 'company-members' member.id %}">{{ member.company_member.full_name }}</a></td>
+						<td>{{ member.title|default:"" }}</td>
+						<td>{{ member.share|default:"" }}</td>
+					</tr>
+				{% endfor %}
+				</table>
+			</div>
+			{% endif %}
+	</div>
+
+	<div class="panel panel-info">
+		<div class="panel-heading">Public Procurements ({{ object.company_procurements|length }})</div>
+			{% if object.company_procurements %}
+			<div class="panel-body">
+				<table class="table table-bordered">
+					<tr>
+						<th>Number</th>
+						<th>Title</th>
+						<th>Subject</th>
+						<th>Value</th>
+						<th>Notice</th>
+					</tr>
+					{% for procurement in object.company_procurements %}
+					<tr>
+						<td><a href="{% url 'public-procurements' procurement.id %}">{{ procurement.number }}</a></td>
+						<td>{{ procurement.title }}</td>
+						<td>{{ procurement.subject }}</td>
+						<td>{{ procurement.value }} &euro;</td>
+						<td>{{ procurement.record_type }}</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+			{% endif %}
+	</div>
+{% endblock %}
