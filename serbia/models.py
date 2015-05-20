@@ -32,6 +32,33 @@ class Company(cmodels.CompanyBaseModel):
         verbose_name_plural = 'Companies'
 
 
+class Procurement(cmodels.ProcurementBaseModel):
+    """Serbia procurement model"""
+    contracting_auth_address = models.CharField(max_length=255, blank=True, verbose_name='Contracting Authority Address')
+    contracting_auth_id = models.CharField(max_length=255, blank=True, verbose_name='Contracting Authority ID')
+    default_reason = models.CharField(max_length=255, blank=True, verbose_name='Reason of Default')
+    orn_code = models.CharField(max_length=255, blank=True, verbose_name='ORN Code')
+    lpp_basis = models.CharField(max_length=255, blank=True, verbose_name='basis of LPP')
+    ppo_reviews = models.CharField(max_length=255, blank=True, verbose_name='PPO reviews')
+    procedure_type = models.CharField(max_length=255, blank=True, verbose_name='Procedure type')
+    suppliers_state = models.CharField(max_length=255, blank=True, verbose_name='Supplier State')
+    subject = models.CharField(max_length=255, blank=True, verbose_name='Procurement Subject')
+    purchases_val_contract = models.CharField(max_length=255, blank=True, verbose_name='Contract value of purchases')
+    purchases_val_estimate = models.CharField(max_length=255, blank=True, verbose_name='Estimate value of purchases')
+    offers = models.CharField(max_length=255, blank=True, verbose_name='Offers')
+    selection_criterion = models.CharField(max_length=255, blank=True, verbose_name='Criterion of selection')
+    preparing_bids_cost = models.CharField(max_length=255, blank=True, verbose_name='Cost of Preparing bids')
+    execution_date = models.DateField(null=True, verbose_name='Date of execution / non-execution')
+    execution_value = models.CharField(max_length=255, blank=True, verbose_name='Execution of contract value excl. VAT')
+    eq_price = models.CharField(max_length=255, blank=True, verbose_name='Eq. price')
+    execution_note = models.CharField(max_length=255, blank=True, verbose_name='Execution / non-execution note')
+    cases_types = models.CharField(max_length=255, blank=True, verbose_name='Types of cases procurement')
+    supplier_name = models.CharField(max_length=255, blank=True, verbose_name='Name of Vendor/Supplier')
+    supplier_id = models.CharField(max_length=255, blank=True, verbose_name='Vendor/Supplier ID')
+    supplier_country = models.CharField(max_length=255, blank=True, verbose_name="Vendor's Country")
+    modifications = models.CharField(max_length=255, blank=True, verbose_name='Modifications')
+
+
 class Official(cmodels.OfficialBaseModel):
     """Serbia public official model."""
     deposits_savings = models.NullBooleanField()
