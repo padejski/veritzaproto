@@ -1,0 +1,35 @@
+{% extends 'procurement_base.html' %}
+
+{% block path %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'serbia:index' %}">Home</a></li>
+    <li><a href="{% url 'serbia:procurements' %}">Procurements</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+  {% endblock path %}
+
+{% block extrarows %}
+    <tr> <td>Contracting Authority ID </td><td>{{ object.contracting_auth_id }}</td> </tr>
+    <tr> <td>Contracting Authority Address</td><td>{{ object.contracting_auth_address }}</td> </tr>
+    <tr> <td>Reason of Default</td><td>{{ object.default_reason }}</td> </tr>
+    <tr> <td>ORN code </td><td>{{ object.orn_code }}</td> </tr>
+    <tr> <td>Basis of LPP </td><td>{{ object.lpp_basis }}</td> </tr>
+    <tr> <td>PPO Reviews </td><td>{{ object.ppo_reviews }}</td> </tr>
+    <tr> <td>Procedure Type </td><td>{{ object.procedure_type }}</td> </tr>
+    <tr> <td>Vendor's / Supplier's State </td><td>{{ object.suppliers_state }}</td> </tr>
+    <tr> <td>Procurement Subject </td><td>{{ object.subject }}</td> </tr>
+    <tr> <td>Contract value of purchases </td><td>{{ object.purchases_val_contract }}</td> </tr>
+    <tr> <td>Estimate value of purchases </td><td>{{ object.purchases_val_estimate }}</td> </tr>
+    <tr> <td>Number of Offers </td><td>{{ object.offers }}</td> </tr>
+    <tr> <td>Criterion of selection </td><td>{{ object.selection_criterion }}</td> </tr>
+    <tr> <td>Cost of Preparing bids </td><td>{{ object.preparing_bids_cost }}</td> </tr>
+    <tr> <td>Date of execution / non-execution </td><td>{{ object.execution_date }}</td> </tr>
+    <tr> <td>Execution of contract value excl. VAT </td><td>{{ object.execution_value }}</td> </tr>
+	<tr> <td>Eq. price</td> <td>{{ object.eq_price }}</td> </tr>
+	<tr> <td>Execution / Non-Execution note</td> <td>{{ object.execution_note }}</td> </tr>
+	<tr> <td>Types of Cases Procurement</td> <td>{{ object.cases_types }}</td> </tr>
+	<tr> <td>Vendor / Supplier name</td> <td>{{ object.supplier_name }}</td> </tr>
+	<tr> <td>Vendor / Supplier ID</td> <td>{{ object.supplier_id }}</td> </tr>
+	<tr> <td>Vendor's Country</td> <td>{{ object.supplier_country }}</td> </tr>
+	<tr> <td>Modifications</td> <td>{{ object.modifications }}</td> </tr>
+{% endblock %}
