@@ -120,13 +120,14 @@ class FamilyMemberTable(VeritzaTable):
 
 
 class PublicProcurementTable(VeritzaTable):
+    winner = tables.Column(accessor='link', verbose_name='Winner')
 
     class Meta:
         model = PublicProcurement
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-            'system_id'
+            'system_id', 'record_type'
         )
 
     def render_number(self, record, value):
@@ -137,6 +138,11 @@ class PublicProcurementTable(VeritzaTable):
     def render_value(self, record, value):
         return mark_safe(u'{0} &euro;'.format(value))
 
+    def render_winner(self, record, value):
+        if record.biddercompany_set.all():
+            winner = record.biddercompany_set.all()[0].company
+            return mark_safe(u'<a href="{0}">{1}</a>'.format(reverse('companies', args=[winner.id]), winner.name))
+        return ""
 
 class BidderCompanyTable(VeritzaTable):
 
