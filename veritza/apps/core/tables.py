@@ -14,11 +14,14 @@ class VeritzaTable(tables.Table):
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
         )
 
+    def render_link(self, record, value):
+        return mark_safe(u'<a href="{0}">source</a>'.format(value))
 
 class PublicOfficialTable(VeritzaTable):
 
     reports = tables.Column(accessor='publicofficialreport_set')
     type = tables.Column(accessor='publicofficialreport_set')
+    link = tables.Column(accessor='link')
 
     class Meta:
         model = PublicOfficial
@@ -41,6 +44,8 @@ class PublicOfficialTable(VeritzaTable):
             return value.all()[0].official_type
         return ""
 
+    def render_link(self, record, value):
+        return mark_safe(u'<a href="{0}">source</a>'.format(value))
 
 class CompanyTable(VeritzaTable):
 
@@ -52,7 +57,7 @@ class CompanyTable(VeritzaTable):
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-            'mail_address', 'name',  'status', 'system_id', 'link'
+            'mail_address', 'name',  'status', 'system_id'
         )
 
     def render_registration_number(self, record, value):
@@ -74,7 +79,7 @@ class CompanyMemberTable(VeritzaTable):
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-            'mail_address', 'name',  'status', 'system_id', 'link', 'company_registration_number'
+            'mail_address', 'name',  'status', 'system_id', 'company_registration_number'
         )
         sequence = ['id', 'first_name', 'last_name', 'company']
 
@@ -97,7 +102,7 @@ class FamilyMemberTable(VeritzaTable):
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
         	'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-        	'mail_address',  'status', 'system_id', 'link'
+        	'mail_address',  'status', 'system_id'
         )
 
         sequence = ['name', 'public_official', 'relationship']
@@ -121,7 +126,7 @@ class PublicProcurementTable(VeritzaTable):
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-            'system_id', 'link'
+            'system_id'
         )
 
     def render_number(self, record, value):
