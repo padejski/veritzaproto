@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.db import IntegrityError
 from django.views.generic import View, TemplateView
 from django.views.generic.detail import DetailView
@@ -208,7 +208,8 @@ class PublicOfficialsView(LoginRequiredMixin, DatasetView, ReportView):
 
     def get_queryset(self):
         queryset = super(PublicOfficialsView, self).get_queryset()
-        return queryset.prefetch_related('publicofficialreport_set').all()
+        prefetch = Prefetch('publicofficialreport_set', queryset=PublicOfficialReport.objects.all().order_by('-year'), to_attr='reports')
+        return queryset.prefetch_related(prefetch).all()
 
 
 class PublicOfficialDetailsView(LoginRequiredMixin, DetailView):

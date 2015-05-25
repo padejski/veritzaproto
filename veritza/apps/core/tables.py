@@ -19,8 +19,10 @@ class VeritzaTable(tables.Table):
 
 class PublicOfficialTable(VeritzaTable):
 
-    reports = tables.Column(accessor='publicofficialreport_set')
-    type = tables.Column(accessor='publicofficialreport_set')
+    reports = tables.Column(accessor='reports')
+    year = tables.Column(accessor='reports')
+    type = tables.Column(accessor='reports')
+    position = tables.Column(accessor='reports')
     link = tables.Column(accessor='link')
 
     class Meta:
@@ -37,11 +39,21 @@ class PublicOfficialTable(VeritzaTable):
         ))
 
     def render_reports(self, record, value):
-        return len(value.all())
+        return len(value)
+
+    def render_year(self, record, value):
+        if value:
+            return value[0].year
+        return ""
 
     def render_type(self, record, value):
-        if len(value.all()) > 0:
-            return value.all()[0].official_type
+        if value:
+            return value[0].official_type
+        return ""
+
+    def render_position(self, record, value):
+        if value:
+            return value[0].public_office
         return ""
 
     def render_link(self, record, value):
