@@ -272,6 +272,14 @@ class FamilyMembersView(LoginRequiredMixin, DatasetView, ReportView):
     stats_template = 'core/stats/family_members.html'
     report = FamilyMembersReport()
 
+    def get_queryset(self):
+        queryset = super(FamilyMembersView, self).get_queryset()
+        prefetch = Prefetch('public_official__publicofficialreport_set',
+            queryset=PublicOfficialReport.objects.all().order_by('-year'),
+            to_attr='public_official_reports')
+        # return queryset.prefetch_related(prefetch).all()
+        return queryset.select_related('public_official').all()
+
 
 class FamilyMemberDetailsView(LoginRequiredMixin, DetailView):
     model = FamilyMember

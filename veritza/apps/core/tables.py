@@ -109,6 +109,10 @@ class CompanyMemberTable(VeritzaTable):
 
 class FamilyMemberTable(VeritzaTable):
 
+    year = tables.Column(accessor='public_official', verbose_name='Year')
+    type = tables.Column(accessor='public_official', verbose_name='Official type')
+    position = tables.Column(accessor='public_official', verbose_name='Official position')
+
     class Meta:
         model = FamilyMember
         attrs = {"class": "paleblue table table-striped table-bordered"}
@@ -129,6 +133,21 @@ class FamilyMemberTable(VeritzaTable):
         return mark_safe(u'<a href="{0}" title="Official details">{1}</a>'.format(
             reverse('public-officials', args=[record.public_official.id]), escape(value)
         ))
+
+    def render_year(self, record, value):
+        if value.publicofficialreport_set.all():
+            return value.publicofficialreport_set.all()[0].year
+        return ""
+
+    def render_type(self, record, value):
+        if value.publicofficialreport_set.all():
+            return value.publicofficialreport_set.all()[0].official_type
+        return ""
+
+    def render_position(self, record, value):
+        if value.publicofficialreport_set.all():
+            return value.publicofficialreport_set.all()[0].public_office
+        return ""
 
 
 class PublicProcurementTable(VeritzaTable):
