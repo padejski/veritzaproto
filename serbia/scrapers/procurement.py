@@ -142,20 +142,9 @@ class SerbiaProcurementScraper(BaseScraper):
 
     def run(self):
         """run scraper"""
-        self.save_models(self.gen_models(self.gen_data_dicts()))
-
-    @staticmethod
-    def save_model(model):
-        """save model to database """
-        try:
-            model.save()
-        except IntegrityError:
-            pass
-
-    def save_models(self, models):
-        """save models to database """
-        for model in models:
+        for model in self.gen_models(self.gen_data_dicts()):
             self.save_model(model)
+            yield
 
     @staticmethod
     def scrape_data_rows(soup):
