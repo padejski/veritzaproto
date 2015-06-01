@@ -5,10 +5,9 @@ Scraping commands
 from collections import deque
 
 from django.core.management.base import BaseCommand
-from serbia.scrapers.companies import SerbiaCompanyScraper as Scc
-from serbia.scrapers.officials import SerbiaOfficialsScraper as Sos
-from serbia.scrapers.procurement import SerbiaProcurementScraper as Sps
-from usa.procurement import FedContractsScraper as Fcs
+
+from serbia.scrapers import serbia_scrapers
+# from usa.procurement import FedContractsScraper as Fcs
 
 
 class ScraperScheduler:
@@ -48,10 +47,8 @@ class Command(BaseCommand):
         sched = ScraperScheduler()
 
         # add scraping tasks
-        sched.scraping_task(Fcs().run())
-        sched.scraping_task(Sos().run())
-        sched.scraping_task(Scc().run())
-        sched.scraping_task(Sps().run())
+        for scp in serbia_scrapers:
+            sched.scraping_task(scp().run())
 
         # run scheduler
         sched.run()
