@@ -12,10 +12,11 @@ Desc      : Veritza base scraper abstract class
 from hashlib import md5
 from datetime import datetime as dt
 
-import utils
 import requests
 from bs4 import BeautifulSoup as bs
+from django.db.utils import IntegrityError
 
+import utils
 
 # ============================================================================
 # BaseScraper class
@@ -66,6 +67,14 @@ class BaseScraper(object):
         soup = bs(self.session.post(*args, **kwargs).content)
 
         return soup
+
+    @staticmethod
+    def save_model(model):
+        """save model to database"""
+        try:
+            model.save()
+        except IntegrityError:
+            pass
 
     @staticmethod
     def str2date(datestr, fmt, sep=None):
