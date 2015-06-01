@@ -36,12 +36,11 @@ class Procurement(cmodels.ProcurementBaseModel):
     """Serbia procurement model"""
     contracting_auth_address = models.CharField(max_length=255, blank=True, verbose_name='Contracting Authority Address')
     contracting_auth_id = models.CharField(max_length=255, blank=True, verbose_name='Contracting Authority ID')
-    default_reason = models.CharField(max_length=255, blank=True, verbose_name='Reason of Default')
+    default_reason = models.CharField(max_length=255, blank=True, verbose_name='Reason of Failure')
     orn_code = models.CharField(max_length=255, blank=True, verbose_name='ORN Code')
     lpp_basis = models.CharField(max_length=255, blank=True, verbose_name='basis of LPP')
     ppo_reviews = models.CharField(max_length=255, blank=True, verbose_name='PPO reviews')
     procedure_type = models.CharField(max_length=255, blank=True, verbose_name='Procedure type')
-    suppliers_state = models.CharField(max_length=255, blank=True, verbose_name='Supplier State')
     subject = models.CharField(max_length=255, blank=True, verbose_name='Procurement Subject')
     purchases_val_contract = models.CharField(max_length=255, blank=True, verbose_name='Contract value of purchases')
     purchases_val_estimate = models.CharField(max_length=255, blank=True, verbose_name='Estimate value of purchases')
@@ -56,7 +55,7 @@ class Procurement(cmodels.ProcurementBaseModel):
     supplier_name = models.CharField(max_length=255, blank=True, verbose_name='Name of Vendor/Supplier')
     supplier_id = models.CharField(max_length=255, blank=True, verbose_name='Vendor/Supplier ID')
     supplier_country = models.CharField(max_length=255, blank=True, verbose_name="Vendor's Country")
-    modifications = models.CharField(max_length=255, blank=True, verbose_name='Modifications')
+    modifications = models.CharField(max_length=255, blank=True, verbose_name='Changes')
 
 
 class Official(cmodels.OfficialBaseModel):
@@ -106,6 +105,21 @@ class Transport(cmodels.OfficialMovable):
     brand = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
     year = models.CharField(max_length=255)
+
+
+class ElectionDonation(cmodels.ElectionDonationBaseModel):
+    """Serbia Election Donations """
+    donation = models.CharField(max_length=255, null=True)
+    dues = models.CharField(max_length=255, null=True)
+    kind_donations = models.CharField(max_length=255, null=True)
+    selection = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Election Contributions'
+
+
+
 # ============================================================================
 # EOF
 # ============================================================================

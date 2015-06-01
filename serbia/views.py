@@ -10,7 +10,6 @@ Desc      : Veritza serbia views
 # necessary imports
 # ============================================================================
 from django.views.generic import TemplateView, DetailView
-# from django.shortcuts import get_object_or_404
 from django_tables2 import SingleTableView
 
 from . import models, tables
@@ -40,8 +39,21 @@ class DatasetsView(TemplateView):
         context['officials_no'] = models.Official.objects.count()
         context['companies_no'] = models.Company.objects.count()
         context['procurements_no'] = models.Procurement.objects.count()
+        context['edonations_no'] = models.ElectionDonation.objects.count()
 
         return context
+
+
+class ElectionDonationsView(SingleTableView):
+    """list of election donations"""
+    model = models.ElectionDonation
+    table_class = tables.ElectionDonationTable
+    template_name = 'serbia_election_donations.html'
+
+
+class ElectionDonationDetailView(DetailView):
+    model = models.ElectionDonation
+    template_name = 'serbia_election_donation.html'
 
 
 class IndexView(TemplateView):

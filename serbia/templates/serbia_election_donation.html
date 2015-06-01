@@ -1,0 +1,16 @@
+{% extends 'election_donation_base.html' %}
+
+{% block path %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'serbia:index' %}">Home</a></li>
+    <li><a href="{% url 'serbia:electioncontribs' %}">Election Contributions</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+  {% endblock path %}
+
+{% block extrarows %}
+	<tr> <td>Donation</td> <td>{{ object.donation }}</td> </tr>
+	<tr> <td>Dues</td> <td>{{ object.dues }}</td> </tr>
+	<tr> <td>Kind Donations</td> <td>{{ object.kind_donations }}</td> </tr>
+	<tr> <td>Selection</td> <td>{{ object.selection }}</td> </tr>
+{% endblock %}

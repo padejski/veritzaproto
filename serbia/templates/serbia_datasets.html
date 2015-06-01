@@ -26,7 +26,7 @@
             </div>
           </div>
 
-            
+
 
             <div class="row">
                 <a href="{% url 'serbia:companies' %}">
@@ -38,7 +38,7 @@
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
                         <div style="font-size: 9pt">
                             List of all the companies in Serbia - public record registry of Serbian Central Registry of Business Entities.
-                        </div> 
+                        </div>
                     </div>
 
             </div>
@@ -54,16 +54,29 @@
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
                         <div style="font-size: 9pt">
                             List of all the public procuments in Serbia.
-                        </div> 
+                        </div>
                     </div>
 
             </div>
 
 
-            
-            
+            <div class="row">
+                <a href="{% url 'serbia:electioncontribs' %}">
+                    <div class="col-md-2">
+                        <img src="{{ MEDIA_URL }}images/elections-contributions-small.png"></img>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Election Contributions ({{ edonations_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of all the public procuments in Serbia.
+                        </div>
+                    </div>
 
-            
+            </div>
+
+
+
 
             </div>
         </div>
@@ -76,8 +89,8 @@
             <div class="panel-heading">Veritzas - public records data integrations</div>
             <div class="panel-body">
 
-           
-            
+
+
 
             </div>
             </div>

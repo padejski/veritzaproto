@@ -23,6 +23,20 @@ class CompanyTable(tables.Table):
                    'companybasemodel_ptr', 'other', 'alt_address', 'industry')
 
 
+class ElectionDonationTable(tables.Table):
+    """election donations data table"""
+    donor_name = tables.LinkColumn('serbia:electioncontrib', args=[A('pk')])
+    url = tables.URLColumn()
+
+    class Meta:
+        model = models.ElectionDonation
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'other_donor',
+                   'donor_address', 'donor_type', 'candidate', 'date',
+                   'url', 'basemodel_ptr', 'electiondonationbasemodel_ptr',
+                   'other', 'alt_address', 'industry')
+
+
 class OfficialTable(tables.Table):
     """public officials table"""
     name = tables.LinkColumn('serbia:official', args=[A('pk')])
