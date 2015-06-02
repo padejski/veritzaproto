@@ -34,11 +34,13 @@ PAYLOAD = {'sEcho': 2, 'sColumns': '',
            'mDataProp_0': 0, 'mDataProp_1': 1,
            'mDataProp_2': 2, 'mDataProp_3': 3,
            'prilogPolitickogSubjekta.liceIme': '',
-           'prilogPolitickogSubjekta.licePrezime': 'Јовановић',
            'politickiSubjekt.id': '',
            'politickiSubjektNaziv': '',
            'izbor.id': '',
            'izborNaziv_': ''}
+
+NAMES = ['Јовановић', 'Никола', 'Лука', 'Лазар', 'Вук', 'Стефан', 'Алекса',
+         'Марко']
 
 
 # ============================================================================
@@ -58,7 +60,7 @@ class SerbiaElectionsScraper(BaseScraper):
         yields: donation (dict): dictionary of donation info
 
         """
-        donors = self.parse_donors(self.get_donors())
+        donors = self.parse_donors(self.get_donors(NAMES))
 
         for donation in self.get_donors_donations(donors):
             yield donation
@@ -89,7 +91,8 @@ class SerbiaElectionsScraper(BaseScraper):
                    'iDisplayLength': 10,
                    'mDataProp_4': 4,
                    'mDataProp_5': 5,
-                   'prilogPolitickogSubjekta.liceId': donor['id']}
+                   'prilogPolitickogSubjekta.liceId': donor['id'],
+                   'prilogPolitickogSubjekta.licePrezime': donor['search_name']}
 
         payload.update(PAYLOAD)
 
@@ -107,31 +110,55 @@ class SerbiaElectionsScraper(BaseScraper):
 
             yield donation
 
-    def get_donors(self):
+    def _get_donors(self, search_name):
         """fetch donors data from ajax endpoint"""
         payload = {'iColumns': 4,
                    'iDisplayLength': 100,
-                   'prilogPolitickogSubjekta.liceId': ''}
+                   'prilogPolitickogSubjekta.liceId': '',
+                   'prilogPolitickogSubjekta.licePrezime': search_name}
 
         payload.update(PAYLOAD)
 
         self.session.headers.update(HEADERS)
 
-        for interval in range(0, 16000, 100):
+        donors_num = self.get_donors_num(payload)
+
+        for interval in range(0, donors_num, 100):
             payload['iDisplayStart'] = interval
 
             res = self.post(BASE_URL, data=payload, cookies=COOKIES)
 
-            yield res.json()
+            donor = res.json()
+            donor['search_name'] = search_name
+
+            yield donor
+
+    def get_donors(self, search_names):
+        """get election donors """
+        for name in search_names:
+            for donor in self._get_donors(name):
+                yield donor
+
+    def get_donors_num(self, payload):
+        """get maximum number of donors from data endpoint"""
+        self.session.headers.update(HEADERS)
+        res = self.post(BASE_URL, data=payload, cookies=COOKIES)
+
+        self.session.close()
+
+        return int(res.json()['iTotalRecords'])
 
     @staticmethod
     def parse_donors(donor_data):
         """parse donors json data"""
         for data in donor_data:
+            search_name = data['search_name']
             data = data['aaData']
             hds = ['id', 'name']
             for item in data:
                 donor_dict = dict(zip(hds, item[1:-1]))
+                donor_dict['search_name'] = search_name
+
                 yield donor_dict
 
     def run(self):
@@ -140,6 +167,7 @@ class SerbiaElectionsScraper(BaseScraper):
             donation['hash'] = self.get_hash(donation)
             model = models.ElectionDonation(**donation)
             self.save_model(model)
+            yield
 
 
 if __name__ == '__main__':
