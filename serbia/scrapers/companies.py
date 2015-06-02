@@ -15,7 +15,6 @@ import datetime
 from itertools import chain
 
 from bs4 import BeautifulSoup as bs
-from django.db.utils import IntegrityError
 
 from corex.basescraper import BaseScraper
 from ..models import Company
@@ -240,12 +239,7 @@ class SerbiaCompanyScraper(BaseScraper):
         # save data to database
         for dat in data:
             model = Company(**dat)
-            try:
-                model.save()
-            except IntegrityError:
-                # try and update data
-                old_model = Company.objects.get(company_id=model.company_id)
-                self.update_model(model, old_model)
+            self.save_model(model)
 
             yield
 
