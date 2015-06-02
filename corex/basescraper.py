@@ -18,6 +18,7 @@ from django.db.utils import IntegrityError
 
 import utils
 
+
 # ============================================================================
 # BaseScraper class
 # ============================================================================
@@ -69,12 +70,13 @@ class BaseScraper(object):
         return soup
 
     @staticmethod
-    def save_model(model):
+    def save_model(model, report_error=False):
         """save model to database"""
         try:
             model.save()
-        except IntegrityError:
-            pass
+        except IntegrityError as err:
+            if report_error:
+                raise err
 
     @staticmethod
     def str2date(datestr, fmt, sep=None):
