@@ -14,7 +14,7 @@ from datetime import datetime as dt
 
 import requests
 from bs4 import BeautifulSoup as bs
-from django.db.utils import IntegrityError
+from django.db import IntegrityError, transaction
 
 import utils
 
@@ -73,7 +73,8 @@ class BaseScraper(object):
     def save_model(model, report_error=False):
         """save model to database"""
         try:
-            model.save()
+            with transaction.atomic():
+                model.save()
         except IntegrityError as err:
             if report_error:
                 raise err
