@@ -93,6 +93,16 @@ class BaseScraper(object):
         return dt.strptime(datestr, fmt).date()
 
     @staticmethod
+    def strip_str(strx, char='\r\n'):
+        """strip string and replace characters occurrences
+        and remove duplicated spaces.
+
+        """
+        strx = ' '.join(strx.strip().replace(char, ' ').split())
+
+        return strx
+
+    @staticmethod
     def update_model(new, old):
         """update old model's content
 
