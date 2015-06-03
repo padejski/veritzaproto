@@ -11,8 +11,8 @@ from xmltodict import parse as xmlparse
 from django.db.utils import IntegrityError
 
 from corex.basescraper import BaseScraper
-from .models import FedCompany as Company
-from .models import FedProcurement as Procurement
+from ..models import FedCompany as Company
+from ..models import FedProcurement as Procurement
 from . import constants as const
 
 
@@ -103,33 +103,30 @@ class FedContractsScraper(BaseScraper):
         """
         for contract, vendor in self.fetch_data():
             self.save_models(contract, vendor)
-            yield
+            break
+            # yield
 
     def save_models(self, contract, vendor):
         """Make and save models to database
 
         """
         vendor['hash'] = self.get_hash(vendor)
-        vmodel = Company(**vendor)
+        vendor = Company(**vendor)
 
         try:
-            vmodel.save()
-        except IntegrityError as err:
-            print(err)
-            return False
-        else:
-            contract['vendor_id'] = vmodel.id
-            contract['hash'] = self.get_hash(contract)
-            cmodel = Procurement(**contract)
-
-        try:
-            cmodel.save()
+            self.save_model(vendor, report_error=True)
         except IntegrityError:
-            pass
+            vendor = Company.objects.get(hash=vendor.hash)
+        finally:
+            contract['vendor_id'] = vendor.id
+            contract['hash'] = self.get_hash(contract)
+            contract = Procurement(**contract)
+
+        self.save_model(contract)
 
 
 if __name__ == '__main__':
-    FedContractsScraper().run()
+    pass
 # ============================================================================
 # EOF
 # ============================================================================
