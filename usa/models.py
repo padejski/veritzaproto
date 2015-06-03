@@ -32,6 +32,15 @@ class FedProcurement(cmodels.ProcurementBaseModel):
         """extra options"""
         verbose_name_plural = 'Procurements'
 
+
+class FedFinancialDisclosure(cmodels.BaseModel):
+    """Federal Financial Disclosure model """
+    filing = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    office = models.CharField(max_length=255)
+    pdf = models.CharField(max_length=255)
+    year = models.CharField(max_length=255)
+
 # ============================================================================
 # EOF
 # ============================================================================
