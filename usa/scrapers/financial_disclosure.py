@@ -32,6 +32,7 @@ HEADERS = {
     'Referer': 'http://clerk.house.gov/public_disc/financial-search.aspx.'
 }
 
+
 # ============================================================================
 # scraper implementation
 # ============================================================================
@@ -119,6 +120,11 @@ class FinDisclosuresScraper(BaseScraper):
         """Scrape data from page content soup"""
         rows = soup.find('table', {'id': 'search_results'}).find_all('tr')[1:]
 
+        # remove paging row
+        for idx, row in enumerate(rows):
+            if row.get('class')[0] == 'pagingRow':
+                rows.pop(idx)
+
         for data in imap(self.scrape_datarow, rows):
             yield data
 
@@ -135,6 +141,7 @@ class FinDisclosuresScraper(BaseScraper):
         data = dict(zip(['name', 'office', 'year', 'filing', 'pdf'],
                         _scrape_row()))
         data['name'] = self.strip_str(data['name'])
+        data['hash'] = self.get_hash(data)
 
         return data
 
