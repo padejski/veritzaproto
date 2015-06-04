@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Module    : basescraper
 Date      : May, 2015
@@ -9,6 +10,9 @@ Desc      : Veritza base scraper abstract class
 # ============================================================================
 # necessary imports
 # ============================================================================
+import gzip
+import urllib
+import StringIO
 from hashlib import md5
 from datetime import datetime as dt
 
@@ -32,6 +36,19 @@ class BaseScraper(object):
         self.utils = utils
         self.session = requests.Session()
         self.session.headers.update({'User-Agent': self.user_agent})
+
+    @staticmethod
+    def download_ftp(url, gzp=False):
+        """download file from ftp server"""
+        fhandle = urllib.urlopen(url)
+
+        if gzp:
+            fileobj = StringIO.StringIO(fhandle.read())
+            content = gzip.GzipFile(fileobj=fileobj)
+        else:
+            content = fhandle.read()
+
+        return content
 
     def get(self, url):
         """fetch url """
