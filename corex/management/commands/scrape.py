@@ -2,12 +2,21 @@
 Scraping commands
 
 """
+# ============================================================================
+# necessary imports
+# ============================================================================
+from itertools import chain
 from collections import deque
 
 from django.core.management.base import BaseCommand
 
 from serbia.scrapers import serbia_scrapers
-# from usa.procurement import FedContractsScraper as Fcs
+from usa.scrapers import usa_scrapers
+
+# ============================================================================
+# scrapers list
+# ============================================================================
+SCRAPERS = chain(serbia_scrapers, usa_scrapers)
 
 
 class ScraperScheduler:
@@ -47,7 +56,7 @@ class Command(BaseCommand):
         sched = ScraperScheduler()
 
         # add scraping tasks
-        for scp in serbia_scrapers:
+        for scp in SCRAPERS:
             sched.scraping_task(scp().run())
 
         # run scheduler
