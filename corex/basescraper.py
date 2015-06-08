@@ -12,6 +12,7 @@ Desc      : Veritza base scraper abstract class
 # ============================================================================
 import gzip
 import urllib
+import zipfile
 import StringIO
 from hashlib import md5
 from datetime import datetime as dt
@@ -38,17 +39,19 @@ class BaseScraper(object):
         self.session.headers.update({'User-Agent': self.user_agent})
 
     @staticmethod
-    def download_ftp(url, gzp=False):
+    def download_ftp(url, gzp=False, zfile=False):
         """download file from ftp server"""
         fhandle = urllib.urlopen(url)
 
         if gzp:
             fileobj = StringIO.StringIO(fhandle.read())
-            content = gzip.GzipFile(fileobj=fileobj)
+            fileobj = gzip.GzipFile(fileobj=fileobj)
+        elif zfile:
+            fileobj = zipfile.ZipFile(StringIO.StringIO(fhandle.read()))
         else:
-            content = fhandle.read()
+            fileobj = fhandle
 
-        return content
+        return fileobj
 
     def get(self, url):
         """fetch url """
