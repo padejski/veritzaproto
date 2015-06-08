@@ -42,8 +42,35 @@ class FedCompany(cmodels.CompanyBaseModel):
         """extra options"""
         verbose_name_plural = "Federal Companies"
 
+
+class FedCommitteeContribution(cmodels.BaseModel):
+    """Committee Election Contribution Model"""
+    amndt_ind = models.CharField(max_length=255, null=True, verbose_name='Amendment')
+    cand_id = models.CharField(max_length=255, null=True, verbose_name='Candidate')
+    city = models.CharField(max_length=255, null=True)
+    cmte_id = models.CharField(max_length=255, null=True, verbose_name='Committee ID')
+    employer = models.CharField(max_length=255, null=True)
+    entity_tp = models.CharField(max_length=255, null=True, verbose_name='Entity Type')
+    file_num = models.CharField(max_length=255, null=True, verbose_name='File Number')
+    image_num = models.CharField(max_length=255, null=True, verbose_name='Microfilm Location')
+    memo_cd = models.CharField(max_length=255, null=True, verbose_name='Memo Code')
+    memo_text = models.CharField(max_length=255, null=True, verbose_name='Memo Text')
+    name = models.CharField(max_length=255, null=True, verbose_name='Contributor Name')
+    occupation = models.CharField(max_length=255, null=True)
+    other_id = models.CharField(max_length=255, null=True, verbose_name='Other ID')
+    rpt_tp = models.CharField(max_length=255, null=True, verbose_name='Report Type')
+    state = models.CharField(max_length=255, null=True)
+    sub_id = models.CharField(max_length=255, null=True, verbose_name='FEC Record Number')
+    tran_id = models.CharField(max_length=255, null=True, verbose_name='Transaction ID')
+    transaction_amt = models.CharField(max_length=255, null=True, verbose_name='Transaction Amount')
+    transaction_dt = models.CharField(max_length=255, null=True, verbose_name='Transaction Date')
+    transaction_pgi = models.CharField(max_length=255, null=True, verbose_name='Primary-Gen Indicator')
+    transaction_tp = models.CharField(max_length=255, null=True, verbose_name='Transaction Type')
+    zip_code = models.CharField(max_length=255, null=True, verbose_name='Zip Code')
+
+
 class FedIndividualContribution(cmodels.BaseModel):
-    """Individual Electrion Contribution Model"""
+    """Individual Election Contribution Model"""
     cmte_id = models.CharField(max_length=255, null=True)
     amndt_ind = models.CharField(max_length=255, verbose_name='Amendment', null=True)
     rpt_tp = models.CharField(max_length=255, verbose_name='Report Type', null=True)
