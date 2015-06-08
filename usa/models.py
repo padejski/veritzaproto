@@ -15,6 +15,25 @@ from corex import models as cmodels
 # ============================================================================
 # database models definitions
 # ============================================================================
+class FedCandidate(cmodels.BaseModel):
+    """Candidate model"""
+    cand_id = models.CharField(max_length=255, null=True)
+    cand_name = models.CharField(max_length=255, null=True, verbose_name='Name')
+    cand_pty_affiliation = models.CharField(max_length=255, null=True, verbose_name='Party Affiliation')
+    cand_election_yr = models.CharField(max_length=255, null=True, verbose_name='Election Year')
+    cand_office_st = models.CharField(max_length=255, null=True, verbose_name='Office State')
+    cand_office = models.CharField(max_length=255, null=True, verbose_name='Office')
+    cand_office_district = models.CharField(max_length=255, null=True, verbose_name='District')
+    cand_ici = models.CharField(max_length=255, null=True, verbose_name='Incumbent Challenger Status')
+    cand_status = models.CharField(max_length=255, null=True, verbose_name='Status')
+    cand_pcc = models.CharField(max_length=255, null=True, verbose_name='Campaign Committee')
+    cand_st1 = models.CharField(max_length=255, null=True, verbose_name='Street')
+    cand_st2 = models.CharField(max_length=255, null=True, verbose_name='Street2')
+    cand_city = models.CharField(max_length=255, null=True, verbose_name='City')
+    cand_st = models.CharField(max_length=255, null=True, verbose_name='State')
+    cand_zip = models.CharField(max_length=255, null=True, verbose_name='Zip Code')
+
+
 class FedCompany(cmodels.CompanyBaseModel):
     """Federal company model """
     place = models.CharField(max_length=255)
@@ -22,6 +41,30 @@ class FedCompany(cmodels.CompanyBaseModel):
     class Meta:
         """extra options"""
         verbose_name_plural = "Federal Companies"
+
+class FedIndividualContribution(cmodels.BaseModel):
+    """Individual Electrion Contribution Model"""
+    cmte_id = models.CharField(max_length=255, null=True)
+    amndt_ind = models.CharField(max_length=255, verbose_name='Amendment', null=True)
+    rpt_tp = models.CharField(max_length=255, verbose_name='Report Type', null=True)
+    transaction_pgi = models.CharField(max_length=255, verbose_name='Primary-General Indicator', null=True)
+    image_num = models.CharField(max_length=255, verbose_name='Microfilm Location', null=True)
+    transaction_tp = models.CharField(max_length=255, verbose_name='Transaction Type', null=True)
+    entity_tp = models.CharField(max_length=255, verbose_name='Entity Type', null=True)
+    name = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
+    state = models.CharField(max_length=255, null=True)
+    zip_code = models.CharField(max_length=255, verbose_name='Zip Code', null=True)
+    employer = models.CharField(max_length=255, null=True)
+    occupation = models.CharField(max_length=255, null=True)
+    transaction_dt = models.CharField(max_length=255, verbose_name='Date', null=True)
+    transaction_amt = models.CharField(max_length=255, verbose_name='Amount', null=True)
+    other_id = models.CharField(max_length=255, verbose_name='Other ID', null=True)
+    tran_id = models.CharField(max_length=255, verbose_name='Transaction ID', null=True)
+    file_num = models.CharField(max_length=255, verbose_name='File Number', null=True)
+    memo_cd = models.CharField(max_length=255, verbose_name='Memo Code', null=True)
+    memo_text = models.CharField(max_length=255, verbose_name='Memo Text', null=True)
+    sub_id = models.CharField(max_length=255, verbose_name='FEC Record Number', null=True)
 
 
 class FedProcurement(cmodels.ProcurementBaseModel):
