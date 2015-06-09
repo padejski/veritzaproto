@@ -94,6 +94,16 @@ class FedIndividualContribution(cmodels.BaseModel):
     sub_id = models.CharField(max_length=255, verbose_name='FEC Record Number', null=True)
 
 
+class FedIrsExemptOrg(cmodels.BaseModel):
+    """IRS Exempt Organizations"""
+    city = models.CharField(max_length=255, null=True)
+    country = models.CharField(max_length=255, null=True)
+    ein = models.CharField(max_length=255, null=True, verbose_name='EIN')
+    name = models.CharField(max_length=255, null=True, verbose_name='Legal Name')
+    state = models.CharField(max_length=255, null=True)
+    status = models.CharField(max_length=255, null=True, verbose_name='Deductibility Status')
+
+
 class FedProcurement(cmodels.ProcurementBaseModel):
     """Federal Procurement model
 
