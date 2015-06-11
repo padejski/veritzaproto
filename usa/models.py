@@ -199,6 +199,21 @@ class FedToxicsFacility(cmodels.BaseModel):
     us_mexico_border_ind = models.CharField(max_length=255, null=True)
 
 
+class FedOshaEbsa(cmodels.BaseModel):
+    """Federal OSHA EBSA Enforcement Data"""
+    case_type = models.CharField(max_length=255, null=True, verbose_name='Case Type')
+    ein = models.CharField(max_length=255, null=True, verbose_name='EIN')
+    final_close_date = models.CharField(max_length=255, null=True, verbose_name='Closing Date')
+    final_close_reason = models.CharField(max_length=255, null=True, verbose_name='Closing Reason')
+    penalty_amount = models.CharField(max_length=255, null=True, verbose_name='Penalty Amount')
+    plan_admin = models.CharField(max_length=255, null=True, verbose_name='Administrator')
+    plan_admin_state = models.CharField(max_length=255, null=True, verbose_name='Admin State')
+    plan_admin_zip_code = models.CharField(max_length=255, null=True, verbose_name='Admin Zip Code')
+    plan_name = models.CharField(max_length=255, null=True, verbose_name='Plan Name')
+    plan_year = models.CharField(max_length=255, null=True, verbose_name='Plan Year')
+    pn = models.CharField(max_length=255, null=True, verbose_name='Plan Number')
+
+
 # ============================================================================
 # EOF
 # ============================================================================
