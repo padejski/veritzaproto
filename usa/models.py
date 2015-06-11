@@ -214,6 +214,48 @@ class FedOshaEbsa(cmodels.BaseModel):
     pn = models.CharField(max_length=255, null=True, verbose_name='Plan Number')
 
 
+class FedOshaInspection(cmodels.BaseModel):
+    """Federal OSHA Inspection Data"""
+    activity_nr = models.CharField(max_length=255, null=True, verbose_name='Inspection ID')
+    adv_notice = models.CharField(max_length=255, null=True, verbose_name='Advance Notice')
+    case_mod_date = models.CharField(max_length=255, null=True)
+    close_case_date = models.CharField(max_length=255, null=True)
+    close_conf_date = models.CharField(max_length=255, null=True)
+    estab_name = models.CharField(max_length=255, null=True, verbose_name='Establishment Name')
+    health_const = models.CharField(max_length=255, null=True)
+    health_manuf = models.CharField(max_length=255, null=True)
+    health_marit = models.CharField(max_length=255, null=True)
+    host_est_key = models.CharField(max_length=255, null=True)
+    indstry_dim_id = models.CharField(max_length=255, null=True)
+    insp_scope = models.CharField(max_length=255, null=True)
+    insp_type = models.CharField(max_length=255, null=True)
+    ld_dt = models.CharField(max_length=255, null=True)
+    mail_city = models.CharField(max_length=255, null=True)
+    mail_state = models.CharField(max_length=255, null=True)
+    mail_street = models.CharField(max_length=255, null=True)
+    mail_zip = models.CharField(max_length=255, null=True)
+    migrant = models.CharField(max_length=255, null=True)
+    naics_code = models.CharField(max_length=255, null=True, verbose_name='NAICS Code')
+    nr_in_estab = models.CharField(max_length=255, null=True)
+    open_date = models.CharField(max_length=255, null=True)
+    owner_code = models.CharField(max_length=255, null=True)
+    owner_type = models.CharField(max_length=255, null=True)
+    reporting_id = models.CharField(max_length=255, null=True)
+    safety_const = models.CharField(max_length=255, null=True)
+    safety_hlth = models.CharField(max_length=255, null=True)
+    safety_manuf = models.CharField(max_length=255, null=True)
+    safety_marit = models.CharField(max_length=255, null=True)
+    sic_code = models.CharField(max_length=255, null=True)
+    site_address = models.CharField(max_length=255, null=True)
+    site_city = models.CharField(max_length=255, null=True, verbose_name='City')
+    site_state = models.CharField(max_length=255, null=True, verbose_name='State')
+    site_zip = models.CharField(max_length=255, null=True, verbose_name='ZIP')
+    state_flag = models.CharField(max_length=255, null=True)
+    union_status = models.CharField(max_length=255, null=True)
+    why_no_insp = models.CharField(max_length=255, null=True, verbose_name='No Inspection Reason')
+    zip_dim_id = models.CharField(max_length=255, null=True)
+
+
 # ============================================================================
 # EOF
 # ============================================================================
