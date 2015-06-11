@@ -256,6 +256,28 @@ class FedOshaInspection(cmodels.BaseModel):
     zip_dim_id = models.CharField(max_length=255, null=True)
 
 
+class FedCpscRecall(cmodels.BaseModel):
+    """Federal Consumer Product Safety Commission Recall Model"""
+    consumer_contact = models.CharField(max_length=255, null=True)
+    desc = models.CharField(max_length=255, null=True)
+    hazards = models.CharField(max_length=255, null=True)
+    images = models.CharField(max_length=255, null=True)
+    in_conj = models.CharField(max_length=255, null=True)
+    injuries = models.CharField(max_length=255, null=True)
+    last_pub_date = models.CharField(max_length=255, null=True)
+    mfcs_countries = models.CharField(max_length=255, null=True)
+    mfcs = models.CharField(max_length=255, null=True)
+    products = models.CharField(max_length=255, null=True)
+    product_upcs = models.CharField(max_length=255, null=True)
+    recall_date = models.CharField(max_length=255, null=True)
+    recall_id = models.CharField(max_length=255, null=True)
+    recall_num = models.CharField(max_length=255, null=True)
+    remedies = models.CharField(max_length=255, null=True)
+    retailers = models.CharField(max_length=255, null=True)
+    title = models.CharField(max_length=255, null=True)
+    url = models.CharField(max_length=255, null=True)
+
+
 # ============================================================================
 # EOF
 # ============================================================================
