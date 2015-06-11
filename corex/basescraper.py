@@ -53,6 +53,15 @@ class BaseScraper(object):
 
         return fileobj
 
+    def download_http(self, url, zfile=False):
+        """download file from an http server"""
+        fcontent = self.session.get(url).content
+
+        if zfile:
+            fcontent = zipfile.ZipFile(StringIO.StringIO(fcontent))
+
+        return fcontent
+
     def get(self, url):
         """fetch url """
         res = self.session.get(url, timeout=60)
