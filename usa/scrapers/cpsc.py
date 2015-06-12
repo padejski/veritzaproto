@@ -12,12 +12,13 @@ __date__ = June 2015
 # necessary imports
 # ============================================================================
 from corex.basescraper import BaseScraper
-from ..models import FedCpscRecall
+from ..models import FedCpscRecall, FedCpscRecallViolation
 
 # ============================================================================
 # useful constants
 # ============================================================================
 REC_URL = 'http://www.saferproducts.gov/RestWebServices/Recall?format=json'
+VIOL_URL = 'http://www.cpsc.gov/en/Recalls/Violations/'
 
 
 # ============================================================================
@@ -83,6 +84,40 @@ class CpscRecallsScraper(BaseScraper):
         for data in self.fetch_data():
             print(data)
             data = FedCpscRecall(**data)
+            self.save_model(data)
+
+            yield
+
+
+class CpscRecallsViolationsScraper(BaseScraper):
+    """Consumer Product Safety Commission Recalls Violations Scraper"""
+
+    def __init__(self):
+        """Initialize base class"""
+        BaseScraper.__init__(self)
+
+    def fetch_data(self):
+        """fetch data from Cpsc website"""
+        for data in self.gen_data_dicts():
+            yield data
+
+    def gen_data_dicts(self):
+        """generate data dictionaries"""
+        rows = (row for row in self.get_soup(VIOL_URL).find_all('table')[-1].find_all('tr'))
+
+        headers = [x.text.strip().lower().replace(' ', '_') for x in next(rows).find_all('td')]
+        headers = [hdr.replace('.', '') for hdr in headers]
+
+        for row in rows:
+            data = dict(zip(headers, [x.text for x in row.find_all('td')]))
+            data['hash'] = self.get_hash(data)
+
+            yield data
+
+    def run(self):
+        """run scraper"""
+        for data in self.fetch_data():
+            data = FedCpscRecallViolation(**data)
             self.save_model(data)
 
             yield
