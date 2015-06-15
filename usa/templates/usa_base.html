@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{% static "core/css/lib/bootstrap.min.css" %}">
   <link rel="stylesheet" href="{% static "core/css/lib/font-awesome.min.css" %}">
   <link rel="stylesheet" href="{% static "core/css/veritza.css" %}">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <!-- <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css"> -->
 
   <script src="{% static "core/js/lib/jquery/jquery.min.js" %}"></script>
@@ -33,7 +34,7 @@
         <div class="nav-collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li{% if current_page == 'datasets' %} class="active"{% endif %}>
-              <a href="{% url 'serbia:datasets' %}">Datasets</a>
+              <a href="{% url 'usa:datasets' %}">Datasets</a>
             </li>
             <li{% if current_page == 'faq' %} class="active"{% endif %}><a href="{% url 'faq' %}">Community</a></li>
             <li{% if current_page == 'about' %} class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
@@ -73,7 +74,7 @@
       </div>
     </div>
       {% block content %}
-       
+
       {% endblock %}
     {% endblock %}
   </div>

@@ -14,40 +14,220 @@
         <div class="row">
           <a href="{% url 'usa:datasets' %}">
             <div class="col-md-2">
-              <img src="{{ MEDIA_URL }}images/public-official-small.png"></img>
+                <i class="fa fa-user fa-3x"></i>
             </div>
             <div class="col-md-8">
               <div style="font-size: 12pt">Public Officials ({{ officials_no }})</div>
           </a>
         	  <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficial' %}</div>
         	  <div style="font-size: 9pt">
-                Names and titles of all the public officials in Serbia - public record registry of Serbian public officials.
+                Names and titles of all the public officials.
                </div>
             </div>
           </div>
 
-            
+
 
             <div class="row">
                 <a href="{% url 'usa:companies' %}">
                     <div class="col-md-2">
-                        <img src="{{ MEDIA_URL }}images/company-small.png"></img>
+                        <i class="fa fa-briefcase fa-3x"></i>
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Companies ({{ companies_no }})</div></a>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
                         <div style="font-size: 9pt">
-                            List of all the companies in Serbia - public record registry of Serbian Central Registry of Business Entities.
-                        </div> 
+                            List of Companies.
+                        </div>
                     </div>
 
             </div>
 
 
-            
-            
+            <div class="row">
+                <a href="{% url 'usa:disclosures' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-money fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Financial Disclosures ({{ disclosures_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Disclosures' %}</div>
+                        <div style="font-size: 9pt">
+                            List of Financial Disclosures.
+                        </div>
+                    </div>
 
-            
+            </div>
+
+
+            <div class="row">
+                <a href="{% url 'usa:procurements' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-bars fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Public Procurement ({{ procurements_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Procurement' %}</div>
+                        <div style="font-size: 9pt">
+                            List of Public Procurement.
+                        </div>
+                    </div>
+
+            </div>
+
+
+            <div class="row">
+                <a href="{% url 'usa:irsexempt' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-certificate fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">IRS Exempt Organizations ({{ irsexempt_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of IRS Exempt Organizations.
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <a href="{% url 'usa:secfilings' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-file-text fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">SEC Filings ({{ secfilings_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of SEC  Filings.
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <a href="{% url 'usa:toxicsfacilities' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-warning fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Toxics Facilites ({{ toxics_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of Toxics Facilities.
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <a href="{% url 'usa:oshaebsa' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-cog fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">OSHA EBSA ({{ oshaebsa_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of OSHA EBSA Enforcements.
+                        </div>
+                    </div>
+
+            </div>
+
+
+            <div class="row">
+                <a href="{% url 'usa:oshainsp' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-plus-square fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">OSHA Inspections ({{ oshainsp_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of OSHA Public Safety Inspections.
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <a href="{% url 'usa:cpscrecalls' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-bell fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">CPSC Recalls ({{ cpscrecalls_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of Consumer Product Safety Commission Recalls.
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <a href="{% url 'usa:cpscviols' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-bell-o fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">CPSC Violations ({{ cpscviol_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of Consumer Product Safety Commission Recalls Violations.
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <a href="{% url 'usa:candidates' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-group fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Election Candidates ({{ candidates_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of Elections Canditates.
+                        </div>
+                    </div>
+
+            </div>
+
+
+            <div class="row">
+                <a href="{% url 'usa:commcontribs' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-money fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Committees Election Contributions ({{ commcontribs_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            List of Committees Election Contributions.
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <a href="{% url 'usa:indvcontribs' %}">
+                    <div class="col-md-2">
+                        <i class="fa fa-money fa-3x"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <div style="font-size: 12pt">Individuals Election Contributions   ({{ indvcontribs_no }})</div></a>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div style="font-size: 9pt">
+                            Lisf of Individuals Elections Contributions.
+                        </div>
+                    </div>
+
+            </div>
+
 
             </div>
         </div>
@@ -60,8 +240,8 @@
             <div class="panel-heading">Veritzas - public records data integrations</div>
             <div class="panel-body">
 
-           
-            
+
+
 
             </div>
             </div>
