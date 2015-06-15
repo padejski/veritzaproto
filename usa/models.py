@@ -238,7 +238,7 @@ class FedOshaInspection(cmodels.BaseModel):
     naics_code = models.CharField(max_length=255, null=True, verbose_name='NAICS Code')
     nr_in_estab = models.CharField(max_length=255, null=True)
     open_date = models.CharField(max_length=255, null=True)
-    owner_code = models.CharField(max_length=255, null=True)
+    owner_code = models.CharField(max_length=255, null=True, verbose_name='Owner Code')
     owner_type = models.CharField(max_length=255, null=True)
     reporting_id = models.CharField(max_length=255, null=True)
     safety_const = models.CharField(max_length=255, null=True)
@@ -258,7 +258,7 @@ class FedOshaInspection(cmodels.BaseModel):
 
 class FedCpscRecall(cmodels.BaseModel):
     """Federal Consumer Product Safety Commission Recall Model"""
-    consumer_contact = models.CharField(max_length=255, null=True)
+    consumer_contact = models.CharField(max_length=255, null=True, verbose_name='Consumer Contact')
     desc = models.CharField(max_length=255, null=True)
     hazards = models.CharField(max_length=255, null=True)
     images = models.CharField(max_length=255, null=True)
@@ -266,7 +266,7 @@ class FedCpscRecall(cmodels.BaseModel):
     injuries = models.CharField(max_length=255, null=True)
     last_pub_date = models.CharField(max_length=255, null=True)
     mfcs_countries = models.CharField(max_length=255, null=True)
-    mfcs = models.CharField(max_length=255, null=True)
+    mfcs = models.CharField(max_length=255, null=True, verbose_name='Manufacturers')
     products = models.CharField(max_length=255, null=True)
     product_upcs = models.CharField(max_length=255, null=True)
     recall_date = models.CharField(max_length=255, null=True)
@@ -280,17 +280,17 @@ class FedCpscRecall(cmodels.BaseModel):
 
 class FedCpscRecallViolation(cmodels.BaseModel):
     """Federal Conusmer Product Safety Comm. Recall Violation Model"""
-    action_requested = models.CharField(max_length=255, null=True)
-    address_1 = models.CharField(max_length=255, null=True)
+    action_requested = models.CharField(max_length=255, null=True, verbose_name='Action Requested')
+    address_1 = models.CharField(max_length=255, null=True, verbose_name='Address')
     address_2 = models.CharField(max_length=255, null=True)
     citation = models.CharField(max_length=255, null=True)
     country = models.CharField(max_length=255, null=True)
     firm = models.CharField(max_length=255, null=True)
-    foreign_mfg = models.CharField(max_length=255, null=True)
-    loa_date = models.CharField(max_length=255, null=True)
-    lot_size = models.CharField(max_length=255, null=True)
+    foreign_mfg = models.CharField(max_length=255, null=True, verbose_name='Foreign Manufacturing')
+    loa_date = models.CharField(max_length=255, null=True, verbose_name='LOA Date')
+    lot_size = models.CharField(max_length=255, null=True, verbose_name='Lot Size')
     model = models.CharField(max_length=255, null=True)
-    primary_violation = models.CharField(max_length=255, null=True)
+    primary_violation = models.CharField(max_length=255, null=True, verbose_name='Primary Violation')
     product = models.CharField(max_length=255, null=True)
 
 
