@@ -42,3 +42,4 @@ migrations_old/
 venv
 data
 __pycache__
+.directory
