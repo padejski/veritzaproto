@@ -27,7 +27,7 @@ class ScraperScheduler:
         """Initiliaze task queue"""
         self._task_queue = deque()
 
-    def scraping_task(self, task):
+    def add_task(self, task):
         """Admit a newly started task to the scheduler
 
         """
@@ -57,7 +57,7 @@ class Command(BaseCommand):
 
         # add scraping tasks
         for scp in SCRAPERS:
-            sched.scraping_task(scp().run())
+            sched.add_task(scp().run())
 
         # run scheduler
         sched.run()
