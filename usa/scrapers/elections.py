@@ -14,7 +14,7 @@ __date__ = June 2015
 from itertools import imap
 
 from corex.basescraper import BaseScraper
-from ..models import FedCandidate, FedIndividualContribution, FedCommitteeContribution
+from ..models import FedCandidate, FedElectionContribution
 
 # ============================================================================
 # useful constants
@@ -129,7 +129,7 @@ class CommitteeContributionsScraper(BaseScraper):
     def run(self):
         """run scraper"""
         for data in self.fetch_data():
-            data = FedCommitteeContribution(**data)
+            data = FedElectionContribution(**data)
             self.save_model(data)
 
             yield
@@ -220,7 +220,7 @@ class IndividualContributionsScraper(BaseScraper):
     def run(self):
         """run scraper"""
         for data in self.fetch_data():
-            data = FedIndividualContribution(**data)
+            data = FedElectionContribution(**data)
             self.save_model(data)
 
             yield
