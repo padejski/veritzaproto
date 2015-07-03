@@ -32,6 +32,11 @@ class FedCandidate(cmodels.BaseModel):
     cand_city = models.CharField(max_length=255, null=True, verbose_name='City')
     cand_st = models.CharField(max_length=255, null=True, verbose_name='State')
     cand_zip = models.CharField(max_length=255, null=True, verbose_name='Zip Code')
+    url = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        """xtra options"""
+        verbose_name_plural = "Election Candidates"
 
 
 class FedCompany(cmodels.CompanyBaseModel):
@@ -43,8 +48,8 @@ class FedCompany(cmodels.CompanyBaseModel):
         verbose_name_plural = "Federal Companies"
 
 
-class FedCommitteeContribution(cmodels.BaseModel):
-    """Committee Election Contribution Model"""
+class FedElectionContribution(cmodels.BaseModel):
+    """Election Contribution Model"""
     amndt_ind = models.CharField(max_length=255, null=True, verbose_name='Amendment')
     cand_id = models.CharField(max_length=255, null=True, verbose_name='Candidate')
     city = models.CharField(max_length=255, null=True)
@@ -67,31 +72,7 @@ class FedCommitteeContribution(cmodels.BaseModel):
     transaction_pgi = models.CharField(max_length=255, null=True, verbose_name='Primary-Gen Indicator')
     transaction_tp = models.CharField(max_length=255, null=True, verbose_name='Transaction Type')
     zip_code = models.CharField(max_length=255, null=True, verbose_name='Zip Code')
-
-
-class FedIndividualContribution(cmodels.BaseModel):
-    """Individual Election Contribution Model"""
-    cmte_id = models.CharField(max_length=255, null=True)
-    amndt_ind = models.CharField(max_length=255, verbose_name='Amendment', null=True)
-    rpt_tp = models.CharField(max_length=255, verbose_name='Report Type', null=True)
-    transaction_pgi = models.CharField(max_length=255, verbose_name='Primary-General Indicator', null=True)
-    image_num = models.CharField(max_length=255, verbose_name='Microfilm Location', null=True)
-    transaction_tp = models.CharField(max_length=255, verbose_name='Transaction Type', null=True)
-    entity_tp = models.CharField(max_length=255, verbose_name='Entity Type', null=True)
-    name = models.CharField(max_length=255, null=True)
-    city = models.CharField(max_length=255, null=True)
-    state = models.CharField(max_length=255, null=True)
-    zip_code = models.CharField(max_length=255, verbose_name='Zip Code', null=True)
-    employer = models.CharField(max_length=255, null=True)
-    occupation = models.CharField(max_length=255, null=True)
-    transaction_dt = models.CharField(max_length=255, verbose_name='Date', null=True)
-    transaction_amt = models.CharField(max_length=255, verbose_name='Amount', null=True)
-    other_id = models.CharField(max_length=255, verbose_name='Other ID', null=True)
-    tran_id = models.CharField(max_length=255, verbose_name='Transaction ID', null=True)
-    file_num = models.CharField(max_length=255, verbose_name='File Number', null=True)
-    memo_cd = models.CharField(max_length=255, verbose_name='Memo Code', null=True)
-    memo_text = models.CharField(max_length=255, verbose_name='Memo Text', null=True)
-    sub_id = models.CharField(max_length=255, verbose_name='FEC Record Number', null=True)
+    url = models.CharField(max_length=255, null=True)
 
 
 class FedIrsExemptOrg(cmodels.BaseModel):
@@ -102,6 +83,7 @@ class FedIrsExemptOrg(cmodels.BaseModel):
     name = models.CharField(max_length=255, null=True, verbose_name='Legal Name')
     state = models.CharField(max_length=255, null=True)
     status = models.CharField(max_length=255, null=True, verbose_name='Deductibility Status')
+    url = models.CharField(max_length=255, null=True)
 
 
 class FedProcurement(cmodels.ProcurementBaseModel):
@@ -120,6 +102,7 @@ class FedFinancialDisclosure(cmodels.BaseModel):
     office = models.CharField(max_length=255)
     pdf = models.CharField(max_length=255)
     year = models.CharField(max_length=255)
+    url = models.CharField(max_length=255, null=True)
 
 
 class FedSecFiling(cmodels.BaseModel):
@@ -197,6 +180,7 @@ class FedToxicsFacility(cmodels.BaseModel):
     tribal_land_name = models.CharField(max_length=255, null=True, verbose_name='Tribal Land Name')
     update_date = models.CharField(max_length=255, null=True, verbose_name='Update Date')
     us_mexico_border_ind = models.CharField(max_length=255, null=True)
+    url = models.CharField(max_length=255, null=True)
 
 
 class FedOshaEbsa(cmodels.BaseModel):
@@ -212,6 +196,7 @@ class FedOshaEbsa(cmodels.BaseModel):
     plan_name = models.CharField(max_length=255, null=True, verbose_name='Plan Name')
     plan_year = models.CharField(max_length=255, null=True, verbose_name='Plan Year')
     pn = models.CharField(max_length=255, null=True, verbose_name='Plan Number')
+    url = models.CharField(max_length=255, null=True)
 
 
 class FedOshaInspection(cmodels.BaseModel):
@@ -254,6 +239,7 @@ class FedOshaInspection(cmodels.BaseModel):
     union_status = models.CharField(max_length=255, null=True)
     why_no_insp = models.CharField(max_length=255, null=True, verbose_name='No Inspection Reason')
     zip_dim_id = models.CharField(max_length=255, null=True)
+    url = models.CharField(max_length=255, null=True)
 
 
 class FedCpscRecall(cmodels.BaseModel):
@@ -292,6 +278,7 @@ class FedCpscRecallViolation(cmodels.BaseModel):
     model = models.CharField(max_length=255, null=True)
     primary_violation = models.CharField(max_length=255, null=True, verbose_name='Primary Violation')
     product = models.CharField(max_length=255, null=True)
+    url = models.CharField(max_length=255, null=True)
 
 
 # ============================================================================
