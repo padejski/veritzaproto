@@ -2,7 +2,7 @@
 views
 
 """
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django_tables2 import SingleTableView
 
 from . import models, tables
@@ -15,19 +15,33 @@ class CandidatesView(SingleTableView):
     template_name = 'usa_list.html'
 
 
+class CandidateDetailView(DetailView):
+    model = models.FedCandidate
+    template_name = 'usa_candidate.html'
+
+
 class CompaniesView(SingleTableView):
     """list of companies view"""
     model = models.FedCompany
     table_class = tables.CompanyTable
     template_name = 'usa_list.html'
 
-class CommitteeContributionsView(SingleTableView):
-    """list of committee contributions"""
-    model = models.FedCommitteeContribution
-    table_class = tables.CommitteeContributionTable
+
+class CompanyDetailView(DetailView):
+    model = models.FedCompany
+    template_name = 'usa_company.html'
+
+
+class ElectionContributionsView(SingleTableView):
+    """list of election contributions"""
+    model = models.FedElectionContribution
+    table_class = tables.ElectionContributionTable
     template_name = 'usa_list.html'
 
 
+class ElectionContributionDetailView(DetailView):
+    model = models.FedElectionContribution
+    template_name = 'usa_contribution.html'
 
 
 class DatasetsView(TemplateView):
@@ -47,11 +61,11 @@ class DatasetsView(TemplateView):
         context['cpscrecalls_no'] = models.FedCpscRecall.objects.count()
         context['cpscviol_no'] = models.FedCpscRecallViolation.objects.count()
         context['candidates_no'] = models.FedCandidate.objects.count()
-        context['commcontribs_no'] = models.FedCommitteeContribution.objects.count()
-        context['indvcontribs_no'] = models.FedIndividualContribution.objects.count()
+        context['econtribs_no'] = models.FedElectionContribution.objects.count()
         context['officials_no'] = 0
 
         return context
+
 
 class FinancialDisclosuresView(SingleTableView):
     """list of Financial disclosures"""
@@ -59,16 +73,15 @@ class FinancialDisclosuresView(SingleTableView):
     table_class = tables.FinancialDisclosureTable
     template_name = 'usa_list.html'
 
+
+class FinancialDisclosureDetailView(DetailView):
+    model = models.FedFinancialDisclosure
+    template_name = 'usa_financial_disclosure.html'
+
+
 class IndexView(TemplateView):
     """Index view """
     template_name = 'usa_home.html'
-
-
-class IndividualContributionsView(SingleTableView):
-    """list of Individual contributions"""
-    model = models.FedIndividualContribution
-    table_class = tables.IndividualContributionTable
-    template_name = 'usa_list.html'
 
 
 class IrsExemptOrgsView(SingleTableView):
@@ -78,11 +91,21 @@ class IrsExemptOrgsView(SingleTableView):
     template_name = 'usa_list.html'
 
 
+class IrsExemptOrgDetailView(DetailView):
+    model = models.FedIrsExemptOrg
+    template_name = 'usa_irsexempt_org.html'
+
+
 class ProcurementsView(SingleTableView):
     """List of procurements """
     model = models.FedProcurement
     table_class = tables.ProcurementTable
     template_name = 'usa_list.html'
+
+
+class ProcurementDetailView(DetailView):
+    model = models.FedProcurement
+    template_name = 'usa_procurement.html'
 
 
 class SecFilingsView(SingleTableView):
@@ -92,11 +115,21 @@ class SecFilingsView(SingleTableView):
     template_name = 'usa_list.html'
 
 
+class SecFilingDetailView(DetailView):
+    model = models.FedSecFiling
+    template_name = 'usa_sec_filing.html'
+
+
 class ToxicsFacilitiesView(SingleTableView):
     """list of Toxics facilities"""
     model = models.FedToxicsFacility
     table_class = tables.ToxicsFacilityTable
     template_name = 'usa_list.html'
+
+
+class ToxicsFacilityDetailView(DetailView):
+    model = models.FedToxicsFacility
+    template_name = 'usa_toxics_facility.html'
 
 
 class OshaEbsasView(SingleTableView):
@@ -106,11 +139,21 @@ class OshaEbsasView(SingleTableView):
     template_name = 'usa_list.html'
 
 
+class OshaEbsaDetailView(DetailView):
+    model = models.FedOshaEbsa
+    template_name = 'usa_osha_ebsa.html'
+
+
 class OshaInspectionsView(SingleTableView):
     """list of OSHA inspections"""
     model = models.FedOshaInspection
     table_class = tables.OshaInspectionTable
     template_name = 'usa_list.html'
+
+
+class OshaInspectionDetailView(DetailView):
+    model = models.FedOshaInspection
+    template_name = 'usa_osha_insp.html'
 
 
 class CpscRecallsView(SingleTableView):
@@ -120,11 +163,21 @@ class CpscRecallsView(SingleTableView):
     template_name = 'usa_list.html'
 
 
+class CpscRecallDetailView(DetailView):
+    model = models.FedCpscRecall
+    template_name = 'usa_cpsc_recall.html'
+
+
 class CpscRecallViolationsView(SingleTableView):
     """list of CPSC Recall Violations"""
     model = models.FedCpscRecallViolation
     table_class = tables.CpscRecallViolationTable
     template_name = 'usa_list.html'
+
+
+class CpscRecallViolationDetailView(DetailView):
+    model = models.FedCpscRecallViolation
+    template_name = 'usa_cpsc_recall_violation.html'
 # ============================================================================
 # EOF
 # ============================================================================
