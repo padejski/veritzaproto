@@ -1,0 +1,32 @@
+{% extends 'usa_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+
+  <h3>IRS Exempt Organizations</h3>
+    <div class="page-header">{{ object.name }}</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Basic information</div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr> <td>City</td> <td>{{ object.city }}</td> </tr>
+          <tr> <td>Country</td> <td>{{ object.country }}</td> </tr>
+          <tr> <td>EIN</td> <td>{{ object.ein }}</td> </tr>
+          <tr> <td>Name</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>State</td> <td>{{ object.state }}</td> </tr>
+          <tr> <td>Status</td> <td>{{ object.status }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+        </table>
+      </div>
+    </div>
+
+
+{% endblock %}

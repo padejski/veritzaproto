@@ -77,7 +77,7 @@
 
 
             <div class="row">
-                <a href="{% url 'usa:irsexempt' %}">
+                <a href="{% url 'usa:irsexempts' %}">
                     <div class="col-md-2">
                         <i class="fa fa-certificate fa-3x"></i>
                     </div>
@@ -122,7 +122,7 @@
             </div>
 
             <div class="row">
-                <a href="{% url 'usa:oshaebsa' %}">
+                <a href="{% url 'usa:oshaebsas' %}">
                     <div class="col-md-2">
                         <i class="fa fa-cog fa-3x"></i>
                     </div>
@@ -138,7 +138,7 @@
 
 
             <div class="row">
-                <a href="{% url 'usa:oshainsp' %}">
+                <a href="{% url 'usa:oshainsps' %}">
                     <div class="col-md-2">
                         <i class="fa fa-plus-square fa-3x"></i>
                     </div>
@@ -199,34 +199,20 @@
 
 
             <div class="row">
-                <a href="{% url 'usa:commcontribs' %}">
+                <a href="{% url 'usa:econtribs' %}">
                     <div class="col-md-2">
                         <i class="fa fa-money fa-3x"></i>
                     </div>
                     <div class="col-md-8">
-                        <div style="font-size: 12pt">Committees Election Contributions ({{ commcontribs_no }})</div></a>
+                        <div style="font-size: 12pt">Election Contributions ({{ econtribs_no }})</div></a>
                         <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
                         <div style="font-size: 9pt">
-                            List of Committees Election Contributions.
+                            List of Election Contributions.
                         </div>
                     </div>
 
             </div>
 
-            <div class="row">
-                <a href="{% url 'usa:indvcontribs' %}">
-                    <div class="col-md-2">
-                        <i class="fa fa-money fa-3x"></i>
-                    </div>
-                    <div class="col-md-8">
-                        <div style="font-size: 12pt">Individuals Election Contributions   ({{ indvcontribs_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
-                        <div style="font-size: 9pt">
-                            Lisf of Individuals Elections Contributions.
-                        </div>
-                    </div>
-
-            </div>
 
 
             </div>

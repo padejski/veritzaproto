@@ -1,0 +1,48 @@
+{% extends 'usa_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+
+  <h3>Election Contributions</h3>
+    <div class="page-header">{{ object.name }}</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Basic information</div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr> <td>Amendment</td> <td>{{ object.filing }}</td> </tr>
+          <tr> <td>Candidate</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>City</td> <td>{{ object.office }}</td> </tr>
+          <tr> <td>Committee ID</td> <td>{{ object.pdf }}</td> </tr>
+          <tr> <td>Employer</td> <td>{{ object.year }}</td> </tr>
+          <tr> <td>Entity Type</td> <td>{{ object.filing }}</td> </tr>
+          <tr> <td>File Number</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>Microfilm Location</td> <td>{{ object.office }}</td> </tr>
+          <tr> <td>Memo Code</td> <td>{{ object.pdf }}</td> </tr>
+          <tr> <td>Memo Text</td> <td>{{ object.year }}</td> </tr>
+          <tr> <td>Contributor Name</td> <td>{{ object.filing }}</td> </tr>
+          <tr> <td>Occupation</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>Other ID</td> <td>{{ object.office }}</td> </tr>
+          <tr> <td>Report Type</td> <td>{{ object.pdf }}</td> </tr>
+          <tr> <td>State</td> <td>{{ object.year }}</td> </tr>
+          <tr> <td>FEC Record Number</td> <td>{{ object.filing }}</td> </tr>
+          <tr> <td>Transaction ID</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>Transaction Amount</td> <td>{{ object.office }}</td> </tr>
+          <tr> <td>Transaction Date</td> <td>{{ object.pdf }}</td> </tr>
+          <tr> <td>Transaction Primary-General Indicator</td> <td>{{ object.year }}</td> </tr>
+          <tr> <td>Transaction Type</td> <td>{{ object.filing }}</td> </tr>
+          <tr> <td>Zip Code</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+        </table>
+      </div>
+    </div>
+
+
+{% endblock %}

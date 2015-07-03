@@ -1,0 +1,55 @@
+{% extends 'usa_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+
+  <h3>Securities and Exchange Commission Filing</h3>
+    <div class="page-header">{{ object.name }}</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Basic information</div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr> <td>Accession Number</td> <td>{{ object.accession_number }}</td> </tr>
+          <tr> <td>Business Address</td> <td>{{ object.business_address }}</td> </tr>
+          <tr> <td>Business Phone</td> <td>{{ object.business_phone }}</td> </tr>
+          <tr> <td>Central Index Key</td> <td>{{ object.central_index_key }}</td> </tr>
+          <tr> <td>City</td> <td>{{ object.city }}</td> </tr>
+          <tr> <td>Company Conformed Name</td> <td>{{ object.company_conformed_name }}</td> </tr>
+          <tr> <td>Company Data</td> <td>{{ object.company_data }}</td> </tr>
+          <tr> <td>Conformed Submission Type</td> <td>{{ object.conformed_submission_type }}</td> </tr>
+          <tr> <td>Date as of Change</td> <td>{{ object.date_as_of_change }}</td> </tr>
+          <tr> <td>Date of Name Change</td> <td>{{ object.date_of_name_change }}</td> </tr>
+          <tr> <td>File as of Date</td> <td>{{ object.filed_as_of_date }}</td> </tr>
+          <tr> <td>Filer</td> <td>{{ object.filer }}</td> </tr>
+          <tr> <td>Filing Values</td> <td>{{ object.filing_values }}</td> </tr>
+          <tr> <td>Film Number</td> <td>{{ object.film_number }}</td> </tr>
+          <tr> <td>Fiscal Year End</td> <td>{{ object.fiscal_year_end }}</td> </tr>
+          <tr> <td>Form Type</td> <td>{{ object.form_type }}</td> </tr>
+          <tr> <td>Former company</td> <td>{{ object.former_company }}</td> </tr>
+          <tr> <td>Former Conformed Name</td> <td>{{ object.former_conformed_name }}</td> </tr>
+          <tr> <td>IRS Number</td> <td>{{ object.irs_number }}</td> </tr>
+          <tr> <td>Mail Address</td> <td>{{ object.mail_address }}</td> </tr>
+          <tr> <td>Public Document Count</td> <td>{{ object.public_document_count }}</td> </tr>
+          <tr> <td>SEC Act</td> <td>{{ object.sec_act }}</td> </tr>
+          <tr> <td>SEC File Number</td> <td>{{ object.sec_file_number }}</td> </tr>
+          <tr> <td>Standard Industrial Classification</td> <td>{{ object.standard_industrial_classification }}</td> </tr>
+          <tr> <td>State</td> <td>{{ object.state }}</td> </tr>
+          <tr> <td>State of Incorporation</td> <td>{{ object.state_of_incorporation }}</td> </tr>
+          <tr> <td>Street 1</td> <td>{{ object.street_1 }}</td> </tr>
+          <tr> <td>Street 2</td> <td>{{ object.street_2 }}</td> </tr>
+          <tr> <td>Zip Code</td> <td>{{ object.zip }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+        </table>
+      </div>
+    </div>
+
+
+{% endblock %}

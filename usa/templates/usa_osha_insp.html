@@ -1,0 +1,64 @@
+{% extends 'usa_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+
+  <h3>OSHA Inspection</h3>
+    <div class="page-header">{{ object.estab_name }}</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Basic information</div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr> <td>Inspection ID</td> <td>{{ object.activity_nr }}</td> </tr>
+          <tr> <td>Advance Notice</td> <td>{{ object.adv_notice }}</td> </tr>
+          <tr> <td>Case Modification Date</td> <td>{{ object.case_mod_date }}</td> </tr>
+          <tr> <td>Close Case Date</td> <td>{{ object.close_case_date }}</td> </tr>
+          <tr> <td>Close Conf Date</td> <td>{{ object.close_conf_date }}</td> </tr>
+          <tr> <td>Establishment Name</td> <td>{{ object.estab_name }}</td> </tr>
+          <tr> <td>Health Const</td> <td>{{ object.health_const }}</td> </tr>
+          <tr> <td>Health Manufacture</td> <td>{{ object.health_manuf }}</td> </tr>
+          <tr> <td>Health Marit</td> <td>{{ object.health_marit }}</td> </tr>
+          <tr> <td>Host Est Key</td> <td>{{ object.host_est_key }}</td> </tr>
+          <tr> <td>Industry DIM ID</td> <td>{{ object.indstry_dim_id }}</td> </tr>
+          <tr> <td>Inspection Scope</td> <td>{{ object.insp_scope }}</td> </tr>
+          <tr> <td>Inspection Type</td> <td><{{ object.insp_type }}</td> </tr>
+          <tr> <td>LD Date</td> <td>{{ object.ld_dt }}</td> </tr>
+          <tr> <td>Mail City</td> <td>{{ object.mail_city }}</td> </tr>
+          <tr> <td>Mail State</td> <td>{{ object.mail_state }}</td> </tr>
+          <tr> <td>Mail Street</td> <td>{{ object.mail_street }}</td> </tr>
+          <tr> <td>Mail Zip</td> <td>{{ object.mail_zip }}</td> </tr>
+          <tr> <td>Migrant</td> <td>{{ object.migrant }}</td> </tr>
+          <tr> <td>NAICS Code</td> <td>{{ object.naics_code }}</td> </tr>
+          <tr> <td>NR in Establishment</td> <td>{{ object.nr_in_estab }}</td> </tr>
+          <tr> <td>Open Date</td> <td>{{ object.open_date }}</td> </tr>
+          <tr> <td>Owner Code</td> <td>{{ object.owner_code }}</td> </tr>
+          <tr> <td>Owner Type</td> <td>{{ object.owner_type }}</td> </tr>
+          <tr> <td>Reporting ID</td> <td>{{ object.reporting_id }}</td> </tr>
+          <tr> <td>Safety Const</td> <td>{{ object.safety_const }}</td> </tr>
+          <tr> <td>Safety Health</td> <td>{{ object.safety_hlth }}</td> </tr>
+          <tr> <td>Safety Manufacturing</td> <td>{{ object.safety_manuf }}</td> </tr>
+          <tr> <td>Safety Marit</td> <td>{{ object.safety_marit }}</td> </tr>
+          <tr> <td>SIC Code</td> <td>{{ object.sic_code }}</td> </tr>
+          <tr> <td>Site Address</td> <td>{{ object.site_address }}</td> </tr>
+          <tr> <td>Site City</td> <td>{{ object.site_city }}</td> </tr>
+          <tr> <td>Site State</td> <td>{{ object.site_state }}</td> </tr>
+          <tr> <td>Site Zip</td> <td>{{ object.site_zip }}</td> </tr>
+          <tr> <td>State Flag</td> <td>{{ object.state_flag }}</td> </tr>
+          <tr> <td>Union Status</td> <td>{{ object.union_status }}</td> </tr>
+          <tr> <td>No Inspection Reason</td> <td>{{ object.why_no_insp }}</td> </tr>
+          <tr> <td>Zip DIM ID</td> <td>{{ object.zip_dim_id }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+        </table>
+      </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'usa_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+
+  <h3>OSHA EBSA Enforcement</h3>
+    <div class="page-header">{{ object.plan_name }}</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Basic information</div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr> <td>Case Type</td> <td>{{ object.case_type }}</td> </tr>
+          <tr> <td>EIN</td> <td>{{ object.ein }}</td> </tr>
+          <tr> <td>Final Close Date</td> <td>{{ object.final_close_date }}</td> </tr>
+          <tr> <td>Final Close Reason</td> <td>{{ object.final_close_reason }}</td> </tr>
+          <tr> <td>Penalty Amount</td> <td>{{ object.penalty_amount }}</td> </tr>
+          <tr> <td>Plan Admin</td> <td>{{ object.plan_admin }}</td> </tr>
+          <tr> <td>Plan Admin State</td> <td>{{ object.plan_admin_state }}</td> </tr>
+          <tr> <td>Plan Admin Zip Code</td> <td>{{ object.plan_admin_zip_code }}</td> </tr>
+          <tr> <td>Plan Name</td> <td>{{ object.plan_name }}</td> </tr>
+          <tr> <td>Plan Year</td> <td>{{ object.plan_year }}</td> </tr>
+          <tr> <td>Plan Number</td> <td>{{ object.pn }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+        </table>
+      </div>
+    </div>
+
+
+{% endblock %}
