@@ -6,7 +6,7 @@ US Federal Level Scrapers
 # import scrapers
 # ============================================================================
 from sec_edgar import SecEdgarScraper
-from procurement import FedContractsScraper
+# from procurement import FedContractsScraper
 from financial_disclosure import FinDisclosuresScraper
 from elections import CommitteeContributionsScraper, ElectionCandsScraper
 from elections import IndividualContributionsScraper
@@ -19,7 +19,7 @@ from toxics_inventory import ToxicsInventoryScraper
 # ============================================================================
 # scrapers list
 # ============================================================================
-usa_scrapers = [FedContractsScraper, FinDisclosuresScraper, SecEdgarScraper,
+usa_scrapers = [FinDisclosuresScraper, SecEdgarScraper,
                 CommitteeContributionsScraper, ElectionCandsScraper,
                 IndividualContributionsScraper, CpscRecallsScraper,
                 CpscRecallsViolationsScraper, IrsExemptScraper,
