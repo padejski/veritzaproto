@@ -5,6 +5,7 @@ Serbia tables
 # necessary imports
 # ============================================================================
 import django_tables2 as tables
+from django_tables2.utils import A
 
 from . import models
 
@@ -29,10 +30,10 @@ class CompanyTable(tables.Table):
                    'companybasemodel_ptr', 'other', 'alt_address', 'industry')
 
 
-class CommitteeContributionTable(tables.Table):
-    """committee contributions  data table"""
+class ElectionContributionTable(tables.Table):
+    """election contributions  data table"""
     class Meta:
-        model = models.FedCommitteeContribution
+        model = models.FedElectionContribution
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = ('id', 'created', 'updated', 'hash', 'amndt_ind', 'memo_cd',
                    'sub_id', 'tran_id', 'transaction_pgi', 'zip_code',
@@ -43,22 +44,13 @@ class CommitteeContributionTable(tables.Table):
 
 class FinancialDisclosureTable(tables.Table):
     """Financial disclosures  data table"""
+    name = tables.LinkColumn('usa:disclosure', args=[A('pk')])
+    pdf = tables.URLColumn()
+
     class Meta:
         model = models.FedFinancialDisclosure
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = ('id', 'created', 'updated', 'hash', 'url', 'basemodel_ptr')
-
-
-class IndividualContributionTable(tables.Table):
-    """Individual contributions  data table"""
-    class Meta:
-        model = models.FedIndividualContribution
-        attrs = {"class": "paleblue table table-striped table-bordered"}
-        exclude = ('id', 'created', 'updated', 'hash', 'amndt_ind', 'memo_cd',
-                   'sub_id', 'tran_id', 'transaction_pgi', 'zip_code',
-                   'memo_text', 'other_id',  'status', 'url', 'basemodel_ptr',
-                   'image_num', 'other', 'occupation', 'employer', 'cmte_id',
-                   'rpt_tp', 'entity_tp', 'transaction_tp')
 
 
 class IrsExemptOrgTable(tables.Table):
