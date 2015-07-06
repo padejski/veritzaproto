@@ -10,8 +10,8 @@ __date__ = April 2015
 # Make necessary imports
 # ============================================================================
 import re
+import copy
 import datetime
-from itertools import chain
 
 from django.db.utils import IntegrityError
 
@@ -179,39 +179,38 @@ class SerbiaOfficialsScraper(BaseScraper):
                 for url in self.yield_data_urls(self.get_json_data()))
 
         for off in offs:
+            official = copy.deepcopy(off)
+
+            for key in ['flats', 'revenues', 'fixed_assets', 'transports']:
+                official.pop(key)
+
+            official = self.make_model(models.Official, official, lst=False)
+
+            official = self.save_model(official)
+
+            if not official:
+                continue
+
+            for key in ['flats', 'revenues', 'fixed_assets', 'transports']:
+                for item in off[key]:
+                    item['official'] = official
+
             est = self.make_model(models.RealEstate, off['flats'])
             sal = self.make_model(models.Salary, off['revenues'])
             asst = self.make_model(models.FixedAsset, off['fixed_assets'])
             trp = self.make_model(models.Transport, off['transports'])
 
-            for key in ['flats', 'revenues', 'fixed_assets', 'transports']:
-                off.pop(key)
-
-            off = self.make_model(models.Official, off, lst=False)
-
-            off = self.save_model(off)
-
-            if not off:
-                print('continuing')
-                continue
-
-            for mov in chain(est, sal, trp, asst):
-                mov.official = off
-
-            for mod in self.utils.flatten_list([est, sal, asst, trp, [off]]):
+            for mod in self.utils.flatten_list([est, sal, asst, trp]):
                 self.save_model(mod)
 
             yield
 
-    @staticmethod
-    def save_model(model):
+    def save_model(self, model, report_error=True):
         """save model to database"""
         try:
-            model.save()
+            super(SerbiaOfficialsScraper, self).save_model(model, report_error)
             return model
-        except IntegrityError as err:
-            print(err)
-            print(model)
+        except IntegrityError:
             return None
 
     def scrape_url(self, url):
@@ -233,6 +232,7 @@ class SerbiaOfficialsScraper(BaseScraper):
         res['place'] = self.extract_place(soup)
         res['date'] = self.extract_date(soup)
         res['year'] = res['date'].year
+        res['title'] = ', '.join(set([x['position'] for x in res['revenues']]))
 
         return res
 
