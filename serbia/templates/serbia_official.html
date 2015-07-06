@@ -9,10 +9,10 @@
   {% endblock path %}
 
 {% block extrarows %}
-	<tr> <td>Salaries</td> 
+	<tr> <td>Salaries</td>
 		<td>
 			{% for x in object.salary_set.all %}
-				{{ x.net_income }}
+				{{ x.net_income }}<br>
 			{% endfor %}
 		</td>
 	</tr>
@@ -22,26 +22,29 @@
 			{% for x in object.realestate_set.all %}
 				{{ x.place }}
 			{% endfor %}
+            {% for x in object.fixedasset_set.all %}
+				{{ x.type_size }}<br>
+			{% endfor %}
 		</td>
     </tr>
 
-    <tr> <td>Fixed Assets</td> 
+    <tr> <td>Fixed Assets</td>
     	<td>
 			{% for x in object.fixedasset_set.all %}
-				{{ x.acquisition_basis }}
+				{{ x.acquisition_basis }}<br>
 			{% endfor %}
 		</td>
     </tr>
 
-    <tr> <td>Transport</td> 
+    <tr> <td>Transport</td>
     	<td>
 			{% for x in object.transport_set.all %}
-				{{ x.brand }}
+				{{ x.brand }}<br>
 			{% endfor %}
 		</td>
     </tr>
 
-     <tr> <td>Companies</td> 
+     <tr> <td>Companies</td>
     	<td>
 			{% for x in object.companies.all %}
 				{{ x.name }}
@@ -49,7 +52,7 @@
 		</td>
     </tr>
 
-     <tr> <td>Children</td> 
+     <tr> <td>Children</td>
     	<td>
 			{% for x in object.children.all %}
 				{{ x.name }}
@@ -57,7 +60,7 @@
 		</td>
     </tr>
 
-	<tr> <td>Deposit Savings</td> <td>{{ object.deposit_savings }}</td> </tr>
+	<tr> <td>Deposit Savings</td> <td>{% if object.deposit_savings %} Yes {% else %} No {% endif %}</td> </tr>
 	<tr> <td>Place</td> <td>{{ object.place }}</td> </tr>
 	<tr> <td>Date</td> <td>{{ object.date }}</td> </tr>
 {% endblock %}
