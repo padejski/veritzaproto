@@ -17,11 +17,10 @@ from ..models import FedOshaEbsa, FedOshaInspection
 # ============================================================================
 # useful constants
 # ============================================================================
-EBSA_URL = 'http://prd-enforce-xfr-02.dol.gov/data_catalog/EBSA/ebsa_ocats_20150402.csv.zip'
+BASE_URL = 'http://ogesdw.dol.gov/views/data_summary.php'
 EBSA_HEADERS = ['case_type', 'ein', 'pn', 'plan_year', 'plan_name', 'plan_admin',
                 'plan_admin_state', 'plan_admin_zip_code', 'final_close_reason',
                 'final_close_date', 'penalty_amount']
-INSP_URL = 'http://prd-enforce-xfr-02.dol.gov/data_catalog/OSHA/osha_inspection_20150610.csv.zip'
 
 
 # ============================================================================
@@ -36,7 +35,8 @@ class OshaEbsaScraper(BaseScraper):
 
     def download_file(self):
         """download and deflate zip data file"""
-        zfile = self.download_http(EBSA_URL, zfile=True)
+        ebsa_url = self.get_ebsa_url()
+        zfile = self.download_http(ebsa_url, zfile=True)
 
         return zfile.open('ebsa_ocats.csv')
 
@@ -66,6 +66,19 @@ class OshaEbsaScraper(BaseScraper):
 
             yield data
 
+    def get_ebsa_url(self):
+        """. """
+        self.session.get(BASE_URL)
+
+        payload = {'agency': 'ebsa'}
+
+        soup = self.post_soup(BASE_URL, data=payload)
+        url = [a.get('href') for a in
+               soup.find('table', {'class': 'download-table'}).find_all('a')
+               if 'ebsa_ocats' in a.get('href')][0]
+
+        return url
+
     def run(self):
         """run scraper"""
         for data in self.fetch_data():
@@ -84,7 +97,8 @@ class OshaInspectionScraper(BaseScraper):
 
     def download_file(self):
         """download and deflate zip data file"""
-        zfile = self.download_http(INSP_URL, zfile=True)
+        insp_url = self.get_insp_url()
+        zfile = self.download_http(insp_url, zfile=True)
         fname = zfile.namelist()[0]
 
         return zfile.open(fname)
@@ -114,6 +128,19 @@ class OshaInspectionScraper(BaseScraper):
             data['hash'] = self.get_hash(data)
 
             yield data
+
+    def get_insp_url(self):
+        """. """
+        self.session.get(BASE_URL)
+
+        payload = {'agency': 'osha'}
+
+        soup = self.post_soup(BASE_URL, data=payload)
+        url = [a.get('href') for a in
+               soup.find('table', {'class': 'download-table'}).find_all('a')
+               if 'osha_inspection' in a.get('href')][0]
+
+        return url
 
     def run(self):
         """run scraper"""
