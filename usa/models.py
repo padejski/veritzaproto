@@ -206,6 +206,7 @@ class FedOshaInspection(cmodels.BaseModel):
     case_mod_date = models.CharField(max_length=1024, null=True)
     close_case_date = models.CharField(max_length=1024, null=True)
     close_conf_date = models.CharField(max_length=1024, null=True)
+    close_conf_year = models.CharField(max_length=1024, null=True)
     estab_name = models.CharField(max_length=1024, null=True, verbose_name='Establishment Name')
     health_const = models.CharField(max_length=1024, null=True)
     health_manuf = models.CharField(max_length=1024, null=True)
