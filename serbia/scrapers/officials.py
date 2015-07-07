@@ -176,7 +176,8 @@ class SerbiaOfficialsScraper(BaseScraper):
         """run scraper"""
 
         offs = (self.scrape_url(url)
-                for url in self.yield_data_urls(self.get_json_data()))
+                for url in self.yield_data_urls(self.get_json_data())
+                if self.scrape_url(url))
 
         for off in offs:
             official = copy.deepcopy(off)
@@ -222,17 +223,21 @@ class SerbiaOfficialsScraper(BaseScraper):
         soup = self.get_soup_basic(url)
 
         res = {}
-        res['url'] = url
-        res['name'] = self.extract_name(soup)
-        res['revenues'] = self.extract_revenues(soup)
-        res['fixed_assets'] = self.extract_fassets(soup)
-        res['transports'] = self.extract_transports(soup)
-        res['deposits_savings'] = self.extract_deposits(soup)
-        res['flats'] = self.extract_flats(soup)
-        res['place'] = self.extract_place(soup)
-        res['date'] = self.extract_date(soup)
-        res['year'] = res['date'].year
-        res['title'] = ', '.join(set([x['position'] for x in res['revenues']]))
+
+        try:
+            res['url'] = url
+            res['name'] = self.extract_name(soup)
+            res['revenues'] = self.extract_revenues(soup)
+            res['fixed_assets'] = self.extract_fassets(soup)
+            res['transports'] = self.extract_transports(soup)
+            res['deposits_savings'] = self.extract_deposits(soup)
+            res['flats'] = self.extract_flats(soup)
+            res['place'] = self.extract_place(soup)
+            res['date'] = self.extract_date(soup)
+            res['year'] = res['date'].year
+            res['title'] = ', '.join(set([x['position'] for x in res['revenues']]))
+        except IndexError:
+            return None
 
         return res
 
