@@ -124,6 +124,7 @@ class OshaInspectionScraper(BaseScraper):
 
         # get csv headers
         headers = next(lines)
+        print(headers)
 
         for line in lines:
             data = dict(zip(headers, line))
