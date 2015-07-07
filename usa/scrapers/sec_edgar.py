@@ -100,7 +100,6 @@ class SecEdgarScraper(BaseScraper):
         try:
             data = dict([(x.lower().strip().replace(' ', '_'), y) for x, y in data])
         except ValueError as err:
-            print(data)
             raise err
 
         for key, val in data.items():

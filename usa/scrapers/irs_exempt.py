@@ -62,7 +62,6 @@ class IrsExemptScraper(BaseScraper):
     def run(self):
         """run scraper"""
         for data in self.fetch_data():
-            print(data)
             data = FedIrsExemptOrg(**data)
             self.save_model(data)
 

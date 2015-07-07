@@ -82,7 +82,6 @@ class CpscRecallsScraper(BaseScraper):
     def run(self):
         """run scraper"""
         for data in self.fetch_data():
-            print(data)
             data = FedCpscRecall(**data)
             self.save_model(data)
 
