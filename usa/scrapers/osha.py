@@ -36,6 +36,7 @@ class OshaEbsaScraper(BaseScraper):
     def download_file(self):
         """download and deflate zip data file"""
         ebsa_url = self.get_ebsa_url()
+        print(ebsa_url)
         zfile = self.download_http(ebsa_url, zfile=True)
 
         return zfile.open('ebsa_ocats.csv')
@@ -76,6 +77,8 @@ class OshaEbsaScraper(BaseScraper):
         url = [a.get('href') for a in
                soup.find('table', {'class': 'download-table'}).find_all('a')
                if 'ebsa_ocats' in a.get('href')][0]
+
+        url = url.replace('../', '')
 
         return url
 
@@ -139,6 +142,8 @@ class OshaInspectionScraper(BaseScraper):
         url = [a.get('href') for a in
                soup.find('table', {'class': 'download-table'}).find_all('a')
                if 'osha_inspection' in a.get('href')][0]
+
+        url = url.replace('../', '')
 
         return url
 
