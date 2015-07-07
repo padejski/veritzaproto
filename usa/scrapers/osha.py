@@ -36,7 +36,6 @@ class OshaEbsaScraper(BaseScraper):
     def download_file(self):
         """download and deflate zip data file"""
         ebsa_url = self.get_ebsa_url()
-        print(ebsa_url)
         zfile = self.download_http(ebsa_url, zfile=True)
 
         return zfile.open('ebsa_ocats.csv')
