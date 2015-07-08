@@ -16,6 +16,8 @@ from ..models import FedCompany as Company
 from ..models import FedProcurement as Procurement
 from . import constants as const
 
+YEARS = [2015, 2014, 2013, 2012, 2011, 2010, 2009]
+
 
 class FedContractsScraper(BaseScraper):
     """USA Federal Procurements Contracts Scraper"""
@@ -54,15 +56,16 @@ class FedContractsScraper(BaseScraper):
 
         """
         max_records = self.get_max_record(
-            xmlparse(self.get_xml(const.CONTRACTS_URL)))
+            xmlparse(self.get_xml(const.CONTRACTS_URL.format(2015))))
 
         for start in range(0, max_records, 1000):
-            url = const.CONTRACTS_URL + '&records_from={}'.format(start)
-            dic = xmlparse(self.get_xml(url))
-            docs = dic['usaspendingSearchResults']['result']['doc']
+            for year in YEARS:
+                url = const.CONTRACTS_URL.format(year) + '&records_from={}'.format(start)
+                dic = xmlparse(self.get_xml(url))
+                docs = dic['usaspendingSearchResults']['result']['doc']
 
-            for doc in docs:
-                yield doc
+                for doc in docs:
+                    yield doc
 
     @staticmethod
     def filter_dict(dic, filter_keys):
@@ -104,8 +107,8 @@ class FedContractsScraper(BaseScraper):
         """
         for contract, vendor in self.fetch_data():
             self.save_models(contract, vendor)
-            break
-            # yield
+
+            yield
 
     def save_models(self, contract, vendor):
         """Make and save models to database

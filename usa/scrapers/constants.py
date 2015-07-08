@@ -6,7 +6,7 @@ Desc      : Veritza usa constants
 
 
 """
-CONTRACTS_URL = 'https://www.usaspending.gov/fpds/fpds.php?detail=c'
+CONTRACTS_URL = 'https://www.usaspending.gov/fpds/fpds.php?detail=c&fiscal_year={}'
 
 CONTRACT_KEYS = ('contracting_auth', 'date', 'desc', 'place', 'price',
                  'transaction_id', 'type', 'url', 'year')
