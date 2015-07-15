@@ -23,7 +23,7 @@
     <tr> <td>Number of Offers </td><td>{{ object.offers }}</td> </tr>
     <tr> <td>Criterion of selection </td><td>{{ object.selection_criterion }}</td> </tr>
     <tr> <td>Cost of Preparing bids </td><td>{{ object.preparing_bids_cost }}</td> </tr>
-    <tr> <td>Date of execution / non-execution </td><td>{{ object.execution_date }}</td> </tr>
+    <tr> <td>Date of execution / non-execution </td><td>{% if object.execution_date %} {{ object.execution_date }} {% endif %}</td> </tr>
     <tr> <td>Execution of contract value excl. VAT (in 000 RSD)</td><td>{{ object.execution_value }}</td> </tr>
 	<tr> <td>Eq. price</td> <td>{{ object.eq_price }}</td> </tr>
 	<tr> <td>Execution / Non-Execution note</td> <td>{{ object.execution_note }}</td> </tr>
