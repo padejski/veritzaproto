@@ -20,7 +20,6 @@ class Company(cmodels.CompanyBaseModel):
     """Serbia business model """
     area = models.CharField(max_length=255)
     company_id = models.CharField(max_length=255)
-    form = models.CharField(max_length=255)
     founder_number = models.CharField(max_length=255)
     place = models.CharField(max_length=255)
     tax_number = models.CharField(max_length=255)
