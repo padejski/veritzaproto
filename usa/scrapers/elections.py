@@ -62,6 +62,18 @@ ENTITY_MAP = {'can': 'Candidate',
               'pac': 'Political Action Committee',
               'pty': 'Party Organization'}
 
+ICI_MAP = {'c': 'Challenger',
+           'i': 'Incumbent',
+           'o': 'Open Seat'}
+
+OFFICE_MAP = {'h': 'House',
+              'p': 'President',
+              's': 'senate'}
+
+PARTY_MAP = {'rep': 'Republican',
+             'ind': 'Independent',
+             'dem': 'Democratic'}
+
 REPORT_MAP = {'12c': 'pre-convention', '12g': 'pre-general',
               '12p': 'pre-primary', '12r': 'pre-run-off',
               '12s': 'pre-special', '24h': '24 hour notification',
@@ -79,6 +91,11 @@ REPORT_MAP = {'12c': 'pre-convention', '12g': 'pre-general',
               'my': 'mid-year report', 'q1': 'april quarterly',
               'q2': 'july quarterly', 'q3': 'october quarterly',
               'ter': 'termination report', 'ye': 'year-end'}
+
+STATUS_MAP = {'c': 'Statutory candidate',
+              'f': 'Statutory candidate for future election',
+              'n': 'Not yet a statutory candidate',
+              'p': 'Statutory candidate in prior cycle'}
 
 
 # ============================================================================
@@ -165,6 +182,7 @@ class ElectionCandsScraper(BaseScraper):
         """
         for line in cfile:
             cand = dict(zip(CAND_HEADERS, line.lower().split('|')))
+            cand = self.map_abbrvs(cand)
             cand['hash'] = self.get_hash(cand)
 
             yield cand
@@ -174,6 +192,16 @@ class ElectionCandsScraper(BaseScraper):
         for gen in imap(self.gen_cand_dict, cfiles):
             for cand in gen:
                 yield cand
+
+    @staticmethod
+    def map_abbrvs(data):
+        """map abbreviations to full words"""
+        data['cand_pty_affiliation'] = PARTY_MAP.get(data['cand_pty_affiliation'], data['cand_pty_affiliation'])
+        data['cand_ici'] = ICI_MAP.get(data['cand_ici'], data['cand_ici'])
+        data['cand_office'] = OFFICE_MAP.get(data['cand_office'], data['cand_office'])
+        data['cand_status'] = STATUS_MAP.get(data['cand_status'], data['cand_status'])
+
+        return data
 
     def run(self):
         """run scraper"""
@@ -213,9 +241,18 @@ class IndividualContributionsScraper(BaseScraper):
         """generate data dicts from file"""
         for line in ifile:
             data = dict(zip(INDV_HEADERS, line.lower().split('|')))
+            data = self.map_abbrvs(data)
             data['hash'] = self.get_hash(data)
 
             yield data
+
+    @staticmethod
+    def map_abbrvs(data):
+        """map abbreviations to full words"""
+        data['entity_tp'] = ENTITY_MAP[data['entity_tp']]
+        data['rpt_tp'] = REPORT_MAP[data['rpt_tp']]
+
+        return data
 
     def run(self):
         """run scraper"""
