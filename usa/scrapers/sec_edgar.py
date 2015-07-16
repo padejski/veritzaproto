@@ -13,6 +13,7 @@ __date__ = June 2015
 # necessary imports
 # ============================================================================
 import itertools
+import datetime as dt
 
 from corex.basescraper import BaseScraper
 from corex.utils import auto_retry
@@ -106,6 +107,7 @@ class SecEdgarScraper(BaseScraper):
             data[key] = val.replace('\t', '')
 
         data['url'] = url
+        data['filed_as_of_date'] = dt.datetime.strptime(data['filed_as_of_date'], "%Y%m%d").date()
         data['hash'] = self.get_hash(data)
 
         return data
