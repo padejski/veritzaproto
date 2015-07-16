@@ -1,0 +1,40 @@
+{% extends 'usa_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block content %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'usa:index' %}">Home</a></li>
+    <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
+    <li><a href="{% url 'usa:candidates' %}">Election Candidates</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+
+  <h3>Election Candidate</h3>
+    <div class="page-header">{{ object.cand_name }}</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Basic information</div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr> <td>Candidate ID</td> <td>{{ object.cand_id }}</td> </tr>
+          <tr> <td>Candidate Name</td> <td>{{ object.cand_name|capfirst }}</td> </tr>
+          <tr> <td>Party Affiliation</td> <td>{{ object.cand_pty_affiliation }}</td> </tr>
+          <tr> <td>Election Year</td> <td>{{ object.cand_election_yr }}</td> </tr>
+          <tr> <td>Office</td> <td>{{ object.cand_office }}</td> </tr>
+          <tr> <td>Office State</td> <td>{{ object.cand_office_st }}</td> </tr>
+          <tr> <td>Office District Number</td> <td>{{ object.cand_office_district }}</td> </tr>
+          <tr> <td>Incumbent Challenger Status</td> <td>{{ object.cand_ici }}</td> </tr>
+          <tr> <td>Status</td> <td>{{ object.cand_status }}</td> </tr>
+          <tr> <td>Campaign Committee</td> <td>{{ object.cand_pcc }}</td> </tr>
+          <tr> <td>State</td> <td>{{ object.cand_st|upper }}</td> </tr>
+          <tr> <td>City</td> <td>{{ object.cand_city }}</td> </tr>
+          <tr> <td>Street</td> <td>{{ object.cand_st1 }}</td> </tr>
+          <tr> <td>Street 2</td> <td>{{ object.cand_st2 }}</td> </tr>
+          <tr> <td>Zip Code</td> <td>{{ object.cand_zip }}</td> </tr>
+        </table>
+      </div>
+    </div>
+
+{% endblock %}

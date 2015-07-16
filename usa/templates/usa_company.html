@@ -5,27 +5,26 @@
 
 {% block content %}
   <ol class="breadcrumb">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li><a href="{% url 'usa:index' %}">Home</a></li>
+    <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
+    <li><a href="{% url 'usa:companies' %}">Companies</a></li>
     <li>{{ object.id }}</li>
   </ol>
 
   <h3>Company profile</h3>
-    <div class="page-header">{{ object.name }}</div>
+    <div class="page-header">{{ object.name|lower|title }}</div>
 
     <div class="panel panel-default">
       <div class="panel-heading">Basic information</div>
       <div class="panel-body">
         <table class="table table-bordered">
-          <tr> <td>Registration number</td> <td>{{ object.registration_number }}</td> </tr>
-          <tr> <td>Identification number</td> <td>{{ object.identification_number }}</td> </tr>
-          <tr> <td>Full name</td> <td>{{ object.full_name }}</td> </tr>
-          <tr> <td>Company type</td> <td>{{ object.economic_activity }}</td> </tr>
+          <tr> <td>Company name</td> <td>{{ object.name|lower|title }}</td> </tr>
+          <tr> <td>DUNS number</td> <td>{{ object.duns_num }}</td> </tr>
+          <tr> <td>Founders</td> <td>{% if object.founders %} {{ object.founders }} {%endif %}</td> </tr>
+          <tr> <td>Company type</td> <td>{{ object.type|lower|title }}</td> </tr>
           <tr> <td>Address</td> <td>{{ object.address }}</td> </tr>
-          <tr> <td>Mail address</td> <td>{{ object.mail_address }}</td> </tr>
-          <tr> <td>Registration date</td> <td>{{ object.registration_date }}</td> </tr>
-          <tr> <td>Location</td> <td>{{ object.location }}</td> </tr>
-          <tr> <td>Activity</td> <td>{{ object.activity }}</td> </tr>
+          <tr> <td>Registration date</td> <td>{{ object.reg_date }}</td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url</a></td> </tr>
         </table>
       </div>
     </div>

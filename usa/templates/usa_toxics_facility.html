@@ -5,8 +5,9 @@
 
 {% block content %}
   <ol class="breadcrumb">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li><a href="{% url 'usa:index' %}">Home</a></li>
+    <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
+    <li><a href="{% url 'usa:toxicsfacilities' %}">Toxics Facilities</a></li>
     <li>{{ object.id }}</li>
   </ol>
 
@@ -55,7 +56,7 @@
           <tr> <td>Tribal Land Name</td> <td>{{ object.tribal_land_name }}</td> </tr>
           <tr> <td>Update Date</td> <td>{{ object.update_date }}</td> </tr>
           <tr> <td>US Mexico Border Indicator</td> <td>{{ object.us_mexico_border_ind }}</td> </tr>
-          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url </a></td> </tr>
         </table>
       </div>
     </div>

@@ -5,12 +5,13 @@
 
 {% block content %}
   <ol class="breadcrumb">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li><a href="{% url 'usa:index' %}">Home</a></li>
+    <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
+    <li><a href="{% url 'usa:irsexempts' %}">IRS Exempt Orgs</a></li>
     <li>{{ object.id }}</li>
   </ol>
 
-  <h3>IRS Exempt Organizations</h3>
+  <h3>IRS Exempt Organization</h3>
     <div class="page-header">{{ object.name }}</div>
 
     <div class="panel panel-default">
@@ -23,7 +24,7 @@
           <tr> <td>Name</td> <td>{{ object.name }}</td> </tr>
           <tr> <td>State</td> <td>{{ object.state }}</td> </tr>
           <tr> <td>Status</td> <td>{{ object.status }}</td> </tr>
-          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url </a></td> </tr>
         </table>
       </div>
     </div>

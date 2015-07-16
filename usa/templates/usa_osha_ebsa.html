@@ -5,12 +5,13 @@
 
 {% block content %}
   <ol class="breadcrumb">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li><a href="{% url 'usa:index' %}">Home</a></li>
+    <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
+    <li><a href="{% url 'usa:oshaebsas' %}">OSHA EBSA</a></li>
     <li>{{ object.id }}</li>
   </ol>
 
-  <h3>OSHA EBSA Enforcement</h3>
+  <h3>OSHA Employee Benefits Security Adminstration Enforcement</h3>
     <div class="page-header">{{ object.plan_name }}</div>
 
     <div class="panel panel-default">
@@ -28,7 +29,7 @@
           <tr> <td>Plan Name</td> <td>{{ object.plan_name }}</td> </tr>
           <tr> <td>Plan Year</td> <td>{{ object.plan_year }}</td> </tr>
           <tr> <td>Plan Number</td> <td>{{ object.pn }}</td> </tr>
-          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url </a></td> </tr>
         </table>
       </div>
     </div>

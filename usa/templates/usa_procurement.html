@@ -1,0 +1,14 @@
+{% extends 'procurement_base.html' %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block path %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'usa:index' %}">Home</a></li>
+    <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
+    <li><a href="{% url 'usa:procurements' %}">Procurements</a></li>
+    <li>{{ object.id }}</li>
+  </ol>
+
+{% endblock path %}

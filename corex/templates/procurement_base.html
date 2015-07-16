@@ -13,21 +13,22 @@
   {% endblock path %}
 
   <h3>Public Procurement</h3>
-    <div class="page-header">{{ object.id }}</div>
+    <div class="page-header">{{ object.desc|lower|title }}</div>
 
     <div class="panel panel-default">
       <div class="panel-heading">Basic information</div>
       <div class="panel-body">
         <table class="table table-bordered">
-          <tr> <td>Contracting Authority</td> <td>{{ object.contracting_auth }}</td> </tr>
-          <tr> <td>Contact Person</td> <td>{% if object.contact_person %} {{ object.contact_person }} {% endif %}</td> </tr>
-          <tr> <td>Contract Date</td> <td>{% if object.date %} {{ object.date }} {% endif %}</td> </tr>
-          <tr> <td>Contract Description</td> <td>{{ object.desc }}</td> </tr>
-          <tr> <td>Contract Year</td> <td>{% if object.year %} {{ object.year }} {% endif %}</td> </tr>
+          <tr> <td>Contracting Authority</td> <td>{{ object.contracting_auth|lower|title }}</td> </tr>
+          <tr> <td>Contact Person</td> <td>{{ object.contact_person|default_if_none:"" }}</td> </tr>
+          <tr> <td>Contract Date</td> <td>{{ object.date|default_if_none:"" }}</td> </tr>
+          <tr> <td>Contract Description</td> <td>{{ object.desc|lower|title }}</td> </tr>
+          <tr> <td>Contract Year</td> <td>{{ object.year|default_if_none:"" }}</td> </tr>
           <tr> <td>Contract Place</td> <td>{{ object.place }}</td> </tr>
           <tr> <td>Contract Price</td> <td>{{ object.price }}</td> </tr>
-          <tr> <td>Contract Transaction ID</td> <td>{% if object.transaction_id %} {{ object.transaction_id }} {%endif %}</td> </tr>
+          <tr> <td>Contract Transaction ID</td> <td>{{ object.transaction_id|default_if_none:"" }}</td> </tr>
           <tr> <td>Procurement Type</td> <td>{{ object.type }}</td> </tr>
+          <tr> <td>Vendor</td> <td>{{ object.vendor.name|lower|title }}</td> </tr>
           <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
           {% block extrarows %} {% endblock %}
         </table>

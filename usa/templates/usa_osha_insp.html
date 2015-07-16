@@ -5,8 +5,9 @@
 
 {% block content %}
   <ol class="breadcrumb">
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'companies' %}">Companies</a></li>
+    <li><a href="{% url 'usa:index' %}">Home</a></li>
+    <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
+    <li><a href="{% url 'usa:oshainsps' %}">OSHA Inspections</a></li>
     <li>{{ object.id }}</li>
   </ol>
 
@@ -55,7 +56,7 @@
           <tr> <td>Union Status</td> <td>{{ object.union_status }}</td> </tr>
           <tr> <td>No Inspection Reason</td> <td>{{ object.why_no_insp }}</td> </tr>
           <tr> <td>Zip DIM ID</td> <td>{{ object.zip_dim_id }}</td> </tr>
-          <tr> <td>URL</td> <td><a target='_' href="{{ object.url }}">url </a></td> </tr>
+          <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url </a></td> </tr>
         </table>
       </div>
     </div>
