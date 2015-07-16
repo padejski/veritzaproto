@@ -74,6 +74,10 @@ class FedElectionContribution(cmodels.BaseModel):
     zip_code = models.CharField(max_length=1024, null=True, verbose_name='Zip Code')
     url = models.CharField(max_length=1024, null=True)
 
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Elections Contributions'
+
 
 class FedIrsExemptOrg(cmodels.BaseModel):
     """IRS Exempt Organizations"""
@@ -85,6 +89,10 @@ class FedIrsExemptOrg(cmodels.BaseModel):
     status = models.CharField(max_length=1024, null=True, verbose_name='Deductibility Status')
     url = models.CharField(max_length=1024, null=True)
 
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'IRS Exempt Organizations'
+
 
 class FedProcurement(cmodels.ProcurementBaseModel):
     """Federal Procurement model
@@ -92,7 +100,7 @@ class FedProcurement(cmodels.ProcurementBaseModel):
     """
     class Meta:
         """extra options"""
-        verbose_name_plural = 'Procurements'
+        verbose_name_plural = 'Federal Procurements'
 
 
 class FedFinancialDisclosure(cmodels.BaseModel):
@@ -104,6 +112,10 @@ class FedFinancialDisclosure(cmodels.BaseModel):
     year = models.CharField(max_length=1024)
     url = models.CharField(max_length=1024, null=True)
 
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Federal Financial Disclosures'
+
 
 class FedSecFiling(cmodels.BaseModel):
     """Federal Securities and Exchange Commission filing model"""
@@ -112,12 +124,12 @@ class FedSecFiling(cmodels.BaseModel):
     business_phone = models.CharField(max_length=1024, null=True)
     central_index_key = models.CharField(max_length=1024, null=True)
     city = models.CharField(max_length=1024, null=True)
-    company_conformed_name = models.CharField(max_length=1024, null=True)
+    company_conformed_name = models.CharField(max_length=1024, null=True, verbose_name='Company Name')
     company_data = models.CharField(max_length=1024, null=True)
     conformed_submission_type = models.CharField(max_length=1024, null=True)
     date_as_of_change = models.CharField(max_length=1024, null=True)
     date_of_name_change = models.CharField(max_length=1024, null=True)
-    filed_as_of_date = models.CharField(max_length=1024, null=True)
+    filed_as_of_date = models.DateField(null=True, verbose_name='Filing` Date')
     filer = models.CharField(max_length=1024, null=True)
     filing_values = models.CharField(max_length=1024, null=True)
     film_number = models.CharField(max_length=1024, null=True)
@@ -125,11 +137,11 @@ class FedSecFiling(cmodels.BaseModel):
     form_type = models.CharField(max_length=1024, null=True)
     former_company = models.CharField(max_length=1024, null=True)
     former_conformed_name = models.CharField(max_length=1024, null=True)
-    irs_number = models.CharField(max_length=1024, null=True)
+    irs_number = models.CharField(max_length=1024, null=True, verbose_name='IRS Number')
     mail_address = models.CharField(max_length=1024, null=True)
     public_document_count = models.CharField(max_length=1024, null=True)
     sec_act = models.CharField(max_length=1024, null=True)
-    sec_file_number = models.CharField(max_length=1024, null=True)
+    sec_file_number = models.CharField(max_length=1024, null=True, verbose_name='SEC File Number')
     standard_industrial_classification = models.CharField(max_length=1024, null=True)
     state = models.CharField(max_length=1024, null=True)
     state_of_incorporation = models.CharField(max_length=1024, null=True)
@@ -137,6 +149,10 @@ class FedSecFiling(cmodels.BaseModel):
     street_2 = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
     zip = models.CharField(max_length=1024, null=True)
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Securities and Exchange Commission Filings'
 
 
 class FedToxicsFacility(cmodels.BaseModel):
@@ -182,6 +198,10 @@ class FedToxicsFacility(cmodels.BaseModel):
     us_mexico_border_ind = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
 
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Toxics Facilities'
+
 
 class FedOshaEbsa(cmodels.BaseModel):
     """Federal OSHA EBSA Enforcement Data"""
@@ -197,6 +217,10 @@ class FedOshaEbsa(cmodels.BaseModel):
     plan_year = models.CharField(max_length=1024, null=True, verbose_name='Plan Year')
     pn = models.CharField(max_length=1024, null=True, verbose_name='Plan Number')
     url = models.CharField(max_length=1024, null=True)
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'OSHA Employees Benefits Security Adminstration Enforcements'
 
 
 class FedOshaInspection(cmodels.BaseModel):
@@ -252,6 +276,10 @@ class FedOshaInspection(cmodels.BaseModel):
     zip_dim_id = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
 
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Occupational Safety and Health Inspections'
+
 
 class FedCpscRecall(cmodels.BaseModel):
     """Federal Consumer Product Safety Commission Recall Model"""
@@ -271,8 +299,12 @@ class FedCpscRecall(cmodels.BaseModel):
     recall_num = models.CharField(max_length=1024, null=True)
     remedies = models.CharField(max_length=1024, null=True)
     retailers = models.CharField(max_length=1024, null=True)
-    title = models.CharField(max_length=1024, null=True)
+    title = models.CharField(max_length=1024, null=True, unique=True)
     url = models.CharField(max_length=1024, null=True)
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Consumer Product Safety Commission Recalls'
 
 
 class FedCpscRecallViolation(cmodels.BaseModel):
@@ -290,6 +322,10 @@ class FedCpscRecallViolation(cmodels.BaseModel):
     primary_violation = models.CharField(max_length=1024, null=True, verbose_name='Primary Violation')
     product = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Consumer Product Safety Commission Recall Violations'
 
 
 # ============================================================================
