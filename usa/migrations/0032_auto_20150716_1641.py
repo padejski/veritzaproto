@@ -63,11 +63,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='fedsecfiling',
-            name='filed_as_of_date',
-            field=models.DateField(null=True, verbose_name=b'Filing` Date'),
-        ),
-        migrations.AlterField(
-            model_name='fedsecfiling',
             name='irs_number',
             field=models.CharField(max_length=1024, null=True, verbose_name=b'IRS Number'),
         ),
