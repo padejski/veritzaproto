@@ -58,7 +58,7 @@ class CpscRecallsScraper(BaseScraper):
         data['title'] = rdict['Title']
         data['url'] = rdict['URL']
         data['last_pub_date'] = rdict['LastPublishDate']
-        data['mfcs'] = rdict['Manufacturers']
+        data['mfcs'] = self.get_key_val(rdict['Manufacturers'])
         data['hazards'] = self.get_key_val(rdict['Hazards'])
         data['consumer_contact'] = rdict['ConsumerContact']
         data['images'] = self.get_key_val(rdict['Images'], key='URL')
