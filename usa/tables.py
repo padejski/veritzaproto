@@ -71,7 +71,6 @@ class IrsExemptOrgTable(tables.Table):
         exclude = ('created', 'updated', 'hash', 'url', 'basemodel_ptr')
 
 
-
 class OfficialTable(tables.Table):
     """public officials table"""
     class Meta:
@@ -173,13 +172,16 @@ class CpscRecallTable(tables.Table):
 
 class CpscRecallViolationTable(tables.Table):
     """Consumer Product Safety Commission Recall Violation data table"""
-    id = tables.LinkColumn('usa:cpscviol', args=[A('pk')])
+    firm = tables.LinkColumn('usa:cpscviol', args=[A('pk')])
 
     class Meta:
         model = models.FedCpscRecallViolation
         attrs = {"class": "paleblue table table-striped table-bordered"}
-        exclude = ('created', 'updated', 'hash', 'url', 'basemodel_ptr',
-                   'address_2')
+        sequence = ('firm', 'primary_violation', 'product', 'action_requested',
+                    'lot_size', 'address_1')
+        exclude = ('id', 'created', 'updated', 'hash', 'url', 'basemodel_ptr',
+                   'address_2', 'citation', 'foreign_mfg', 'loa_date',
+                   'model', 'country')
 
 
 # ============================================================================
