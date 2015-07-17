@@ -12,24 +12,24 @@
   </ol>
 
   <h3>Consumer Product Safety Commission Recall Violation</h3>
-    <div class="page-header">{{ object.primary_violation }}</div>
+    <div class="page-header">{{ object.firm|lower|title }}</div>
 
     <div class="panel panel-default">
       <div class="panel-heading">Basic information</div>
       <div class="panel-body">
         <table class="table table-bordered">
           <tr> <td>Action Requested</td> <td>{{ object.action_requested }}</td> </tr>
-          <tr> <td>Address 1</td> <td>{{ object.address_1 }}</td> </tr>
-          <tr> <td>Address 2</td> <td>{{ object.address_2 }}</td> </tr>
+          <tr> <td>Address 1</td> <td>{{ object.address_1|lower|title }}</td> </tr>
+          <tr> <td>Address 2</td> <td>{{ object.address_2|lower|title }}</td> </tr>
           <tr> <td>Citation</td> <td>{{ object.citation }}</td> </tr>
-          <tr> <td>Country</td> <td>{{ object.Country }}</td> </tr>
-          <tr> <td>Firm</td> <td>{{ object.firm }}</td> </tr>
-          <tr> <td>Foreign Manufacturing</td> <td>{{ object.foreign_mfg }}</td> </tr>
+          <tr> <td>Country</td> <td>{{ object.country|lower|title }}</td> </tr>
+          <tr> <td>Firm</td> <td>{{ object.firm|lower|title }}</td> </tr>
+          <tr> <td>Foreign Manufacturing</td> <td>{{ object.foreign_mfg|lower|title }}</td> </tr>
           <tr> <td>LOA Date</td> <td>{{ object.loa_date }}</td> </tr>
           <tr> <td>Lot Size</td> <td>{{ object.lot_size }}</td> </tr>
           <tr> <td>Model</td> <td>{{ object.model }}</td> </tr>
           <tr> <td>Primary Violation</td> <td>{{ object.primary_violation }}</td> </tr>
-          <tr> <td>Product</td> <td>{{ object.product }}</td> </tr>
+          <tr> <td>Product</td> <td>{{ object.product|lower|title }}</td> </tr>
           <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url </a></td> </tr>
         </table>
       </div>
