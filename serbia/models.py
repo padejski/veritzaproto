@@ -9,8 +9,20 @@ Desc      : Veritza serbia models
 # necessary imports
 # ============================================================================
 from django.db import models
+from django.db.models.signals import post_save
+from django.core.management import call_command
+
 from corex import models as cmodels
 from corex.models import UnsavedForeignKey, UnsavedManyToManyField
+
+
+# ============================================================================
+# utility function(s)
+# ============================================================================
+def ack_save(sender, **kwargs):
+    """acknowledge model save if successful"""
+    if kwargs['created']:
+        call_command('integratedata')
 
 
 # ============================================================================
@@ -117,6 +129,53 @@ class ElectionDonation(cmodels.ElectionDonationBaseModel):
         """extra options"""
         verbose_name_plural = 'Election Contributions'
 
+
+# ============================================================================
+# veritza data integration models
+# ============================================================================
+class OfficialCompany(cmodels.BaseModel):
+    """Public Officials and Companies data integration
+
+    """
+    official = models.ForeignKey('Official')
+    company = models.ForeignKey('Company')
+
+    def __repr__(self):
+        return "{} - {}".format(self.official.name, self.company.name)
+
+    class Meta:
+        verbose_name = "Public Official's company"
+        verbose_name_plural = "Public Officials Companies"
+
+
+class OfficialCompanyProcurement(cmodels.BaseModel):
+    """Public Official Companies in Procurement
+
+    """
+    official = models.ForeignKey('Official')
+    company = models.ForeignKey('Company')
+    procurement = models.ForeignKey('Procurement')
+
+    def __repr__(self):
+        return "{} - {} - {}".format(self.official.name, self.company.name,
+                                     self.procurement.id)
+
+    class Meta:
+        verbose_name = "Public Official's Company in Procurement"
+        verbose_name_plural = "Public Officials Companies in Procurement"
+
+
+class PoliticalFunderCompany(cmodels.BaseModel):
+    """Companies Owned by political funders
+
+    """
+    company = models.ForeignKey('Company')
+    donation = models.ForeignKey('ElectionDonation')
+
+# ============================================================================
+# hook up post_save signal to reciever
+# ============================================================================
+post_save.connect(ack_save, sender=Official, dispatch_uid="integrate_data")
 
 
 # ============================================================================
