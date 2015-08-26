@@ -22,7 +22,7 @@ class CompaniesView(SingleTableView):
     """list of companies view"""
     model = models.Company
     table_class = tables.CompanyTable
-    template_name = 'serbia_companies.html'
+    template_name = 'serbia_list.html'
 
 
 class CompanyDetailView(DetailView):
@@ -40,6 +40,7 @@ class DatasetsView(TemplateView):
         context['companies_no'] = models.Company.objects.count()
         context['procurements_no'] = models.Procurement.objects.count()
         context['edonations_no'] = models.ElectionDonation.objects.count()
+        context['offcompanies_no'] = models.OfficialCompany.objects.count()
 
         return context
 
@@ -48,7 +49,7 @@ class ElectionDonationsView(SingleTableView):
     """list of election donations"""
     model = models.ElectionDonation
     table_class = tables.ElectionDonationTable
-    template_name = 'serbia_election_donations.html'
+    template_name = 'serbia_list.html'
 
 
 class ElectionDonationDetailView(DetailView):
@@ -64,7 +65,7 @@ class OfficialsView(SingleTableView):
     """list of public officials view"""
     model = models.Official
     table_class = tables.OfficialTable
-    template_name = 'serbia_officials.html'
+    template_name = 'serbia_list.html'
 
 
 class OfficialDetailView(DetailView):
@@ -76,12 +77,19 @@ class ProcurementsView(SingleTableView):
     """list of procurement view"""
     model = models.Procurement
     table_class = tables.ProcurementTable
-    template_name = 'serbia_procurements.html'
+    template_name = 'serbia_list.html'
 
 
 class ProcurementDetailView(DetailView):
     model = models.Procurement
     template_name = 'serbia_procurement.html'
+
+
+class OfficialsCompanies(SingleTableView):
+    """list of public officials' companies"""
+    model = models.OfficialCompany
+    table_class = tables.OfficialCompanyTable
+    template_name = 'serbia_list.html'
 # ============================================================================
 # EOF
 # ============================================================================
