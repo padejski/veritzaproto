@@ -125,8 +125,9 @@ class SerbiaCompanyScraper(BaseScraper):
             code (str): an 8-digit numeric identifier
 
         """
-        codes = [int(x) for x in self.fetch_codes(dfile)]
-        codes = (str(x) for x in xrange(min(codes), max(codes)))
+        # codes = [int(x) for x in self.fetch_codes(dfile)]
+        # codes = (str(x) for x in xrange(min(codes), max(codes)))
+        codes = (x for x in self.fetch_codes(dfile))
 
         for code in codes:
             if len(code) == 7:
