@@ -1,5 +1,9 @@
 """
-Serbia tables
+Module    : tables
+Date      : May, 2015
+Author(s) : Matt Gathu <mattgathu@gmail.com>
+Desc      : Veritza serbia models views tables
+
 """
 # ============================================================================
 # necessary imports
@@ -10,6 +14,9 @@ from django_tables2.utils import A
 from . import models
 
 
+# ============================================================================
+# tables implementation
+# ============================================================================
 class CompanyTable(tables.Table):
     """companies data table"""
     alt_name = tables.LinkColumn('serbia:company', args=[A('pk')])
@@ -68,6 +75,16 @@ class ProcurementTable(tables.Table):
                    'offers', 'execution_date', 'execution_value',
                    'basemodel_ptr', 'procurementbasemodel_ptr', 'other')
 
+
+class OfficialCompanyTable(tables.Table):
+    """public offcials companies table"""
+    official = tables.Column(accessor='official.name', verbose_name='official')
+    company = tables.Column(accessor='company.name', verbose_name='company')
+
+    class Meta:
+        model = models.OfficialCompany
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
 # ============================================================================
 # EOF
 # ============================================================================
