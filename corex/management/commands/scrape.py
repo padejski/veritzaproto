@@ -5,6 +5,7 @@ Scraping commands
 # ============================================================================
 # necessary imports
 # ============================================================================
+import sys
 from itertools import chain
 from collections import deque
 
@@ -17,7 +18,7 @@ from usa.scrapers import usa_scrapers
 # scrapers list
 # ============================================================================
 SCRAPERS = chain(serbia_scrapers, usa_scrapers)
-SCRAPERS = usa_scrapers
+SCRAPERS = serbia_scrapers
 
 
 class ScraperScheduler:
@@ -61,4 +62,8 @@ class Command(BaseCommand):
             sched.add_task(scp().run())
 
         # run scheduler
-        sched.run()
+        try:
+            sched.run()
+        except KeyboardInterrupt:
+            print('quitting...\n')
+            sys.exit(0)
