@@ -1,6 +1,19 @@
+"""
+Module    : models
+Date      : May, 2015
+Author(s) : Matt Gathu <mattgathu@gmail.com>
+Desc      : Veritza core models
+
+"""
+# ============================================================================
+# imports
+# ============================================================================
 from django.db import models
 
 
+# ============================================================================
+# custom db fields
+# ============================================================================
 class UnsavedForeignKey(models.ForeignKey):
     """An FK which can point to a unsaved obj"""
     allow_unsaved_instance_assignment = True
@@ -11,6 +24,9 @@ class UnsavedManyToManyField(models.ManyToManyField):
     allow_unsaved_instance_assignment = True
 
 
+# ============================================================================
+# core database models
+# ============================================================================
 class BaseModel(models.Model):
     """base model"""
     id = models.AutoField(primary_key=True)
