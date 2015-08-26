@@ -47,6 +47,8 @@ MAPPING = [(u'Седиште', 'city'),
            (u'Правна форма', 'type'),
            (u'Назив делатности', 'industry')]
 
+CODES_FILE = 'IDS.csv'
+
 
 # ============================================================================
 # Company Scraper
@@ -105,7 +107,10 @@ class SerbiaCompanyScraper(BaseScraper):
                     'SearchByRegistryCodeString': code,
                     'X-Requested-With': 'XMLHttpRequest'}
 
-        url = bs(self.post(POST_URL, data=formdata).text).find('a').get('href')
+        try:
+            url = bs(self.post(POST_URL, data=formdata).text).find('a').get('href')
+        except AttributeError:
+            url = None
 
         return url
 
@@ -120,8 +125,11 @@ class SerbiaCompanyScraper(BaseScraper):
             code (str): an 8-digit numeric identifier
 
         """
-        for code in self.fetch_codes(dfile):
-            if len(code) < 8 and len(code) == 7:
+        codes = [int(x) for x in self.fetch_codes(dfile)]
+        codes = (str(x) for x in xrange(min(codes), max(codes)))
+
+        for code in codes:
+            if len(code) == 7:
                 code = '0' + code
             yield code
 
@@ -166,7 +174,8 @@ class SerbiaCompanyScraper(BaseScraper):
                 continue
             url = self.fetch_url(code)
 
-            yield url
+            if url:
+                yield url
 
     def scrape_info(self, url):
         """scrape info from url"""
@@ -226,14 +235,12 @@ class SerbiaCompanyScraper(BaseScraper):
     def run(self):
         """execute scraping routine"""
 
-        # fetch companies unique id codes from csv
-        cfile = os.path.dirname(os.path.abspath(__file__))+'/IDS.csv'
-        codes = (code for code in self.generate_codes(cfile))
+        # company codes file
+        cfile = os.path.dirname(os.path.abspath(__file__)) + '/' + CODES_FILE
 
         # fetch companies data urls using codes
-        urls = (url for url in self.generate_urls(codes))
+        urls = self.generate_urls(self.generate_codes(cfile))
 
-        # scrape data from companies data urls
         data = (self.scrape_info(url) for url in urls)
 
         # save data to database
@@ -241,7 +248,7 @@ class SerbiaCompanyScraper(BaseScraper):
             model = Company(**dat)
             self.save_model(model)
 
-            yield
+            yield  # scraper's cooperative multitasking hook
 
 
 # ============================================================================
