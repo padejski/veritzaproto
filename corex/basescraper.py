@@ -14,8 +14,8 @@ import gzip
 import urllib
 import zipfile
 import StringIO
-from hashlib import md5
 from datetime import datetime as dt
+from abc import abstractmethod
 
 import requests
 from bs4 import BeautifulSoup as bs
@@ -68,10 +68,9 @@ class BaseScraper(object):
 
         return res
 
-    @staticmethod
-    def get_hash(obj):
+    def get_hash(self, obj):
         """get md5 digest of obj"""
-        return md5(str(obj)).digest().decode("iso-8859-1")
+        return self.utils.get_hash(obj)
 
     def get_soup(self, url):
         """beautifulsoup of url contents"""
@@ -97,6 +96,11 @@ class BaseScraper(object):
         soup = bs(self.session.post(*args, **kwargs).content)
 
         return soup
+
+    @abstractmethod
+    def run(self):
+        """run scraper"""
+        pass
 
     @staticmethod
     def save_model(model, report_error=False):
