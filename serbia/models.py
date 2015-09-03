@@ -33,10 +33,23 @@ class Company(cmodels.CompanyBaseModel):
     area = models.CharField(max_length=255)
     company_id = models.CharField(max_length=255)
     founder_number = models.CharField(max_length=255)
+    legal_rep = models.CharField(max_length=255, null=True)
+    members = models.CharField(max_length=255, null=True)
     place = models.CharField(max_length=255)
     tax_number = models.CharField(max_length=255)
     termination_date = models.CharField(max_length=255)
     officials = UnsavedManyToManyField('Official')
+    other_individuals = models.CharField(max_length=255, null=True)
+    supervisors = models.CharField(max_length=255, null=True)
+
+    @property
+    def individuals(self):
+        """get a list of company individuals"""
+        individuals = [self.directors, self.founders, self.legal_rep,
+                       self.members, self.other_individuals, self.supervisors]
+        individuals = (x for x in  individuals if x)
+
+        return set(individuals)
 
     class Meta:
         """extra options"""

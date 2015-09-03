@@ -85,6 +85,31 @@ class OfficialCompanyTable(tables.Table):
         model = models.OfficialCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
+
+
+class OfficialCompanyProcurementTable(tables.Table):
+    """public officials companies in procurement table"""
+    official = tables.Column(accessor='official.name', verbose_name='official')
+    company = tables.Column(accessor='company.name', verbose_name='company')
+    procurement = tables.Column(accessor='procurement.subject', verbose_name='procurement')
+
+    class Meta:
+        model = models.OfficialCompanyProcurement
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
+
+
+class PoliticalFunderCompanyTable(tables.Table):
+    """political donors companies table"""
+    company = tables.Column(accessor='company.name', verbose_name='company')
+    donor = tables.Column(accessor='donation.donor_name', verbose_name='donor')
+
+    class Meta:
+        model = models.PoliticalFunderCompany
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
+
+
 # ============================================================================
 # EOF
 # ============================================================================
