@@ -3,16 +3,21 @@
 {% block path %}
   <ol class="breadcrumb">
     <li><a href="{% url 'serbia:index' %}">Home</a></li>
+    <li><a href="{% url 'serbia:datasets' %}">Datasets</a></li>
     <li><a href="{% url 'serbia:companies' %}">Companies</a></li>
     <li>{{ object.id }}</li>
   </ol>
   {% endblock path %}
 
 {% block extrarows %}
+    <tr> <td>Legal Representative</td> <td>{{ object.legal_rep }}</td> </tr>
+    <tr> <td>Members</td> <td>{{ object.members }}</td> </tr>
+    <tr> <td>Supervisors</td> <td>{{ object.supervisors }}</td> </tr>
+    <tr> <td>Other Individuals</td> <td>{{ object.other_individuals }}</td> </tr>
 	<tr> <td>Area</td> <td>{{ object.area }}</td> </tr>
-	<tr> <td>ID</td> <td>{{ object.company_id }}</td> </tr>
+	<tr> <td>ID / Stat Number</td> <td>{{ object.company_id }}</td> </tr>
 	<tr> <td>Form</td> <td>{{ object.form }}</td> </tr>
-	<tr> <td>Founder Number</td> <td>{{ object.founder_number }}</td> </tr>
+
 	<tr> <td>Place</td> <td>{{ object.place }}</td> </tr>
 	<tr> <td>Tax Number</td> <td>{{ object.tax_number }}</td> </tr>
 	<tr> <td>Termination Date</td> <td>{{ object.termination_date }}</td> </tr>
