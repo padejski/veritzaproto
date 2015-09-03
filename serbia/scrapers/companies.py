@@ -45,7 +45,12 @@ MAPPING = [(u'Седиште', 'city'),
            (u'Датум оснивања', 'reg_date'),
            (u'ПИБ', 'tax_number'),
            (u'Правна форма', 'type'),
-           (u'Назив делатности', 'industry')]
+           (u'Назив делатности', 'industry'),
+           ('directors', 'directors'),
+           ('legal_rep', 'legal_rep'),
+           ('members', 'members'),
+           ('supervisors', 'supervisors'),
+           ('other_individuals', 'other_individuals')]
 
 CODES_FILE = 'IDS.csv'
 
@@ -59,6 +64,16 @@ class SerbiaCompanyScraper(BaseScraper):
     def __init__(self):
         """Initialize scraper """
         BaseScraper.__init__(self)
+
+    @staticmethod
+    def dkey_to_dict(old_dict, old_key, new_key):
+        """extract key from dictionary and return it in a new dictionary
+        with a different name.
+        """
+        try:
+            return {new_key: old_dict[old_key]}
+        except KeyError:
+            return {}
 
     def extract_xtra_urls(self, url):
         """extract extra information urls"""
@@ -195,7 +210,7 @@ class SerbiaCompanyScraper(BaseScraper):
             except KeyError:
                 continue
 
-        ret['url'] = url
+        ret['url'] = START_URL
         ret['reg_date'] = datetime.datetime.strptime(ret['reg_date'], "%d.%m.%Y").date()
 
         ret[u'area'], ret[u'place'], ret[u'address'] = [
@@ -229,9 +244,24 @@ class SerbiaCompanyScraper(BaseScraper):
         content = [x.split(':', 1) for x in content if
                    len(x.split(':', 1)) == 2]
 
-        content_dict = {k.strip(): v.strip() for k, v in content}
+        cdict = {k.strip(): v.strip() for k, v in content}
 
-        return content_dict
+        if 'legaltrust' in url.lower():
+            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'legal_rep')
+
+        if 'enterprisesteeri' in url.lower():
+            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'directors')
+
+        if 'enterprisemember' in url.lower():
+            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'members')
+
+        if 'supervisoryboard' in url.lower():
+            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'supervisors')
+
+        if 'othertrustees' in url.lower():
+            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'other_individuals')
+
+        return cdict
 
     def run(self):
         """execute scraping routine"""
