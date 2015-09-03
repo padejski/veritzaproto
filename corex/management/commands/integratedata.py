@@ -27,11 +27,11 @@ class Command(BaseCommand):
         officials = serbia.models.Official.objects.all()
         companies = serbia.models.Company.objects.all()
 
-        for offcl in officials:
+        for off in officials:
             for cmpy in companies:
-                if cmpy.founders:
-                    if are_similar(offcl.name, cmpy.founders):
-                        dat = {'official': offcl, 'company': cmpy}
+                for individual in cmpy.individuals:
+                    if are_similar(off.name, individual):
+                        dat = {'official': off, 'company': cmpy}
                         dat['hash'] = get_hash(dat)
                         model = serbia.models.OfficialCompany(**dat)
 
@@ -39,6 +39,8 @@ class Command(BaseCommand):
                             model.save()
                         except IntegrityError:
                             pass
+
+                        break
 
     # ========================================================================
     # public officials companies in procurement integrations
@@ -59,6 +61,27 @@ class Command(BaseCommand):
                     model.save()
                 except IntegrityError:
                     pass
+
+    # ========================================================================
+    # political funders companies
+    # ========================================================================
+    companies = serbia.models.Company.objects.all()
+    donations = serbia.models.ElectionDonation.objects.all()
+
+    for cmpy in companies:
+        for donation in donations:
+            for individual in cmpy.individuals:
+                if are_similar(individual, donation.donor_name):
+                    dat = {'company': cmpy, 'donation': donation}
+                    dat['hash'] = get_hash(dat)
+                    model = serbia.models.PoliticalFunderCompany(**dat)
+
+                    try:
+                        model.save()
+                    except IntegrityError:
+                        pass
+
+                    break
 
 
 # ============================================================================
