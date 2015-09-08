@@ -47,7 +47,7 @@ class Company(cmodels.CompanyBaseModel):
         """get a list of company individuals"""
         individuals = [self.directors, self.founders, self.legal_rep,
                        self.members, self.other_individuals, self.supervisors]
-        individuals = (x for x in  individuals if x)
+        individuals = (x for x in individuals if x)
 
         return set(individuals)
 
@@ -184,6 +184,22 @@ class PoliticalFunderCompany(cmodels.BaseModel):
     """
     company = models.ForeignKey('Company')
     donation = models.ForeignKey('ElectionDonation')
+
+
+class PoliticalFunderCompanyProcurement(cmodels.BaseModel):
+    """Companies Owned by political funders that are in procurement
+
+    """
+    company = models.ForeignKey('PoliticalFunderCompany')
+    procurement = models.ForeignKey('Procurement')
+
+
+class CompanyPoliticalFunderProcurement(cmodels.BaseModel):
+    """Companies that are political funders and also in procurement
+
+    """
+    company = models.ForeignKey('Company')
+    procurement = models.ForeignKey('Procurement')
 
 # ============================================================================
 # hook up post_save signal to reciever
