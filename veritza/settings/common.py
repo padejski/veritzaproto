@@ -39,6 +39,7 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     ('Alexander Stefanov', 'alexander.stefanov@lulin.bg'),
     ('Djordje Padejski', 'padejski@stanford.edu'),
+    ('Matt Gathu', 'mattgathu@gmail.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
@@ -169,7 +170,7 @@ TEMPLATE_DIRS = (
 MIDDLEWARE_CLASSES = (
     # Use GZip compression to reduce bandwidth.
     'django.middleware.gzip.GZipMiddleware',
-    
+
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     # Default Django middleware.
@@ -180,7 +181,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'userena.middleware.UserenaLocaleMiddleware',
-    
+
 )
 ########## END MIDDLEWARE CONFIGURATION
 
