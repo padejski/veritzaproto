@@ -40,8 +40,12 @@ urlpatterns = [
         name='officialscompanies'),
     url(r'^officialscompaniesprocurement/$',
         views.OfficialsCompaniesProcurement.as_view(), name='officialscompaniesprocurement'),
-    url(r'^politicalfunderscompanies/$',
-        views.PoliticalFundersCompanies.as_view(), name='politicalfunderscompanies')
+    url(r'^funderscompanies/$',
+        views.FundersCompanies.as_view(), name='funderscompanies'),
+    url(r'^funderscompaniesprocurement',
+        views.FundersCompaniesProcurement.as_view(), name='funderscompaniesprocurement'),
+    url(r'^fundingcompaniesprocurement',
+        views.FundingCompaniesProcurement.as_view(), name='fundingcompaniesprocurement')
 ]
 
 # ============================================================================
