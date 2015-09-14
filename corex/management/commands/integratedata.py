@@ -6,7 +6,7 @@ make data integrations
 # imports
 # ============================================================================
 from django.core.management.base import BaseCommand
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 
 import serbia.models
 from corex.utils import are_similar, get_hash
@@ -65,7 +65,6 @@ def integrate_funders_companies():
                     break
 
 
-
 def integrate_funderscompanies_procurement():
     """ integrate political funders companies with procurement
 
@@ -108,7 +107,8 @@ def make_save_model(model, attr_dict):
     model = model(**attr_dict)
 
     try:
-        model.save()
+        with transaction.atomic():
+            model.save()
         return True
     except IntegrityError:
         return False
