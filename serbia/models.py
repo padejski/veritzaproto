@@ -178,7 +178,7 @@ class OfficialCompanyProcurement(cmodels.BaseModel):
         verbose_name_plural = "Public Officials Companies in Procurement"
 
 
-class PoliticalFunderCompany(cmodels.BaseModel):
+class FunderCompany(cmodels.BaseModel):
     """Companies Owned by political funders
 
     """
@@ -186,19 +186,27 @@ class PoliticalFunderCompany(cmodels.BaseModel):
     donation = models.ForeignKey('ElectionDonation')
 
 
-class PoliticalFunderCompanyProcurement(cmodels.BaseModel):
+class FunderCompanyProcurement(cmodels.BaseModel):
     """Companies Owned by political funders that are in procurement
 
     """
-    company = models.ForeignKey('PoliticalFunderCompany')
+    company = models.ForeignKey('FunderCompany')
     procurement = models.ForeignKey('Procurement')
 
 
-class CompanyPoliticalFunderProcurement(cmodels.BaseModel):
-    """Companies that are political funders and also in procurement
+class FundingCompany(cmodels.BaseModel):
+    """companies that are political funders
 
     """
     company = models.ForeignKey('Company')
+    donation = models.ForeignKey('ElectionDonation')
+
+
+class FundingCompanyProcurement(cmodels.BaseModel):
+    """Companies that are political funders and also in procurement
+
+    """
+    company = models.ForeignKey('FundingCompany')
     procurement = models.ForeignKey('Procurement')
 
 # ============================================================================
