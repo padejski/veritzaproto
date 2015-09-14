@@ -42,7 +42,9 @@ class DatasetsView(TemplateView):
         context['edonations_no'] = models.ElectionDonation.objects.count()
         context['offcompanies_no'] = models.OfficialCompany.objects.count()
         context['offcompaniesproc_no'] = models.OfficialCompanyProcurement.objects.count()
-        context['funderscompanies_no'] = models.PoliticalFunderCompany.objects.count()
+        context['funderscompanies_no'] = models.FunderCompany.objects.count()
+        context['funderscompaniesproc_no'] = models.FunderCompanyProcurement.objects.count()
+        context['fundingcompaniesproc_no'] = models.FundingCompanyProcurement.objects.count()
 
         return context
 
@@ -101,10 +103,24 @@ class OfficialsCompaniesProcurement(SingleTableView):
     template_name = 'serbia_list.html'
 
 
-class PoliticalFundersCompanies(SingleTableView):
+class FundersCompanies(SingleTableView):
     """list of election donors/funders companies"""
-    model = models.PoliticalFunderCompany
-    table_class = tables.PoliticalFunderCompanyTable
+    model = models.FunderCompany
+    table_class = tables.FunderCompanyTable
+    template_name = 'serbia_list.html'
+
+
+class FundersCompaniesProcurement(SingleTableView):
+    """list of companies in procurement owned by political funders"""
+    model = models.FunderCompanyProcurement
+    table_class = tables.FunderCompanyProcurementTable
+    template_name = 'serbia_list.html'
+
+
+class FundingCompaniesProcurement(SingleTableView):
+    """list of companies that are funders and also are in procurement"""
+    model = models.FundingCompanyProcurement
+    table_class = tables.FundingCompanyProcurementTable
     template_name = 'serbia_list.html'
 # ============================================================================
 # EOF
