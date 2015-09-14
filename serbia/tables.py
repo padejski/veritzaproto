@@ -99,13 +99,35 @@ class OfficialCompanyProcurementTable(tables.Table):
         exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
 
 
-class PoliticalFunderCompanyTable(tables.Table):
+class FunderCompanyTable(tables.Table):
     """political donors companies table"""
     company = tables.Column(accessor='company.name', verbose_name='company')
     donor = tables.Column(accessor='donation.donor_name', verbose_name='donor')
 
     class Meta:
-        model = models.PoliticalFunderCompany
+        model = models.FunderCompany
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
+
+
+class FunderCompanyProcurementTable(tables.Table):
+    """political donors companies in procurement table"""
+    company = tables.Column(accessor='company.company.name', verbose_name='company')
+    procurement = tables.Column(accessor='procurement.subject', verbose_name='procurement')
+
+    class Meta:
+        model = models.FunderCompanyProcurement
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
+
+
+class FundingCompanyProcurementTable(tables.Table):
+    """donor companies in procurement table"""
+    company = tables.Column(accessor='company.name', verbose_name='company')
+    procurement = tables.Column(accessor='procurement.subject', verbose_name='procurement')
+
+    class Meta:
+        model = models.FundingCompanyProcurement
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
 
