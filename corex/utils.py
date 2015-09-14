@@ -51,7 +51,7 @@ def are_similar(str1, str2, index=0.9):
     """
     if (not str1 or not str2):
         return False
-    if SequenceMatcher(None, str1, str2).ratio() >= index:
+    if SequenceMatcher(None, str1.strip(), str2.strip()).ratio() >= index:
         return True
 
     return False
