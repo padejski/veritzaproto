@@ -115,7 +115,7 @@
 
 
                 <div class="row">
-                    <a href="{% url 'serbia:politicalfunderscompanies' %}">
+                    <a href="{% url 'serbia:funderscompanies' %}">
                         <div class="col-md-2">
                             <img src="{{ MEDIA_URL }}images/official-company-small.png"></img>
                         </div>
@@ -123,6 +123,31 @@
                             <div style="font-size: 12pt">Political Funders Companies ({{ funderscompanies_no }})</div></a>
                             <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
                             <div style="font-size: 9pt">List of all the Serbian companies that have a political funder name in the list of founders, directors or board members - combined public record registry.</div>
+                        </div>
+                </div>
+
+                <div class="row">
+                    <a href="{% url 'serbia:funderscompaniesprocurement' %}">
+                        <div class="col-md-2">
+                            <img src="{{ MEDIA_URL }}images/official-company-small.png"></img>
+                        </div>
+                        <div class="col-md-8">
+                            <div style="font-size: 12pt">Political Funders Companies in procurement ({{ funderscompaniesproc_no }})</div></a>
+                            <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                            <div style="font-size: 9pt">List of all the Serbian companies that have a political funder name in the list of founders, directors or board members and are listed in goverment procurement.</div>
+                        </div>
+                </div>
+
+
+                <div class="row">
+                    <a href="{% url 'serbia:fundingcompaniesprocurement' %}">
+                        <div class="col-md-2">
+                            <img src="{{ MEDIA_URL }}images/official-company-small.png"></img>
+                        </div>
+                        <div class="col-md-8">
+                            <div style="font-size: 12pt">Funding Companies in procurement ({{ funderscompanies_no }})</div></a>
+                            <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                            <div style="font-size: 9pt">List of all the Serbian companies that are political funders and are listed in government procurement.</div>
                         </div>
                 </div>
 
