@@ -78,8 +78,10 @@ class ProcurementTable(tables.Table):
 
 class OfficialCompanyTable(tables.Table):
     """public offcials companies table"""
-    official = tables.Column(accessor='official.name', verbose_name='official')
-    company = tables.Column(accessor='company.name', verbose_name='company')
+    official = tables.LinkColumn('serbia:official', args=[A('official.pk')],
+                                 accessor='official.name', verbose_name='official')
+    company = tables.LinkColumn('serbia:company', args=[A('company.pk')],
+                                accessor='company.name', verbose_name='company')
 
     class Meta:
         model = models.OfficialCompany
@@ -89,9 +91,12 @@ class OfficialCompanyTable(tables.Table):
 
 class OfficialCompanyProcurementTable(tables.Table):
     """public officials companies in procurement table"""
-    official = tables.Column(accessor='official.name', verbose_name='official')
-    company = tables.Column(accessor='company.name', verbose_name='company')
-    procurement = tables.Column(accessor='procurement.subject', verbose_name='procurement')
+    official = tables.LinkColumn('serbia:official', args=[A('official.pk')],
+                                 accessor='official.name', verbose_name='official')
+    company = tables.LinkColumn('serbia:company', args=[A('company.pk')],
+                                accessor='company.name', verbose_name='company')
+    procurement = tables.LinkColumn('serbia:procurement', args=[A('procurement.pk')],
+                                    accessor='procurement.subject', verbose_name='procurement')
 
     class Meta:
         model = models.OfficialCompanyProcurement
@@ -101,19 +106,23 @@ class OfficialCompanyProcurementTable(tables.Table):
 
 class FunderCompanyTable(tables.Table):
     """political donors companies table"""
-    company = tables.Column(accessor='company.name', verbose_name='company')
-    donor = tables.Column(accessor='donation.donor_name', verbose_name='donor')
+    company = tables.LinkColumn('serbia:company', args=[A('company.pk')],
+                                accessor='company.name', verbose_name='company')
+    donor = tables.LinkColumn('serbia:electioncontribs', args=[A('donation.pk')],
+                              accessor='donation.donor_name', verbose_name='funder')
 
     class Meta:
         model = models.FunderCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
-        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr', 'donation')
 
 
 class FunderCompanyProcurementTable(tables.Table):
     """political donors companies in procurement table"""
-    company = tables.Column(accessor='company.company.name', verbose_name='company')
-    procurement = tables.Column(accessor='procurement.subject', verbose_name='procurement')
+    company = tables.LinkColumn('serbia:company', args=[A('company.company.pk')],
+                                accessor='company.company.name', verbose_name='company')
+    procurement = tables.LinkColumn('serbia:procurement', args=[A('procurement.pk')],
+                                    accessor='procurement.subject', verbose_name='procurement')
 
     class Meta:
         model = models.FunderCompanyProcurement
@@ -123,8 +132,10 @@ class FunderCompanyProcurementTable(tables.Table):
 
 class FundingCompanyProcurementTable(tables.Table):
     """donor companies in procurement table"""
-    company = tables.Column(accessor='company.name', verbose_name='company')
-    procurement = tables.Column(accessor='procurement.subject', verbose_name='procurement')
+    company = tables.LinkColumn('serbia:company', args=[A('company.pk')],
+                                accessor='company.name', verbose_name='company')
+    procurement = tables.LinkColumn('serbia:procurement', args=[A('procurement.pk')],
+                                    accessor='procurement.subject', verbose_name='procurement')
 
     class Meta:
         model = models.FundingCompanyProcurement
