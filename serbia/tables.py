@@ -108,7 +108,7 @@ class FunderCompanyTable(tables.Table):
     """political donors companies table"""
     company = tables.LinkColumn('serbia:company', args=[A('company.pk')],
                                 accessor='company.name', verbose_name='company')
-    donor = tables.LinkColumn('serbia:electioncontribs', args=[A('donation.pk')],
+    donor = tables.LinkColumn('serbia:electioncontrib', args=[A('donation.pk')],
                               accessor='donation.donor_name', verbose_name='funder')
 
     class Meta:
