@@ -22,7 +22,7 @@ EMAIL_HOST = 'smtp.mandrillapp.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL='alexander.stefanov@lulin.bg'
+DEFAULT_FROM_EMAIL = 'dev@veritza.org'
 # ######### END EMAIL CONFIGURATION
 
 
