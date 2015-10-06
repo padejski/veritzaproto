@@ -12,6 +12,8 @@ Desc      : Veritza serbia views
 from django.views.generic import TemplateView, DetailView
 from django_tables2 import SingleTableView
 
+from veritza.apps.core.views import LoginRequiredMixin
+
 from . import models, tables
 
 
@@ -31,7 +33,7 @@ class CompanyDetailView(DetailView):
     template_name = 'serbia_company.html'
 
 
-class DatasetsView(TemplateView):
+class DatasetsView(LoginRequiredMixin, TemplateView):
     template_name = 'serbia_datasets.html'
 
     def get_context_data(self, **kwargs):

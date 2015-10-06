@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Companies ({{ companies_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedCompany,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Companies.
                         </div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Financial Disclosures ({{ disclosures_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Disclosures' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedFinancialDisclosure,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Financial Disclosures.
                         </div>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Public Procurement ({{ procurements_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Procurement' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedProcurement,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Public Procurement.
                         </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">IRS Exempt Organizations ({{ irsexempt_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedIrsExemptOrg,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of IRS Exempt Organizations.
                         </div>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">SEC Filings ({{ secfilings_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedSecFiling,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of SEC  Filings.
                         </div>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Toxics Facilites ({{ toxics_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedToxicsFacility,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Toxics Facilities.
                         </div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">OSHA EBSA ({{ oshaebsa_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedOshaEbsa,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of OSHA EBSA Enforcements.
                         </div>
@@ -129,7 +129,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">OSHA Inspections ({{ oshainsp_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedOshaInspection,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of OSHA Public Safety Inspections.
                         </div>
@@ -144,7 +144,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">CPSC Recalls ({{ cpscrecalls_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedCpscRecall,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Consumer Product Safety Commission Recalls.
                         </div>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">CPSC Violations ({{ cpscviol_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedCpscRecallViolation,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Consumer Product Safety Commission Recalls Violations.
                         </div>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Election Candidates ({{ candidates_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedCandidate,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Elections Canditates.
                         </div>
@@ -190,7 +190,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Election Contributions ({{ econtribs_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='FedElectionContribution,usa' app_name='usa' %}</div>
                         <div style="font-size: 9pt">
                             List of Election Contributions.
                         </div>

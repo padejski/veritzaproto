@@ -9,6 +9,8 @@ __date__ = May 2015
 # ============================================================================
 # necessary imports
 # ============================================================================
+import itertools
+
 from corex.basescraper import BaseScraper
 from .. import models
 
@@ -60,10 +62,31 @@ class SerbiaElectionsScraper(BaseScraper):
         yields: donation (dict): dictionary of donation info
 
         """
-        donors = self.parse_donors(self.get_donors(NAMES))
+        names = (name for name in self.gen_names())
+        donors = self.parse_donors(self.get_donors(names))
 
         for donation in self.get_donors_donations(donors):
             yield donation
+
+    @staticmethod
+    def gen_names():
+        """generate search names
+
+        self.gen_names() -> search_names_iterable
+
+        args: None
+
+        yields: name (str) : search name
+
+        """
+        cnames = (c.name for c in models.Company.objects.all())
+        onames = (o.name for o in models.Official.objects.all())
+
+        for names in itertools.chain(NAMES, cnames, onames):
+            for name in names.strip().split(' '):
+                if len(name) > 4:
+                    print(name)
+                    yield name
 
     def get_donors_donations(self, donors):
         """fetch donor's donation
@@ -146,7 +169,11 @@ class SerbiaElectionsScraper(BaseScraper):
 
         self.session.close()
 
-        return int(res.json()['iTotalRecords'])
+        try:
+            return int(res.json()['iTotalRecords'])
+        except ValueError:
+            print(res.text)
+            return 0
 
     @staticmethod
     def parse_donors(donor_data):

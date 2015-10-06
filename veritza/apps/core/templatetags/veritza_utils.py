@@ -14,5 +14,9 @@ def count_objects(model_name_verbose, app_label='core'):
     return "-"
 
 @register.filter
-def is_subscribed(user, dataset):
-	return user.is_subscribed(dataset)
+def is_subscribed(user, dataset, app_label='core'):
+	return user.is_subscribed(dataset, app_label)
+
+@register.filter
+def split_pick_first(strvar, sep=','):
+    return strvar.split(sep)[0]

@@ -4,13 +4,14 @@
 <form action="{% url 'subscription' %}" method="post" style="display: inline">
 {% if not user.is_anonymous  %}
     {% if user|is_subscribed:dataset_name %}
-        <input class="btn btn-danger btn-xs" type="submit" value="{% trans 'Follow' %}">
+        <input class="btn btn-danger btn-xs" type="submit" value="{% trans 'Unfollow' %}">
         <input type="hidden" name="action" value="unsubscribe">
     {% else %}
-        <input class="btn btn-success btn-xs" type="submit" value="{% trans 'Unfollow' %}">
+        <input class="btn btn-success btn-xs" type="submit" value="{% trans 'Follow' %}">
         <input type="hidden" name="action" value="subscribe">
     {% endif %}
-        <input type="hidden" name="dataset" value="{{ dataset_name }}">
+        <input type="hidden" name="dataset" value="{{ dataset_name|split_pick_first }}">
+        <input type="hidden" name="app" value="{{ app_name }}">
         {% csrf_token %}
 {% endif %}
 </form>

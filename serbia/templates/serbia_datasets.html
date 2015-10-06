@@ -3,6 +3,8 @@
 {% load humanize %}
 {% load i18n %}
 
+
+
 {% block content %}
 <div class="row">
   <!-- LEFT PANE -->
@@ -19,7 +21,7 @@
             <div class="col-md-8">
               <div style="font-size: 12pt">Public Officials ({{ officials_no }})</div>
           </a>
-        	  <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficial' %}</div>
+        	  <div>{% include 'core/subscription_form_include.html' with dataset_name='Official,serbia' app_name='serbia' %}</div>
         	  <div style="font-size: 9pt">
                 Names and titles of all the public officials in Serbia - public record registry of Serbian public officials.
                </div>
@@ -35,7 +37,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Companies ({{ companies_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company,serbia' app_name='serbia' %}</div>
                         <div style="font-size: 9pt">
                             List of all the companies in Serbia - public record registry of Serbian Central Registry of Business Entities.
                         </div>
@@ -51,7 +53,7 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Procurements ({{ procurements_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Procurement,serbia' app_name='serbia' %}</div>
                         <div style="font-size: 9pt">
                             List of all the public procuments in Serbia.
                         </div>
@@ -67,9 +69,9 @@
                     </div>
                     <div class="col-md-8">
                         <div style="font-size: 12pt">Election Contributions ({{ edonations_no }})</div></a>
-                        <div>{% include 'core/subscription_form_include.html' with dataset_name='Company' %}</div>
+                        <div>{% include 'core/subscription_form_include.html' with dataset_name='ElectionDonation,serbia' app_name='serbia' %}</div>
                         <div style="font-size: 9pt">
-                            List of all the public procuments in Serbia.
+                            List of all the election contributions in Serbia.
                         </div>
                     </div>
 
@@ -96,7 +98,7 @@
                         </div>
                         <div class="col-md-8">
                             <div style="font-size: 12pt">Public Official Companies ({{ offcompanies_no }})</div></a>
-                            <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                            <div>{% include 'core/subscription_form_include.html' with dataset_name='OfficialCompany,serbia' app_name='serbia' %}</div>
                             <div style="font-size: 9pt">List of all the Serbian companies that have a public official name in the list of founders, directors or board members - combined public record registry.</div>
                         </div>
                 </div>
@@ -108,7 +110,7 @@
                         </div>
                         <div class="col-md-8">
                             <div style="font-size: 12pt">Public Official Companies in Procurement ({{ offcompaniesproc_no }})</div></a>
-                            <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                            <div>{% include 'core/subscription_form_include.html' with dataset_name='OfficialCompanyprocurement,serbia' app_name='serbia' %}</div>
                             <div style="font-size: 9pt">List of all the Serbian companies in procurement that have a public official name in the list of founders, directors or board members - combined public record registry.</div>
                         </div>
                 </div>
@@ -121,7 +123,7 @@
                         </div>
                         <div class="col-md-8">
                             <div style="font-size: 12pt">Political Funders Companies ({{ funderscompanies_no }})</div></a>
-                            <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                            <div>{% include 'core/subscription_form_include.html' with dataset_name='FunderCompany,serbia' app_name='serbia' %}</div>
                             <div style="font-size: 9pt">List of all the Serbian companies that have a political funder name in the list of founders, directors or board members - combined public record registry.</div>
                         </div>
                 </div>
@@ -133,7 +135,7 @@
                         </div>
                         <div class="col-md-8">
                             <div style="font-size: 12pt">Political Funders Companies in procurement ({{ funderscompaniesproc_no }})</div></a>
-                            <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                            <div>{% include 'core/subscription_form_include.html' with dataset_name='FunderCompanyProcurement,serbia' app_name='serbia' %}</div>
                             <div style="font-size: 9pt">List of all the Serbian companies that have a political funder name in the list of founders, directors or board members and are listed in goverment procurement.</div>
                         </div>
                 </div>
@@ -146,7 +148,7 @@
                         </div>
                         <div class="col-md-8">
                             <div style="font-size: 12pt">Funding Companies in procurement ({{ fundingcompaniesproc_no }})</div></a>
-                            <div>{% include 'core/subscription_form_include.html' with dataset_name='PublicOfficialCompany' %}</div>
+                            <div>{% include 'core/subscription_form_include.html' with dataset_name='FundingCompanyProcurement,serbia' app_name='serbia' %}</div>
                             <div style="font-size: 9pt">List of all the Serbian companies that are political funders and are listed in government procurement.</div>
                         </div>
                 </div>

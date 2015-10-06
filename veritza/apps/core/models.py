@@ -33,21 +33,26 @@ class User(AbstractUser):
 
     uuid = UUIDField()
 
-    def subscribe(self, dataset):
+    def subscribe(self, dataset, app_label='core'):
         if isinstance(dataset, basestring):
-            dataset = get_model('core', dataset)
+            dataset = get_model(app_label, dataset)
         content_type = ContentType.objects.get_for_model(dataset)
         self.subscription_set.add(Subscription(user=self, dataset=content_type))
 
-    def unsubscribe(self, dataset):
+    def unsubscribe(self, dataset, app_label='core'):
         if isinstance(dataset, basestring):
-            dataset = get_model('core', dataset)
+            dataset = get_model(app_label, dataset)
         content_type = ContentType.objects.get_for_model(dataset)
         Subscription.objects.filter(user=self, dataset=content_type).delete()
 
-    def is_subscribed(self, dataset):
+    def is_subscribed(self, dataset, app_label='core'):
         if isinstance(dataset, basestring):
-            dataset = get_model('core', dataset)
+            try:
+                app_label = dataset.split(',')[1]
+                dataset = dataset.split(',')[0]
+            except IndexError:
+                pass
+            dataset = get_model(app_label, dataset)
         content_type = ContentType.objects.get_for_model(dataset)
         return bool(Subscription.objects.filter(user=self, dataset=content_type).count())
 

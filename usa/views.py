@@ -5,6 +5,8 @@ views
 from django.views.generic import TemplateView, DetailView
 from django_tables2 import SingleTableView
 
+from veritza.apps.core.views import LoginRequiredMixin
+
 from . import models, tables
 
 
@@ -44,7 +46,7 @@ class ElectionContributionDetailView(DetailView):
     template_name = 'usa_contribution.html'
 
 
-class DatasetsView(TemplateView):
+class DatasetsView(LoginRequiredMixin, TemplateView):
     """Datasets index view """
     template_name = 'usa_datasets.html'
 

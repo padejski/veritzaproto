@@ -25,11 +25,11 @@ class LoginRequiredMixin(object):
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'core/details/montenegro_home.html'
 
 
 class DatasetsView(TemplateView):
-    template_name = 'datasets.html'
+    template_name = 'core/details/montenegro_datasets.html'
 
 
 class FaqView(TemplateView):
@@ -45,7 +45,7 @@ class ContactView(TemplateView):
 
 
 class DatasetsView(LoginRequiredMixin, TemplateView):
-    template_name = 'datasets.html'
+    template_name = 'core/details/montenegro_datasets.html'
 
 
 class SubscriptionView(View):
@@ -54,17 +54,18 @@ class SubscriptionView(View):
         user = request.user
         dataset = request.POST.get('dataset', '')
         action = request.POST.get('action', '')
+        app = request.POST.get('app_label', None)
         message = ''
 
         if action == 'subscribe':
             try:
-                user.subscribe(dataset)
+                user.subscribe(dataset, app)
                 message = 'Successfully subscribed for {0}'.format(dataset)
             except IntegrityError as e:
                 return redirect(request.path)
 
         elif action == 'unsubscribe':
-            user.unsubscribe(dataset)
+            user.unsubscribe(dataset, app)
             message = 'Successfully unsubscribed from {0}'.format(dataset)
 
         else:

@@ -1,0 +1,22 @@
+{% extends "veritza_base.html" %}
+
+{% block datasetsurl %}<a href="#">{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-sm-4">
+      <div>Montenegro</div>
+      <a href="{% url 'montenegro:datasets' %}"><img src="{{ MEDIA_URL }}images/Serbia_and_Montenegro.png"></img></a>
+  </div>
+  <div class="col-sm-4">
+      <div>Serbia</div>
+      <a href="{% url 'serbia:datasets' %}"><img src="{{ MEDIA_URL }}images/Serbia_and_Montenegro.png"></img></a>
+  </div>
+  <div class="col-sm-4">
+      <div>USA</div>
+      <a href="{% url 'usa:datasets' %}"><img src="{{ MEDIA_URL }}images/United_States_of_America.png"></img></a>
+  </div>
+</div>
+
+{% endblock %}

@@ -33,7 +33,7 @@
         <a class="navbar-brand" href="{% url 'home' %}">Veritza</a>
         <div class="nav-collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li{% if current_page == 'datasets' %} class="active"{% endif %}><a href="{% url 'datasets' %}">Datasets</a></li>
+            <li{% if current_page == 'datasets' %} class="active"{% endif %}>{% block datasetsurl %}<a href="{% url 'datasets' %}">{% endblock %}Datasets</a></li>
             <li{% if current_page == 'faq' %} class="active"{% endif %}><a href="{% url 'faq' %}">Community</a></li>
             <li{% if current_page == 'about' %} class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
             <li{% if current_page == 'contact' %} class="active"{% endif %}><a href="{% url 'contact' %}">Contact</a></li>
