@@ -221,6 +221,7 @@ THIRD_PARTY_APPS = (
     'userena',
     'django_tables2',
     'report_tools',
+    'watson',
 )
 
 LOCAL_APPS = (
