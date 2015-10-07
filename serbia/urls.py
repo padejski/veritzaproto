@@ -18,24 +18,26 @@ from . import views
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
 
+    url(r'^search', views.SearchView.as_view(), name='search'),
+
     url(r'^companies/$', views.CompaniesView.as_view(), name='companies'),
 
     url(r'^companies/(?P<pk>\d+)/$', views.CompanyDetailView.as_view(),
-        name='company'),
+        name='companies'),
     url(r'^datasets/$', views.DatasetsView.as_view(), name='datasets'),
 
     url(r'^electioncontribs/$', views.ElectionDonationsView.as_view(),
         name='electioncontribs'),
     url(r'^electioncontribs/(?P<pk>\d+)/$',
-        views.ElectionDonationDetailView.as_view(), name='electioncontrib'),
+        views.ElectionDonationDetailView.as_view(), name='election-donations'),
     url(r'^officials/$', views.OfficialsView.as_view(), name='officials'),
 
     url(r'^officials/(?P<pk>\d+)/$', views.OfficialDetailView.as_view(),
-        name='official'),
+        name='officials'),
     url(r'^procurements/$', views.ProcurementsView.as_view(),
         name='procurements'),
     url(r'^procurements/(?P<pk>\d+)/$', views.ProcurementDetailView.as_view(),
-        name='procurement'),
+        name='procurements'),
     url(r'^officialscompanies/$', views.OfficialsCompanies.as_view(),
         name='officialscompanies'),
     url(r'^officialscompaniesprocurement/$',
