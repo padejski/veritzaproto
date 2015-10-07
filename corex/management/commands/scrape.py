@@ -46,6 +46,8 @@ class ScraperScheduler:
                 self._task_queue.append(task)
             except StopIteration:
                 pass
+            except Exception as exc:
+                print(exc)
 
 
 class Command(BaseCommand):
