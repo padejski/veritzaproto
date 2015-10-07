@@ -11,6 +11,7 @@ Desc      : Veritza serbia models
 from django.db import models
 from django.db.models.signals import post_save
 from django.core.management import call_command
+import watson
 
 from corex import models as cmodels
 from corex.models import UnsavedForeignKey, UnsavedManyToManyField
@@ -51,6 +52,9 @@ class Company(cmodels.CompanyBaseModel):
 
         return set(individuals)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         """extra options"""
         verbose_name_plural = 'Companies'
@@ -81,6 +85,12 @@ class Procurement(cmodels.ProcurementBaseModel):
     supplier_country = models.CharField(max_length=255, blank=True, verbose_name="Vendor's Country")
     modifications = models.CharField(max_length=255, blank=True, verbose_name='Changes')
 
+    def __unicode__(self):
+        return self.contracting_auth
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Procurements'
 
 class Official(cmodels.OfficialBaseModel):
     """Serbia public official model."""
@@ -88,9 +98,12 @@ class Official(cmodels.OfficialBaseModel):
     place = models.CharField(max_length=255, blank=True)
     date = models.DateField(max_length=255, null=True)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         """extra options"""
-        verbose_name_plural = 'Public Officials'
+        verbose_name_plural = 'Officials'
 
 
 class FixedAsset(cmodels.OfficialMovable):
@@ -138,9 +151,12 @@ class ElectionDonation(cmodels.ElectionDonationBaseModel):
     kind_donations = models.CharField(max_length=255, null=True)
     selection = models.CharField(max_length=255, null=True)
 
+    def __unicode__(self):
+        return self.donor_name
+
     class Meta:
         """extra options"""
-        verbose_name_plural = 'Election Contributions'
+        verbose_name_plural = 'Election Donations'
 
 
 # ============================================================================
@@ -213,6 +229,13 @@ class FundingCompanyProcurement(cmodels.BaseModel):
 # hook up post_save signal to reciever
 # ============================================================================
 post_save.connect(ack_save, sender=Official, dispatch_uid="integrate_data")
+
+
+# ============================================================================
+# register models for django-watson
+# ============================================================================
+for model in (Company, Procurement, Official, ElectionDonation):
+    watson.register(model)
 
 
 # ============================================================================
