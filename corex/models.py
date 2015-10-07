@@ -34,6 +34,10 @@ class BaseModel(models.Model):
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
+    @classmethod
+    def get_url_name(cls):
+        return cls._meta.verbose_name_plural.replace(' ', '-').lower()
+
 
 class CompanyBaseModel(BaseModel):
     """Company base model"""
