@@ -1,3 +1,4 @@
 {% extends "veritza_base.html" %}
 
 {% block datasetsurl %}<a href="{% url 'serbia:datasets' %}">{% endblock %}
+{% block search %}<form style="padding-top: 8px;" action="{% url 'serbia:search' %}"> {% endblock %}
