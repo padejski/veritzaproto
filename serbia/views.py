@@ -12,6 +12,8 @@ Desc      : Veritza serbia views
 from django.views.generic import TemplateView, DetailView
 from django_tables2 import SingleTableView
 
+import watson
+
 from veritza.apps.core.views import LoginRequiredMixin
 
 from . import models, tables
@@ -124,6 +126,35 @@ class FundingCompaniesProcurement(SingleTableView):
     model = models.FundingCompanyProcurement
     table_class = tables.FundingCompanyProcurementTable
     template_name = 'serbia_list.html'
+
+
+class SearchView(LoginRequiredMixin, TemplateView):
+    """serbia search view"""
+    template_name = 'serbia_search_results.html'
+
+    def get(self, request, *args, **kwargs):
+        """search term"""
+        search_term = request.GET.get('search')
+        context = self.get_context_data(**kwargs)
+        context['search'] = search_term
+        context['results_count'] = 0
+        context['datasets'] = []
+
+        _models = [models.Company, models.ElectionDonation, models.Procurement,
+                   models.Official]
+
+        for model in _models:
+            results = watson.filter(model, search_term)
+            context['results_count'] += len(results)
+            context['datasets'].append({
+                'model': model,
+                'model_meta': model._meta,
+                'model_name': model.__name__,
+                'objects': results
+            })
+
+        return self.render_to_response(context)
+
 # ============================================================================
 # EOF
 # ============================================================================
