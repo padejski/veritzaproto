@@ -173,6 +173,7 @@ class OfficialCompany(cmodels.BaseModel):
         return "{} - {}".format(self.official.name, self.company.name)
 
     class Meta:
+        unique_together = ('official', 'company')
         verbose_name = "Public Official's company"
         verbose_name_plural = "Public Officials Companies"
 
