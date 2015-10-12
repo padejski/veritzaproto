@@ -9,6 +9,8 @@ Desc      : Veritza usa models
 # necessary imports
 # ============================================================================
 from django.db import models
+import watson
+
 from corex import models as cmodels
 
 
@@ -327,6 +329,15 @@ class FedCpscRecallViolation(cmodels.BaseModel):
         """extra options"""
         verbose_name_plural = 'Consumer Product Safety Commission Recall Violations'
 
+
+# ============================================================================
+# register models for django-watson
+# ============================================================================
+for model in (FedCandidate, FedCompany, FedElectionContribution,
+              FedIrsExemptOrg, FedProcurement, FedFinancialDisclosure,
+              FedSecFiling, FedToxicsFacility, FedOshaEbsa, FedOshaInspection,
+              FedCpscRecall, FedCpscRecallViolation):
+    watson.register(model)
 
 # ============================================================================
 # EOF
