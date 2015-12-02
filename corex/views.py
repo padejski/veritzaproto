@@ -9,6 +9,7 @@ Desc      : Veritza core views
 # ============================================================================
 # necessary imports
 # ============================================================================
+from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
 
@@ -22,7 +23,7 @@ class IndexView(TemplateView):
 
 class DatasetsView(TemplateView):
     template_name = 'core_datasets.html'
-    
+
 
 class FaqView(TemplateView):
     template_name = 'faq.html'
@@ -49,7 +50,7 @@ class SubscriptionView(View):
             try:
                 user.subscribe(dataset, app)
                 message = 'Successfully subscribed for {0}'.format(dataset)
-            except IntegrityError as e:
+            except IntegrityError:
                 return redirect(request.path)
 
         elif action == 'unsubscribe':
