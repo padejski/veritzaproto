@@ -43,7 +43,7 @@ class SubscriptionView(View):
         user = request.user
         dataset = request.POST.get('dataset', '')
         action = request.POST.get('action', '')
-        app = request.POST.get('app_label', None)
+        app = request.POST.get('app', None)
         message = ''
 
         if action == 'subscribe':
