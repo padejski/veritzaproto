@@ -42,8 +42,8 @@ class ScraperScheduler:
         while self._task_queue:
             task = self._task_queue.popleft()
             try:
-                next(task)
                 self._task_queue.append(task)
+                next(task)
             except StopIteration:
                 pass
             except Exception as exc:
