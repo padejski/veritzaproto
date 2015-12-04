@@ -52,7 +52,7 @@ MAPPING = [(u'Седиште', 'city'),
            ('supervisors', 'supervisors'),
            ('other_individuals', 'other_individuals')]
 
-CODES_FILE = 'IDS.csv'
+CODES_FILE = 'IDS2.csv'
 
 
 # ============================================================================
@@ -104,9 +104,12 @@ class SerbiaCompanyScraper(BaseScraper):
             codes (genexp): generator expression of codes
 
         """
-        codes = (line.split(',')[1] for line in open(dfile, 'r'))
+        try:
+            codes = (line.split(',')[1] for line in open(dfile, 'r'))
 
-        next(codes)  # remove header row
+            next(codes)  # remove header row
+        except IndexError:
+            codes = (line.strip() for line in open(dfile))
 
         return codes
 
