@@ -237,32 +237,35 @@ class SerbiaCompanyScraper(BaseScraper):
             content_dict (dict): dict with scraped info
 
         """
-        soup = self.get_soup(url)
-        content = [x.find_all('p') for x in
-                   soup.find_all('div', {'class': 'GroupContent'}) if x.find('p')]
-        content = self.utils.flatten_list(content)
+        try:
+            soup = self.get_soup(url)
+            content = [x.find_all('p') for x in
+                       soup.find_all('div', {'class': 'GroupContent'}) if x.find('p')]
+            content = self.utils.flatten_list(content)
 
-        content = chain.from_iterable([x.text.split('\r\n') for x in content])
+            content = chain.from_iterable([x.text.split('\r\n') for x in content])
 
-        content = [x.split(':', 1) for x in content if
+            content = [x.split(':', 1) for x in content if
                    len(x.split(':', 1)) == 2]
 
-        cdict = {k.strip(): v.strip() for k, v in content}
+            cdict = {k.strip(): v.strip() for k, v in content}
 
-        if 'legaltrust' in url.lower():
-            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'legal_rep')
+            if 'legaltrust' in url.lower():
+                cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'legal_rep')
 
-        if 'enterprisesteeri' in url.lower():
-            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'directors')
+            if 'enterprisesteeri' in url.lower():
+                cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'directors')
 
-        if 'enterprisemember' in url.lower():
-            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'members')
+            if 'enterprisemember' in url.lower():
+                cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'members')
 
-        if 'supervisoryboard' in url.lower():
-            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'supervisors')
+            if 'supervisoryboard' in url.lower():
+                cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'supervisors')
 
-        if 'othertrustees' in url.lower():
-            cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'other_individuals')
+            if 'othertrustees' in url.lower():
+                cdict = self.dkey_to_dict(cdict, u'Име Презиме', 'other_individuals')
+        except AttributeError:
+            cdict = {}
 
         return cdict
 
@@ -279,10 +282,11 @@ class SerbiaCompanyScraper(BaseScraper):
 
         # save data to database
         for dat in data:
-            model = Company(**dat)
-            self.save_model(model)
+            if dat:
+                model = Company(**dat)
+                self.save_model(model)
 
-            yield  # scraper's cooperative multitasking hook
+                yield  # scraper's cooperative multitasking hook
 
 
 # ============================================================================
