@@ -13,7 +13,7 @@ from itertools import imap
 
 from django.db.utils import IntegrityError
 
-from corex.basescraper import BaseScraper
+from apps.corex.basescraper import BaseScraper
 from ..models import Procurement
 
 

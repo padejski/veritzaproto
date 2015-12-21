@@ -11,7 +11,7 @@ __date__ = May 2015
 # ============================================================================
 import itertools
 
-from corex.basescraper import BaseScraper
+from apps.corex.basescraper import BaseScraper
 from .. import models
 
 # ============================================================================

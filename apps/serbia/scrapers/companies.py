@@ -16,7 +16,7 @@ from itertools import chain
 
 from bs4 import BeautifulSoup as bs
 
-from corex.basescraper import BaseScraper
+from apps.corex.basescraper import BaseScraper
 from ..models import Company
 
 

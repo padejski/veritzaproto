@@ -15,7 +15,7 @@ import datetime
 
 from django.db.utils import IntegrityError
 
-from corex.basescraper import BaseScraper
+from apps.corex.basescraper import BaseScraper
 from .. import models
 
 
