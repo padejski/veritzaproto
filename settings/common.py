@@ -6,7 +6,7 @@ from os.path import abspath, basename, dirname, join, normpath
 from os import environ
 from sys import path
 
-from djcelery import setup_loader
+# from djcelery import setup_loader
 
 
 ########## PATH CONFIGURATION
@@ -188,7 +188,7 @@ MIDDLEWARE_CLASSES = (
 
 ########## URL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
-ROOT_URLCONF = '%s.urls' % SITE_NAME
+ROOT_URLCONF = 'urls'
 ########## END URL CONFIGURATION
 
 
@@ -225,11 +225,11 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
-    'veritza.apps.core',
-    'veritza.apps.stats',
-    'corex',
-    'serbia',
-    'usa'
+    'apps.core',
+    'apps.stats',
+    'apps.corex',
+    'apps.serbia',
+    'apps.usa'
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

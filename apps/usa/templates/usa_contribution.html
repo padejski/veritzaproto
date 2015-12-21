@@ -7,7 +7,7 @@
   <ol class="breadcrumb">
     <li><a href="{% url 'usa:index' %}">Home</a></li>
     <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
-    <li><a href="{% url 'usa:econtribs' %}">Election Contributions</a></li>
+    <li><a href="{% url 'usa:elections-contributions' %}">Election Contributions</a></li>
     <li>{{ object.id }}</li>
   </ol>
 
@@ -18,28 +18,28 @@
       <div class="panel-heading">Basic information</div>
       <div class="panel-body">
         <table class="table table-bordered">
-          <tr> <td>Amendment</td> <td>{{ object.filing }}</td> </tr>
-          <tr> <td>Candidate</td> <td>{{ object.name }}</td> </tr>
-          <tr> <td>City</td> <td>{{ object.office }}</td> </tr>
-          <tr> <td>Committee ID</td> <td>{{ object.pdf }}</td> </tr>
-          <tr> <td>Employer</td> <td>{{ object.year }}</td> </tr>
-          <tr> <td>Entity Type</td> <td>{{ object.filing }}</td> </tr>
-          <tr> <td>File Number</td> <td>{{ object.name }}</td> </tr>
-          <tr> <td>Microfilm Location</td> <td>{{ object.office }}</td> </tr>
-          <tr> <td>Memo Code</td> <td>{{ object.pdf }}</td> </tr>
-          <tr> <td>Memo Text</td> <td>{{ object.year }}</td> </tr>
-          <tr> <td>Contributor Name</td> <td>{{ object.filing }}</td> </tr>
-          <tr> <td>Occupation</td> <td>{{ object.name }}</td> </tr>
-          <tr> <td>Other ID</td> <td>{{ object.office }}</td> </tr>
-          <tr> <td>Report Type</td> <td>{{ object.pdf }}</td> </tr>
-          <tr> <td>State</td> <td>{{ object.year }}</td> </tr>
-          <tr> <td>FEC Record Number</td> <td>{{ object.filing }}</td> </tr>
-          <tr> <td>Transaction ID</td> <td>{{ object.name }}</td> </tr>
-          <tr> <td>Transaction Amount</td> <td>{{ object.office }}</td> </tr>
-          <tr> <td>Transaction Date</td> <td>{{ object.pdf }}</td> </tr>
-          <tr> <td>Transaction Primary-General Indicator</td> <td>{{ object.year }}</td> </tr>
-          <tr> <td>Transaction Type</td> <td>{{ object.filing }}</td> </tr>
-          <tr> <td>Zip Code</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>Amendment</td> <td>{{ object.amndt_ind }}</td> </tr>
+          <tr> <td>Candidate ID</td> <td>{{ object.cand_id }}</td> </tr>
+          <tr> <td>City</td> <td>{{ object.city }}</td> </tr>
+          <tr> <td>Committee ID</td> <td>{{ object.cmte_id }}</td> </tr>
+          <tr> <td>Employer</td> <td>{{ object.employer }}</td> </tr>
+          <tr> <td>Entity Type</td> <td>{{ object.entity_tp }}</td> </tr>
+          <tr> <td>File Number</td> <td>{{ object.file_num }}</td> </tr>
+          <tr> <td>Microfilm Location</td> <td>{{ object.image_num }}</td> </tr>
+          <tr> <td>Memo Code</td> <td>{{ object.memo_cd }}</td> </tr>
+          <tr> <td>Memo Text</td> <td>{{ object.memo_text }}</td> </tr>
+          <tr> <td>Contributor Name</td> <td>{{ object.name }}</td> </tr>
+          <tr> <td>Occupation</td> <td>{{ object.occupation }}</td> </tr>
+          <tr> <td>Other ID</td> <td>{{ object.other_id }}</td> </tr>
+          <tr> <td>Report Type</td> <td>{{ object.rpt_tp }}</td> </tr>
+          <tr> <td>State</td> <td>{{ object.state }}</td> </tr>
+          <tr> <td>FEC Record Number</td> <td>{{ object.sub_id }}</td> </tr>
+          <tr> <td>Transaction ID</td> <td>{{ object.tran_id }}</td> </tr>
+          <tr> <td>Transaction Amount</td> <td>{{ object.transaction_amt }}</td> </tr>
+          <tr> <td>Transaction Date</td> <td>{{ object.transaction_dt }}</td> </tr>
+          <tr> <td>Transaction Primary-General Indicator</td> <td>{{ object.transaction_pgi }}</td> </tr>
+          <tr> <td>Transaction Type</td> <td>{{ object.transaction_tp }}</td> </tr>
+          <tr> <td>Zip Code</td> <td>{{ object.zip_code }}</td> </tr>
           <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url </a></td> </tr>
         </table>
       </div>

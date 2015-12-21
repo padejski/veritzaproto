@@ -11,8 +11,8 @@ from collections import deque
 
 from django.core.management.base import BaseCommand
 
-from serbia.scrapers import serbia_scrapers
-from usa.scrapers import usa_scrapers
+from apps.serbia.scrapers import serbia_scrapers
+from apps.usa.scrapers import usa_scrapers
 
 # ============================================================================
 # scrapers list

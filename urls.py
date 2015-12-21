@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.conf.urls.static import static
-from veritza.apps.core import views as core_views
+from apps.core import views as core_views
 
 admin.autodiscover()
 
@@ -11,10 +11,10 @@ urlpatterns = patterns(
     url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('userena.urls')),
-    url(r'^serbia/', include('serbia.urls', namespace='serbia')),
-    url(r'^usa/', include('usa.urls', namespace='usa')),
-    url(r'^montenegro/', include('veritza.apps.core.urls', namespace='montenegro')),
-    url(r'^', include('corex.urls')),
+    url(r'^serbia/', include('apps.serbia.urls', namespace='serbia')),
+    url(r'^usa/', include('apps.usa.urls', namespace='usa')),
+    url(r'^montenegro/', include('apps.core.urls', namespace='montenegro')),
+    url(r'^', include('apps.corex.urls')),
 
 
     url(r'^search', core_views.SearchView.as_view(), name='search'),

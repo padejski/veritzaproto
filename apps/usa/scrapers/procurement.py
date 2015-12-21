@@ -11,7 +11,7 @@ from itertools import imap
 from xmltodict import parse as xmlparse
 from django.db.utils import IntegrityError
 
-from corex.basescraper import BaseScraper
+from apps.corex.basescraper import BaseScraper
 from ..models import FedCompany as Company
 from ..models import FedProcurement as Procurement
 from . import constants as const

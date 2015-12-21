@@ -7,7 +7,7 @@ make data integrations
 # ============================================================================
 from django.core.management.base import BaseCommand
 
-from serbia.integration import SerbiaIntegrator
+from apps.serbia.integration import SerbiaIntegrator
 
 # ============================================================================
 # data integration: django command

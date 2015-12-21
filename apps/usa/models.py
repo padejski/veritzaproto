@@ -11,7 +11,7 @@ Desc      : Veritza usa models
 from django.db import models
 import watson
 
-from corex import models as cmodels
+from apps.corex import models as cmodels
 
 
 # ============================================================================
@@ -102,7 +102,7 @@ class FedProcurement(cmodels.ProcurementBaseModel):
     """
     class Meta:
         """extra options"""
-        verbose_name_plural = 'Federal Procurements'
+        verbose_name_plural = 'Federal Procurement'
 
 
 class FedFinancialDisclosure(cmodels.BaseModel):
@@ -304,6 +304,12 @@ class FedCpscRecall(cmodels.BaseModel):
     title = models.CharField(max_length=1024, null=True, unique=True)
     url = models.CharField(max_length=1024, null=True)
 
+    @property
+    def get_images(self):
+        """get and yield images url """
+        for image_url in self.images.split(','):
+            yield image_url
+
     class Meta:
         """extra options"""
         verbose_name_plural = 'Consumer Product Safety Commission Recalls'
@@ -328,6 +334,37 @@ class FedCpscRecallViolation(cmodels.BaseModel):
     class Meta:
         """extra options"""
         verbose_name_plural = 'Consumer Product Safety Commission Recall Violations'
+
+
+# ============================================================================
+# veritza data integration models
+# ============================================================================
+class FedFunderCompany(cmodels.BaseModel):
+    """Companies owned by political contributors/funders"""
+    company = models.ForeignKey('FedCompany')
+    contribution = models.ForeignKey('FedElectionContribution')
+
+
+class FedFunderCompanyProcurement(cmodels.BaseModel):
+    """Companies owned by political funders that are in procurement """
+    company = models.ForeignKey('FedFunderCompany')
+    procurement = models.ForeignKey('FedProcurement')
+
+
+class FedFundingCompany(cmodels.BaseModel):
+    """companies that are political funders
+
+    """
+    company = models.ForeignKey('FedCompany')
+    donation = models.ForeignKey('FedElectionContribution')
+
+
+class FedFundingCompanyProcurement(cmodels.BaseModel):
+    """Companies that are political funders and also in procurement
+
+    """
+    company = models.ForeignKey('FedFundingCompany')
+    procurement = models.ForeignKey('FedProcurement')
 
 
 # ============================================================================

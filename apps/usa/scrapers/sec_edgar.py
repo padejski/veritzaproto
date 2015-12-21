@@ -15,8 +15,8 @@ __date__ = June 2015
 import itertools
 import datetime as dt
 
-from corex.basescraper import BaseScraper
-from corex.utils import auto_retry
+from apps.corex.basescraper import BaseScraper
+from apps.corex.utils import auto_retry
 from ..models import FedSecFiling
 
 # ============================================================================

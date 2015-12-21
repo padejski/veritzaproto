@@ -11,6 +11,8 @@ __date__ = June 2015
 # ============================================================================
 # necessary imports
 # ============================================================================
+import re
+
 from corex.basescraper import BaseScraper
 from ..models import FedToxicsFacility
 
@@ -63,6 +65,10 @@ class ToxicsInventoryScraper(BaseScraper):
 
         for line in lines:
             data = dict(zip(DATA_HEADERS, line.split(',')))
+            # clean data values
+            for key, val in data.iteritems():
+                data[key] = re.sub(r'^"|"$', '', val)
+
             data['hash'] = self.get_hash(data)
 
             yield data

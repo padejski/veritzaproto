@@ -10,9 +10,9 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django_tables2 import SingleTableView
 from report_tools.views import ReportView
 
-from veritza.apps.core.reports import *
-from veritza.apps.core.models import *
-from veritza.apps.core.tables import *
+from apps.core.reports import *
+from apps.core.models import *
+from apps.core.tables import *
 
 
 from django.contrib.auth.decorators import login_required

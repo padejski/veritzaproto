@@ -10,9 +10,9 @@ Desc      : Veritza serbia data integration module
 # ============================================================================
 from django.db import IntegrityError, transaction
 
-from serbia import models
+from apps.serbia import models
 
-from corex.utils import are_similar, get_hash
+from apps.corex.utils import are_similar, get_hash
 
 
 # ============================================================================

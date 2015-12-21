@@ -10,7 +10,7 @@ Desc      : Veritza serbia admin
 # necessary imports
 # ============================================================================
 from django.contrib import admin
-from serbia.models import Company, Procurement, Official, ElectionDonation
+from apps.serbia.models import Company, Procurement, Official, ElectionDonation
 
 
 # ============================================================================

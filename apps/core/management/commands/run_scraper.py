@@ -1,7 +1,7 @@
 from subprocess import call
 from optparse import make_option
 from django.core.management.base import BaseCommand
-from veritza.apps.core.models import refresh_all_veritzas
+from apps.core.models import refresh_all_veritzas
 
 
 class Command(BaseCommand):

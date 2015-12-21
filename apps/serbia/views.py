@@ -14,7 +14,7 @@ from django_tables2 import SingleTableView
 
 import watson
 
-from veritza.apps.core.views import LoginRequiredMixin
+from apps.core.views import LoginRequiredMixin
 
 from . import models, tables
 

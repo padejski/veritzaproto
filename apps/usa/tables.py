@@ -12,7 +12,7 @@ from . import models
 
 class CandidateTable(tables.Table):
     """election candidate table"""
-    cand_name = tables.LinkColumn('usa:candidate', args=[A('pk')])
+    cand_name = tables.LinkColumn('usa:election-candidates', args=[A('pk')])
     cand_pty_affiliation = tables.Column()
     cand_election_yr = tables.Column()
     cand_office = tables.Column()
@@ -24,7 +24,7 @@ class CandidateTable(tables.Table):
 
 class CompanyTable(tables.Table):
     """companies data table"""
-    name = tables.LinkColumn('usa:company', args=[A('pk')])
+    name = tables.LinkColumn('usa:federal-companies', args=[A('pk')])
 
     class Meta:
         model = models.FedCompany
@@ -38,7 +38,7 @@ class CompanyTable(tables.Table):
 
 class ElectionContributionTable(tables.Table):
     """election contributions  data table"""
-    id = tables.LinkColumn('usa:econtrib', args=[A('pk')])
+    id = tables.LinkColumn('usa:elections-contributions', args=[A('pk')])
 
     class Meta:
         model = models.FedElectionContribution
@@ -52,7 +52,7 @@ class ElectionContributionTable(tables.Table):
 
 class FinancialDisclosureTable(tables.Table):
     """Financial disclosures  data table"""
-    name = tables.LinkColumn('usa:disclosure', args=[A('pk')])
+    name = tables.LinkColumn('usa:federal-financial-disclosures', args=[A('pk')])
     pdf = tables.URLColumn()
 
     class Meta:
@@ -63,7 +63,7 @@ class FinancialDisclosureTable(tables.Table):
 
 class IrsExemptOrgTable(tables.Table):
     """IRS Exempt Organizations  data table"""
-    id = tables.LinkColumn('usa:irsexempt', args=[A('pk')])
+    id = tables.LinkColumn('usa:irs-exempt-organizations', args=[A('pk')])
 
     class Meta:
         model = models.FedIrsExemptOrg
@@ -83,7 +83,7 @@ class OfficialTable(tables.Table):
 
 class ProcurementTable(tables.Table):
     """procurements table """
-    id = tables.LinkColumn('usa:procurement', args=[A('pk')])
+    id = tables.LinkColumn('usa:federal-procurement', args=[A('pk')])
 
     class Meta:
         model = models.FedProcurement
@@ -95,7 +95,8 @@ class ProcurementTable(tables.Table):
 
 class SecFilingTable(tables.Table):
     """SEC filings  data table"""
-    id = tables.LinkColumn('usa:secfiling', args=[A('pk')])
+    id = tables.LinkColumn('usa:securities-and-exchange-commission-filings',
+                           args=[A('pk')])
 
     class Meta:
         model = models.FedSecFiling
@@ -115,7 +116,7 @@ class SecFilingTable(tables.Table):
 
 class ToxicsFacilityTable(tables.Table):
     """Toxics facilities  data table"""
-    id = tables.LinkColumn('usa:toxicsfacility', args=[A('pk')])
+    id = tables.LinkColumn('usa:toxics-facilities', args=[A('pk')])
 
     class Meta:
         model = models.FedToxicsFacility
@@ -133,7 +134,8 @@ class ToxicsFacilityTable(tables.Table):
 
 class OshaEbsaTable(tables.Table):
     """OSHA Ebsa Enforcement data table"""
-    id = tables.LinkColumn('usa:oshaebsa', args=[A('pk')])
+    id = tables.LinkColumn('usa:osha-employee-benefits-security-adminstration-enforcements',
+                           args=[A('pk')])
 
     class Meta:
         model = models.FedOshaEbsa
@@ -143,7 +145,8 @@ class OshaEbsaTable(tables.Table):
 
 class OshaInspectionTable(tables.Table):
     """OSHA Inspection  data table"""
-    id = tables.LinkColumn('usa:oshainsp', args=[A('pk')])
+    id = tables.LinkColumn('usa:occupational-safety-and-health-inspections',
+                           args=[A('pk')])
 
     class Meta:
         model = models.FedOshaInspection
@@ -160,7 +163,8 @@ class OshaInspectionTable(tables.Table):
 
 class CpscRecallTable(tables.Table):
     """Consumer Product Safety Commission Recall data table"""
-    id = tables.LinkColumn('usa:cpscrecall', args=[A('pk')])
+    id = tables.LinkColumn('usa:consumer-product-safety-commission-recalls',
+                           args=[A('pk')])
 
     class Meta:
         model = models.FedCpscRecall
@@ -172,7 +176,8 @@ class CpscRecallTable(tables.Table):
 
 class CpscRecallViolationTable(tables.Table):
     """Consumer Product Safety Commission Recall Violation data table"""
-    firm = tables.LinkColumn('usa:cpscviol', args=[A('pk')])
+    firm = tables.LinkColumn('usa:consumer-product-safety-commission-recall-violations',
+                             args=[A('pk')])
 
     class Meta:
         model = models.FedCpscRecallViolation

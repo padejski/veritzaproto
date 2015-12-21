@@ -11,7 +11,7 @@ __date__ = June 2015
 import itertools
 from itertools import imap
 
-from corex.basescraper import BaseScraper
+from apps.corex.basescraper import BaseScraper
 from ..models import FedFinancialDisclosure
 
 # ============================================================================

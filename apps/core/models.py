@@ -10,17 +10,17 @@ from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import signals, Avg, Min, Max, Sum, Count
-from django.db.models.loading import get_model
 from django.db import models, connection
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from django_extensions.db.fields import UUIDField
-
+from django.apps import apps
+get_model = apps.get_model
 from userena.models import UserenaBaseProfile
 
-from veritza.apps.core.storages import DummyStorage
+from apps.core.storages import DummyStorage
 
 logger = logging.getLogger('debug')
 

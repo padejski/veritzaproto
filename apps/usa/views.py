@@ -4,8 +4,9 @@ views
 """
 from django.views.generic import TemplateView, DetailView
 from django_tables2 import SingleTableView
+import watson
 
-from veritza.apps.core.views import LoginRequiredMixin
+from apps.core.views import LoginRequiredMixin
 
 from . import models, tables
 
@@ -180,6 +181,40 @@ class CpscRecallViolationsView(SingleTableView):
 class CpscRecallViolationDetailView(DetailView):
     model = models.FedCpscRecallViolation
     template_name = 'usa_cpsc_recall_violation.html'
+
+
+class SearchView(LoginRequiredMixin, TemplateView):
+    """usa search view"""
+    template_name = 'usa_search_results.html'
+
+    def get(self, request, *args, **kwargs):
+        """search term"""
+        search_term = request.GET.get('search')
+        context = self.get_context_data(**kwargs)
+        context['search'] = search_term
+        context['results_count'] = 0
+        context['datasets'] = []
+
+        _models = [models.FedCandidate, models.FedCompany, models.FedCpscRecall,
+                   models.FedCpscRecallViolation, models.FedElectionContribution,
+                   models.FedFinancialDisclosure, models.FedIrsExemptOrg,
+                   models.FedOshaEbsa, models.FedOshaInspection,
+                   models.FedProcurement, models.FedSecFiling,
+                   models.FedToxicsFacility]
+
+        for model in _models:
+            results = watson.filter(model, search_term)
+            context['results_count'] += len(results)
+            context['datasets'].append({
+                'model': model,
+                'model_meta': model._meta,
+                'model_name': model.__name__,
+                'objects': results
+            })
+
+        return self.render_to_response(context)
+
+
 # ============================================================================
 # EOF
 # ============================================================================

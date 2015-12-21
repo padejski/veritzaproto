@@ -5,7 +5,7 @@ from report_tools.chart_data import ChartData
 from report_tools.renderers.googlecharts import GoogleChartsRenderer
 from report_tools import charts
 
-from veritza.apps.core.models import FamilyMember
+from apps.core.models import FamilyMember
 
 class FamilyMembersReport(Report):
     renderer = GoogleChartsRenderer

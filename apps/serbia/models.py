@@ -13,8 +13,8 @@ from django.db.models.signals import post_save
 from django.core.management import call_command
 import watson
 
-from corex import models as cmodels
-from corex.models import UnsavedForeignKey, UnsavedManyToManyField
+from apps.corex import models as cmodels
+from apps.corex.models import UnsavedForeignKey, UnsavedManyToManyField
 
 
 # ============================================================================
@@ -91,6 +91,7 @@ class Procurement(cmodels.ProcurementBaseModel):
     class Meta:
         """extra options"""
         verbose_name_plural = 'Procurements'
+
 
 class Official(cmodels.OfficialBaseModel):
     """Serbia public official model."""

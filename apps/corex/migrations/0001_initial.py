@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import corex.models
+import apps.corex.models
 
 
 class Migration(migrations.Migration):
@@ -97,31 +97,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='officialbasemodel',
             name='children',
-            field=corex.models.UnsavedManyToManyField(to='corex.OfficialChild'),
+            field=apps.corex.models.UnsavedManyToManyField(to='corex.OfficialChild'),
         ),
         migrations.AddField(
             model_name='officialbasemodel',
             name='companies',
-            field=corex.models.UnsavedManyToManyField(to='corex.CompanyBaseModel'),
+            field=apps.corex.models.UnsavedManyToManyField(to='corex.CompanyBaseModel'),
         ),
         migrations.AddField(
             model_name='officialbasemodel',
             name='movables',
-            field=corex.models.UnsavedManyToManyField(to='corex.OfficialMovable'),
+            field=apps.corex.models.UnsavedManyToManyField(to='corex.OfficialMovable'),
         ),
         migrations.AddField(
             model_name='officialbasemodel',
             name='real_estates',
-            field=corex.models.UnsavedManyToManyField(to='corex.OfficialRealEstate'),
+            field=apps.corex.models.UnsavedManyToManyField(to='corex.OfficialRealEstate'),
         ),
         migrations.AddField(
             model_name='officialbasemodel',
             name='salaries',
-            field=corex.models.UnsavedManyToManyField(to='corex.OfficialSalary'),
+            field=apps.corex.models.UnsavedManyToManyField(to='corex.OfficialSalary'),
         ),
         migrations.AddField(
             model_name='officialbasemodel',
             name='spouse',
-            field=corex.models.UnsavedForeignKey(to='corex.OfficialSpouse', null=True),
+            field=apps.corex.models.UnsavedForeignKey(to='corex.OfficialSpouse', null=True),
         ),
     ]

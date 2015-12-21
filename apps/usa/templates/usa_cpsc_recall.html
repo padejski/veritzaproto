@@ -7,12 +7,12 @@
   <ol class="breadcrumb">
     <li><a href="{% url 'usa:index' %}">Home</a></li>
     <li><a href="{% url 'usa:datasets' %}">Datasets</a></li>
-    <li><a href="{% url 'usa:cpscrecalls' %}">CPSC Recalls</a></li>
+    <li><a href="{% url 'usa:consumer-product-safety-commission-recalls' %}">CPSC Recalls</a></li>
     <li>{{ object.id }}</li>
   </ol>
 
   <h3>Consumer Product Safety Commission Recall</h3>
-    <div class="page-header">{{ object.desc }}</div>
+    <div class="page-header">{{ object.title }}</div>
 
     <div class="panel panel-default">
       <div class="panel-heading">Basic information</div>
@@ -20,7 +20,15 @@
         <table class="table table-bordered">
           <tr> <td>Consumer Contact</td> <td>{{ object.consumer_contact }}</td> </tr>
           <tr> <td>Hazards</td> <td>{{ object.hazards }}</td> </tr>
-          <tr> <td>Images</td> <td>{{ object.images }}</td> </tr>
+          <tr> <td>Images</td>
+              <td>
+                  {% for image_url in object.get_images %}
+                  <li><a href="{{ image_url }}"><i class="fa fa-picture-o">image</i></a></li>
+                  {% empty %}
+                  <li>No images.</li>
+                  {% endfor %}
+              </td>
+          </tr>
           <tr> <td>In Conjuction</td> <td>{{ object.in_conj }}</td> </tr>
           <tr> <td>Injuries</td> <td>{{ object.injuries }}</td> </tr>
           <tr> <td>Last Publication Date</td> <td>{{ object.last_pub_date }}</td> </tr>
@@ -33,7 +41,7 @@
           <tr> <td>Recall Number</td> <td>{{ object.recall_num }}</td> </tr>
           <tr> <td>Remedies</td> <td>{{ object.remedies }}</td> </tr>
           <tr> <td>Retailers</td> <td>{{ object.retailers }}</td> </tr>
-          <tr> <td>Title</td> <td>{{ object.<title>Page Title</title> }}</td> </tr>
+          <tr> <td>Description</td> <td>{{ object.desc }}</td> </tr>
           <tr> <td>URL</td> <td><a target='_' href="{{ object.url|default_if_none:"#" }}">url </a></td> </tr>
         </table>
       </div>

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import corex.models
+import apps.corex.models
 
 
 class Migration(migrations.Migration):
@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='officialmovable',
             name='official',
-            field=corex.models.UnsavedForeignKey(to='corex.OfficialBaseModel', null=True),
+            field=apps.corex.models.UnsavedForeignKey(to='corex.OfficialBaseModel', null=True),
         ),
     ]

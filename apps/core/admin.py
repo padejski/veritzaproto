@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin import SimpleListFilter
 from django.contrib import admin
 
-from veritza.apps.core.models import (
+from apps.core.models import (
     Dataset, Veritza, Person, PublicOfficial, PublicOfficialReport,
     Company, ProcurementCompany, ProcurementCompanyRaw, BidderCompany, ContractingAuthority, PublicProcurement, CompanyMember,
     ConflictInterest, ConflictInterestFamilyMember, PublicOfficialCompany, FamilyMember, FamilyMemberCompany,

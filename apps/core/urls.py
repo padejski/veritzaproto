@@ -8,7 +8,7 @@ Desc      : Veritza montenegro urls patterns
 
 from django.conf.urls import url
 
-from veritza.apps.core import views
+from apps.core import views
 
 urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='index'),

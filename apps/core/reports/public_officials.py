@@ -5,7 +5,7 @@ from report_tools.chart_data import ChartData
 from report_tools.renderers.googlecharts import GoogleChartsRenderer
 from report_tools import charts
 
-from veritza.apps.core.models import PublicOfficial, PublicOfficialReport
+from apps.core.models import PublicOfficial, PublicOfficialReport
 
 class PublicOfficialsReport(Report):
     renderer = GoogleChartsRenderer

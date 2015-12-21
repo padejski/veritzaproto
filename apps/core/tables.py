@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 
 import django_tables2 as tables
 
-from veritza.apps.core.models import *
+from apps.core.models import *
 
 class VeritzaTable(tables.Table):
 
