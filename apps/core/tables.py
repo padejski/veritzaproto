@@ -14,11 +14,16 @@ class VeritzaTable(tables.Table):
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
         )
 
+    def render_link(self, record, value):
+        return mark_safe(u'<a href="{0}">source</a>'.format(value))
 
 class PublicOfficialTable(VeritzaTable):
 
-    reports = tables.Column(accessor='publicofficialreport_set')
-    type = tables.Column(accessor='publicofficialreport_set')
+    reports = tables.Column(accessor='reports')
+    year = tables.Column(accessor='reports')
+    type = tables.Column(accessor='reports')
+    position = tables.Column(accessor='reports')
+    link = tables.Column(accessor='link')
 
     class Meta:
         model = PublicOfficial
@@ -34,13 +39,25 @@ class PublicOfficialTable(VeritzaTable):
         ))
 
     def render_reports(self, record, value):
-        return len(value.all())
+        return len(value)
 
-    def render_type(self, record, value):
-        if len(value.all()) > 0:
-            return value.all()[0].official_type
+    def render_year(self, record, value):
+        if value:
+            return value[0].year
         return ""
 
+    def render_type(self, record, value):
+        if value:
+            return value[0].official_type
+        return ""
+
+    def render_position(self, record, value):
+        if value:
+            return value[0].public_office
+        return ""
+
+    def render_link(self, record, value):
+        return mark_safe(u'<a href="{0}">source</a>'.format(value))
 
 class CompanyTable(VeritzaTable):
 
@@ -52,7 +69,7 @@ class CompanyTable(VeritzaTable):
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-            'mail_address', 'name',  'status', 'system_id', 'link'
+            'mail_address', 'name',  'status', 'system_id'
         )
 
     def render_registration_number(self, record, value):
@@ -74,7 +91,7 @@ class CompanyMemberTable(VeritzaTable):
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-            'mail_address', 'name',  'status', 'system_id', 'link', 'company_registration_number'
+            'mail_address', 'name',  'status', 'system_id', 'company_registration_number'
         )
         sequence = ['id', 'first_name', 'last_name', 'company']
 
@@ -92,12 +109,16 @@ class CompanyMemberTable(VeritzaTable):
 
 class FamilyMemberTable(VeritzaTable):
 
+    year = tables.Column(accessor='public_official', verbose_name='Year')
+    type = tables.Column(accessor='public_official', verbose_name='Official type')
+    position = tables.Column(accessor='public_official', verbose_name='Official position')
+
     class Meta:
         model = FamilyMember
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
         	'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-        	'mail_address',  'status', 'system_id', 'link'
+        	'mail_address',  'status', 'system_id'
         )
 
         sequence = ['name', 'public_official', 'relationship']
@@ -113,15 +134,31 @@ class FamilyMemberTable(VeritzaTable):
             reverse('public-officials', args=[record.public_official.id]), escape(value)
         ))
 
+    def render_year(self, record, value):
+        if value.publicofficialreport_set.all():
+            return value.publicofficialreport_set.all()[0].year
+        return ""
+
+    def render_type(self, record, value):
+        if value.publicofficialreport_set.all():
+            return value.publicofficialreport_set.all()[0].official_type
+        return ""
+
+    def render_position(self, record, value):
+        if value.publicofficialreport_set.all():
+            return value.publicofficialreport_set.all()[0].public_office
+        return ""
+
 
 class PublicProcurementTable(VeritzaTable):
+    winner = tables.Column(accessor='link', verbose_name='Winner')
 
     class Meta:
         model = PublicProcurement
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-            'system_id', 'link'
+            'system_id', 'record_type'
         )
 
     def render_number(self, record, value):
@@ -132,6 +169,11 @@ class PublicProcurementTable(VeritzaTable):
     def render_value(self, record, value):
         return mark_safe(u'{0} &euro;'.format(value))
 
+    def render_winner(self, record, value):
+        if record.biddercompany_set.all():
+            winner = record.biddercompany_set.all()[0].company
+            return mark_safe(u'<a href="{0}">{1}</a>'.format(reverse('companies', args=[winner.id]), winner.name))
+        return ""
 
 class BidderCompanyTable(VeritzaTable):
 
