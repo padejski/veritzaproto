@@ -1,0 +1,8 @@
+.panel-body .row {
+	margin-bottom: 30px;
+}
+
+#accordion .panel-body .row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
