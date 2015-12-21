@@ -18,7 +18,7 @@ from apps.usa.scrapers import usa_scrapers
 # scrapers list
 # ============================================================================
 SCRAPERS = chain(serbia_scrapers, usa_scrapers)
-SCRAPERS = [serbia_scrapers[0]]
+SCRAPERS = serbia_scrapers
 
 
 class ScraperScheduler:
