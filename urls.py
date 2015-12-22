@@ -18,7 +18,6 @@ urlpatterns = patterns(
 
 
     url(r'^search', core_views.SearchView.as_view(), name='search'),
-    url(r'^scrapers/$', core_views.ScrapersView.as_view(), name='scrapers'),
 
 
 
