@@ -39,6 +39,7 @@ DATA_HEADERS = ['accuracy_value', 'census_block_code', 'city_name',
 # ============================================================================
 class ToxicsInventoryScraper(BaseScraper):
     """Toxics Inventory Scraper"""
+    NAME = 'usa:toxics-inventory'
 
     def __init__(self):
         """Initialize base scraper"""

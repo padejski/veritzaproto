@@ -26,6 +26,7 @@ HEADERS = ['ein', 'name', 'city', 'state', 'country', 'status']
 # ============================================================================
 class IrsExemptScraper(BaseScraper):
     """IRS Exempt Organizations Scraper"""
+    NAME = 'usa:irs-exempt'
 
     def __init__(self):
         """Initialize base scraper"""

@@ -31,6 +31,8 @@ DATA_URL = 'http://www.acas.rs/acasPublic/izvestajDetails.htm?parent=pretragaIzv
 # ============================================================================
 class SerbiaOfficialsScraper(BaseScraper):
     """Serbian Public Officials Scraper """
+    NAME = 'serbia:officials'
+
     def __init__(self):
         """Initialize scraper"""
         BaseScraper.__init__(self)

@@ -33,6 +33,7 @@ QTRS = ['QTR1', 'QTR2', 'QTR3', 'QTR4']
 # ============================================================================
 class SecEdgarScraper(BaseScraper):
     """SEC Edgar database scraper"""
+    NAME = 'usa:sec-edgar'
 
     def __init__(self):
         """Initialize base scraper"""

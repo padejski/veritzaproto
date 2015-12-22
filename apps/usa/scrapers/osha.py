@@ -42,6 +42,7 @@ OSHA_HEADERS = ['activity_nr', 'reporting_id', 'state_flag', 'estab_name',
 # ============================================================================
 class OshaEbsaScraper(BaseScraper):
     """OSHA EBSA Enforcement data scraper"""
+    NAME = 'usa:osha'
 
     def __init__(self):
         """init base class"""

@@ -60,6 +60,8 @@ HEADERS = [
 # ============================================================================
 class SerbiaProcurementScraper(BaseScraper):
     """Serbia Procurement Scraper """
+    NAME = 'serbia:procurement'
+
     def __init__(self):
         """initialize base class"""
         BaseScraper.__init__(self)

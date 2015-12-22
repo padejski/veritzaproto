@@ -26,6 +26,7 @@ VIOL_URL = 'http://www.cpsc.gov/en/Recalls/Violations/'
 # ============================================================================
 class CpscRecallsScraper(BaseScraper):
     """Federal Consumer Product Safety Commission Recalls Scraper"""
+    NAME = 'usa:cpsc'
 
     def __init__(self):
         """Initialize base class"""

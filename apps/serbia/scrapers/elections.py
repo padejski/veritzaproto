@@ -50,6 +50,8 @@ NAMES = ['Јовановић', 'Никола', 'Лука', 'Лазар', 'Вук
 # ============================================================================
 class SerbiaElectionsScraper(BaseScraper):
     """Serbian Elections Donations Scraper"""
+    NAME = 'serbia:elections'
+
     def __init__(self):
         """initialize base class"""
         BaseScraper.__init__(self)

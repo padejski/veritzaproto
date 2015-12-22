@@ -60,6 +60,7 @@ CODES_FILE = 'IDS2.csv'
 # ============================================================================
 class SerbiaCompanyScraper(BaseScraper):
     """Serbian Business Registry Scraper"""
+    NAME = 'serbia:companies'
 
     def __init__(self):
         """Initialize scraper """
@@ -246,7 +247,7 @@ class SerbiaCompanyScraper(BaseScraper):
             content = chain.from_iterable([x.text.split('\r\n') for x in content])
 
             content = [x.split(':', 1) for x in content if
-                   len(x.split(':', 1)) == 2]
+                       len(x.split(':', 1)) == 2]
 
             cdict = {k.strip(): v.strip() for k, v in content}
 

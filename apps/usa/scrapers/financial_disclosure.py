@@ -38,6 +38,7 @@ HEADERS = {
 # ============================================================================
 class FinDisclosuresScraper(BaseScraper):
     """USA Federal financial disclosures scraper"""
+    NAME = 'usa:financial-disclosures'
 
     def __init__(self):
         """Initialize base scraper"""
