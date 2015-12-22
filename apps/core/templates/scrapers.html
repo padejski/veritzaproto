@@ -13,32 +13,31 @@
     <h3 class="page-header">Scrapers management</h3>
 
     {% if user.is_authenticated and user.is_superuser %}
-        {% for project in projects %}
         <div class="row">
-            <h3>{{ project.name|capfirst }} {% trans 'spiders' %}</h3>
-            <table id="project-{{ project.name }}" class="table table-bordered table-stripped">
+            <h3>Veritza Scrapers</h3>
+            <table id="project-veritza" class="table table-bordered table-stripped">
                 <tr>
                     <th>Name</th>
                     <th>Status</th>
                     <th>Last Run</th>
                     <th>Action</th>
                 </tr>
-                <tbody id="scrapers-{{ project.name }}">
-                {% for spider in project.spiders %}
-                    <tr id="spider-{{ spider.name }}">
-                        <td>{{ spider.name|capfirst }}</td>
+                <tbody id="scrapers-veritza">
+                {% for scraper in scrapers %}
+                    <tr id="spider-{{ scraper.name }}">
+                        <td>{{ scraper.name|capfirst }}</td>
                         <td><span id="spider-status"
                             class="label
-                                {% if spider.status == 'running' %}
+                                {% if scraper.status == 'running' %}
                                     label-success
-                                {% elif spider.status == 'pending' %}
+                                {% elif scraper.status == 'pending' %}
                                     label-warning
                                 {% else %}
                                     label-primary
-                                {% endif %}">{{ spider.status }}</td>
-                        <td><span id="spider-last-run">{{ spider.last_run|date:"M dS Y, h:m A" }}</span></td>
+                                {% endif %}">{{ scraper.status }}</td>
+                        <td><span id="spider-last-run">{{ scraper.last_run|date:"M dS Y, h:m A" }}</span></td>
                         <td>
-                            {% if spider.status == 'running' or spider.status == 'pending' %}
+                            {% if scraper.status == 'running' or scraper.status == 'pending' %}
                                 <button id="spider-action" class="btn btn-danger btn-xs" onclick="manager.cancel('{{ spider.jobid }}', '{{ project.name }}')">Stop</button>
                             {% else %}
                                 <button id="spider-action" class="btn btn-success btn-xs" onclick="manager.schedule('{{ spider.name }}', '{{ project.name }}'')">Run</button>
@@ -49,7 +48,6 @@
                 </tbody>
             </table>
         </div>
-        {% endfor %}
     {% else %}
         <p>You are not authorized to view this page.</p>
     {% endif %}
