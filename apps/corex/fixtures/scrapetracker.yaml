@@ -1,0 +1,60 @@
+- model: corex.ScrapeTracker
+  pk: 1
+  fields:
+      name: 'serbia:companies'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 2
+  fields:
+      name: 'serbia:procurement'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 3
+  fields:
+      name: 'serbia:elections'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 4
+  fields:
+      name: 'serbia:officials'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 5
+  fields:
+      name: 'usa:cpsc'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 6
+  fields:
+      name: 'usa:procurement'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 7
+  fields:
+      name: 'usa:sec-edgar'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 8
+  fields:
+      name: 'usa:financial-disclosures'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 9
+  fields:
+      name: 'usa:elections'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 10
+  fields:
+      name: 'usa:irs-exempt'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 11
+  fields:
+      name: 'usa:osha'
+      status: 'pending'
+- model: corex.ScrapeTracker
+  pk: 12
+  fields:
+      name: 'usa:toxics-inventory'
+      status: 'pending'
