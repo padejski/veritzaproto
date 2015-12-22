@@ -125,6 +125,16 @@ class ElectionDonationBaseModel(BaseModel):
     amount = models.CharField(max_length=255, null=True)
     other = models.CharField(max_length=255, null=True)
     url = models.CharField(max_length=255, null=True)
+
+
+class ScrapeTracker(models.Model):
+    """Scraper tracker
+
+    """
+    id = models.AutoField(primary_key=True)
+    last_run = models.DateTimeField(auto_now_add=True, null=True)
+    name = models.CharField(max_length=100, unique=True)
+    status = models.CharField(max_length=50, default='pending')
 # ============================================================================
 # EOF
 # ============================================================================
