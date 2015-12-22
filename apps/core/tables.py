@@ -35,7 +35,7 @@ class PublicOfficialTable(VeritzaTable):
 
     def render_name(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('public-officials', args=[record.id]), escape(value)
+            reverse('montenegro:public-officials', args=[record.id]), escape(value)
         ))
 
     def render_reports(self, record, value):
@@ -74,7 +74,7 @@ class CompanyTable(VeritzaTable):
 
     def render_registration_number(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('companies', args=[record.id]), escape(value)
+            reverse('montenegro:companies', args=[record.id]), escape(value)
         ))
 
     def render_members(self, record, value):
@@ -98,12 +98,12 @@ class CompanyMemberTable(VeritzaTable):
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('company-members', args=[record.id]), escape(value)
+            reverse('montenegro:company-members', args=[record.id]), escape(value)
         ))
 
     def render_company(self, record, value):
         return mark_safe(u'<a href="{0}" title="Company details">{1}</a>'.format(
-            reverse('companies', args=[record.company.id]), escape(value)
+            reverse('montenegro:companies', args=[record.company.id]), escape(value)
         ))
 
 
@@ -126,12 +126,12 @@ class FamilyMemberTable(VeritzaTable):
 
     def render_name(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('family-members', args=[record.id]), escape(value)
+            reverse('montenegro:family-members', args=[record.id]), escape(value)
         ))
 
     def render_public_official(self, record, value):
         return mark_safe(u'<a href="{0}" title="Official details">{1}</a>'.format(
-            reverse('public-officials', args=[record.public_official.id]), escape(value)
+            reverse('montenegro:public-officials', args=[record.public_official.id]), escape(value)
         ))
 
     def render_year(self, record, value):
@@ -163,7 +163,7 @@ class PublicProcurementTable(VeritzaTable):
 
     def render_number(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('public-procurements', args=[record.id]), escape(value)
+            reverse('montenegro:public-procurements', args=[record.id]), escape(value)
         ))
 
     def render_value(self, record, value):
@@ -186,17 +186,17 @@ class BidderCompanyTable(VeritzaTable):
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('bidder-companies', args=[record.id]), escape(value)
+            reverse('montenegro:bidder-companies', args=[record.id]), escape(value)
         ))
 
     def render_company(self, record, value):
         return mark_safe(u'<a href="{0}" title="Company details">{1}</a>'.format(
-            reverse('companies', args=[record.company.id]), escape(value)
+            reverse('montenegro:companies', args=[record.company.id]), escape(value)
         ))
 
     def render_procurement(self, record, value):
         return mark_safe(u'<a href="{0}" title="Procurement details">{1}</a>'.format(
-            reverse('public-procurements', args=[record.procurement.id]), escape(value)
+            reverse('montenegro:public-procurements', args=[record.procurement.id]), escape(value)
         ))
 
 
@@ -229,17 +229,17 @@ class PublicOfficialCompanyTable(VeritzaTable):
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('public-official-companies', args=[record.id]), escape(value)
+            reverse('montenegro:public-official-companies', args=[record.id]), escape(value)
         ))
 
     def render_official(self, record, value):
         return mark_safe(u'<a href="{0}" title="Official details">{1}</a>'.format(
-            reverse('public-officials', args=[record.official.id]), escape(value)
+            reverse('montenegro:public-officials', args=[record.official.id]), escape(value)
         ))
 
     def render_company(self, record, value):
         return mark_safe(u'<a href="{0}" title="Company details">{1}</a>'.format(
-            reverse('companies', args=[record.company.id]), escape(value)
+            reverse('montenegro:companies', args=[record.company.id]), escape(value)
         ))
 
 
@@ -256,22 +256,22 @@ class ConflictInterestTable(VeritzaTable):
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('public-official-companies', args=[record.id]), escape(value)
+            reverse('montenegro:public-official-companies', args=[record.id]), escape(value)
         ))
 
     def render_official(self, record, value):
         return mark_safe(u'<a href="{0}" title="Official details">{1}</a>'.format(
-            reverse('public-officials', args=[record.official.id]), escape(value)
+            reverse('montenegro:public-officials', args=[record.official.id]), escape(value)
         ))
 
     def render_company(self, record, value):
         return mark_safe(u'<a href="{0}" title="Company details">{1}</a>'.format(
-            reverse('companies', args=[record.company.id]), escape(value)
+            reverse('montenegro:companies', args=[record.company.id]), escape(value)
         ))
 
     def render_public_procurement(self, record, value):
         return mark_safe(u'<a href="{0}" title="Procurement details">{1}</a>'.format(
-            reverse('public-procurements', args=[record.public_procurement.id]), escape(value)
+            reverse('montenegro:public-procurements', args=[record.public_procurement.id]), escape(value)
         ))
 
 
@@ -286,17 +286,17 @@ class FamilyMemberCompanyTable(VeritzaTable):
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('companies', args=[record.id]), escape(value)
+            reverse('montenegro:companies', args=[record.id]), escape(value)
         ))
 
     def render_member(self, record, value):
         return mark_safe(u'<a href="{0}" title="Family member details">{1}</a>'.format(
-            reverse('family-members', args=[record.member.id]), escape(value)
+            reverse('montenegro:family-members', args=[record.member.id]), escape(value)
         ))
 
     def render_company(self, record, value):
         return mark_safe(u'<a href="{0}" title="Company details">{1}</a>'.format(
-            reverse('companies', args=[record.company.id]), escape(value)
+            reverse('montenegro:companies', args=[record.company.id]), escape(value)
         ))
 
 
@@ -312,20 +312,20 @@ class ConflictInterestFamilyMemberTable(VeritzaTable):
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('public-official-companies', args=[record.id]), escape(value)
+            reverse('montenegro:public-official-companies', args=[record.id]), escape(value)
         ))
 
     def render_member(self, record, value):
         return mark_safe(u'<a href="{0}" title="Official details">{1}</a>'.format(
-            reverse('family-members', args=[record.member.id]), escape(value)
+            reverse('montenegro:family-members', args=[record.member.id]), escape(value)
         ))
 
     def render_company(self, record, value):
         return mark_safe(u'<a href="{0}" title="Company details">{1}</a>'.format(
-            reverse('companies', args=[record.company.id]), escape(value)
+            reverse('montenegro:companies', args=[record.company.id]), escape(value)
         ))
 
     def render_public_procurement(self, record, value):
         return mark_safe(u'<a href="{0}" title="Procurement details">{1}</a>'.format(
-            reverse('public-procurements', args=[record.public_procurement.id]), escape(value)
+            reverse('montenegro:public-procurements', args=[record.public_procurement.id]), escape(value)
         ))
