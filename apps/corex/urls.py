@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^faq/$', views.FaqView.as_view(), name='faq'),
     url(r'^about/$', views.AboutView.as_view(), name='about'),
     url(r'^contact/$', views.ContactView.as_view(), name='contact'),
+    url(r'^scrapers/$', views.ScrapersView.as_view(), name='scrapers'),
     url(r'^subscription/$', views.SubscriptionView.as_view(), name='subscription')
 ]
 

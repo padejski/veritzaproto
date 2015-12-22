@@ -12,6 +12,8 @@ Desc      : Veritza core views
 from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
+from apps.core.views import LoginRequiredMixin
+from apps.corex import models
 
 
 # ============================================================================
@@ -35,6 +37,17 @@ class AboutView(TemplateView):
 
 class ContactView(TemplateView):
     template_name = 'contact.html'
+
+
+class ScrapersView(LoginRequiredMixin, TemplateView):
+    template_name = 'scrapers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ScrapersView, self).get_context_data(**kwargs)
+        context['scrapers'] = [{'name': x.name, 'status': x.status, 'last_run': x.last_run} for
+                               x in models.ScrapeTracker.objects.all()]
+
+        return context
 
 
 class SubscriptionView(View):
