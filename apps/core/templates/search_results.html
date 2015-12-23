@@ -26,7 +26,7 @@
 	                <div class="panel-body">
 	    				<table class="table table-bordered table-stripped">
 						{% for object in dataset.objects %}
-							<tr><td><a href="{% url dataset.model.get_url_name object.pk %}">{{ object }}</a></td></tr>
+							<tr><td><a href="{% url 'montenegro:'|add:dataset.model.get_url_name object.pk %}">{{ object }}</a></td></tr>
 						{% endfor %}
 						</table>
 	                </div>
