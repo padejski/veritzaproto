@@ -37,11 +37,8 @@
                                 {% endif %}">{{ scraper.status }}</td>
                         <td><span id="spider-last-run">{{ scraper.last_run|date:"M dS Y, h:m A" }}</span></td>
                         <td>
-                            {% if scraper.status == 'running' or scraper.status == 'pending' %}
-                                <button id="spider-action" class="btn btn-danger btn-xs" onclick="manager.cancel('{{ spider.jobid }}', '{{ project.name }}')">Stop</button>
-                            {% else %}
-                                <button id="spider-action" class="btn btn-success btn-xs" onclick="manager.schedule('{{ spider.name }}', '{{ project.name }}'')">Run</button>
-                            {% endif %}
+                            <div>{% include 'scrape_form_include.html' with scraper=scraper %}</div>
+
                         </td>
                     </tr>
                 {% endfor %}
