@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse
 
 import django_tables2 as tables
 
-from apps.core.models import *
+from apps.core import models
+
 
 class VeritzaTable(tables.Table):
 
@@ -17,6 +18,7 @@ class VeritzaTable(tables.Table):
     def render_link(self, record, value):
         return mark_safe(u'<a href="{0}">source</a>'.format(value))
 
+
 class PublicOfficialTable(VeritzaTable):
 
     reports = tables.Column(accessor='reports')
@@ -26,11 +28,11 @@ class PublicOfficialTable(VeritzaTable):
     link = tables.Column(accessor='link')
 
     class Meta:
-        model = PublicOfficial
+        model = models.PublicOfficial
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-        	'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-        	'system_id'
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
+            'system_id'
         )
 
     def render_name(self, record, value):
@@ -59,13 +61,14 @@ class PublicOfficialTable(VeritzaTable):
     def render_link(self, record, value):
         return mark_safe(u'<a href="{0}">source</a>'.format(value))
 
+
 class CompanyTable(VeritzaTable):
 
     members = tables.Column(accessor='companymember_set')
     procurements = tables.Column(accessor='biddercompany_set')
 
     class Meta:
-        model = Company
+        model = models.Company
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
@@ -87,14 +90,13 @@ class CompanyTable(VeritzaTable):
 class CompanyMemberTable(VeritzaTable):
 
     class Meta:
-        model = CompanyMember
+        model = models.CompanyMember
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
             'mail_address', 'name',  'status', 'system_id', 'company_registration_number'
         )
         sequence = ['id', 'first_name', 'last_name', 'company']
-
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
@@ -114,15 +116,14 @@ class FamilyMemberTable(VeritzaTable):
     position = tables.Column(accessor='public_official', verbose_name='Official position')
 
     class Meta:
-        model = FamilyMember
+        model = models.FamilyMember
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-        	'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-        	'mail_address',  'status', 'system_id'
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
+            'mail_address',  'status', 'system_id'
         )
 
         sequence = ['name', 'public_official', 'relationship']
-
 
     def render_name(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
@@ -154,7 +155,7 @@ class PublicProcurementTable(VeritzaTable):
     winner = tables.Column(accessor='link', verbose_name='Winner')
 
     class Meta:
-        model = PublicProcurement
+        model = models.PublicProcurement
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
@@ -172,13 +173,14 @@ class PublicProcurementTable(VeritzaTable):
     def render_winner(self, record, value):
         if record.biddercompany_set.all():
             winner = record.biddercompany_set.all()[0].company
-            return mark_safe(u'<a href="{0}">{1}</a>'.format(reverse('companies', args=[winner.id]), winner.name))
+            return mark_safe(u'<a href="{0}">{1}</a>'.format(reverse('montenegro:companies', args=[winner.id]), winner.name))
         return ""
+
 
 class BidderCompanyTable(VeritzaTable):
 
     class Meta:
-        model = BidderCompany
+        model = models.BidderCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
@@ -203,7 +205,7 @@ class BidderCompanyTable(VeritzaTable):
 class ElectionsContributionsTable(VeritzaTable):
 
     class Meta:
-        model = ElectionsContributions
+        model = models.ElectionsContributions
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok', 'csv_file'
@@ -211,7 +213,7 @@ class ElectionsContributionsTable(VeritzaTable):
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('elections-contributions', args=[record.id]), escape(value)
+            reverse('montenegro:elections-contributions', args=[record.id]), escape(value)
         ))
 
     def render_amount(self, record, value):
@@ -221,7 +223,7 @@ class ElectionsContributionsTable(VeritzaTable):
 class PublicOfficialCompanyTable(VeritzaTable):
 
     class Meta:
-        model = PublicOfficialCompany
+        model = models.PublicOfficialCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
@@ -246,13 +248,12 @@ class PublicOfficialCompanyTable(VeritzaTable):
 class ConflictInterestTable(VeritzaTable):
 
     class Meta:
-        model = ConflictInterest
+        model = models.ConflictInterest
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
-        	'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
-        	'mail_address', 'name',  'status', 'system_id', 'link'
+            'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
+            'mail_address', 'name',  'status', 'system_id', 'link'
         )
-
 
     def render_id(self, record, value):
         return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
@@ -278,7 +279,7 @@ class ConflictInterestTable(VeritzaTable):
 class FamilyMemberCompanyTable(VeritzaTable):
 
     class Meta:
-        model = FamilyMemberCompany
+        model = models.FamilyMemberCompany
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
@@ -300,11 +301,10 @@ class FamilyMemberCompanyTable(VeritzaTable):
         ))
 
 
-
 class ConflictInterestFamilyMemberTable(VeritzaTable):
 
     class Meta:
-        model = ConflictInterestFamilyMember
+        model = models.ConflictInterestFamilyMember
         attrs = {"class": "paleblue table table-striped table-bordered"}
         exclude = (
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok'
