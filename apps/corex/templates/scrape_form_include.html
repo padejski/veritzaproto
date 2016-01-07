@@ -1,0 +1,15 @@
+{% load veritza_utils %}
+{% load i18n %}
+
+<form action="{% url 'scrape' %}" method="post" style="display: inline">
+    {% if scraper.status == 'running' %}
+        <input class="btn btn-danger btn-xs" type="submit" value="{% trans 'Stop' %}">
+        <input type="hidden" name="action" value="stop">
+        <input type="hidden" name="scraper" value="{{ scraper.name }}">
+    {% else %}
+        <input class="btn btn-success btn-xs" type="submit" value="{% trans 'Run' %}">
+        <input type="hidden" name="action" value="run">
+        <input type="hidden" name="scraper" value="{{ scraper.name }}">
+    {% endif %}
+        {% csrf_token %}
+</form>
