@@ -9,9 +9,13 @@ Desc      : Veritza core views
 # ============================================================================
 # necessary imports
 # ============================================================================
+import threading
+
 from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
+from django.core.management import call_command
+
 from apps.core.views import LoginRequiredMixin
 from apps.corex import models
 
@@ -69,6 +73,28 @@ class SubscriptionView(View):
         elif action == 'unsubscribe':
             user.unsubscribe(dataset, app)
             message = 'Successfully unsubscribed from {0}'.format(dataset)
+
+        else:
+            return redirect(request.META.get('HTTP_REFERER'))
+
+        return redirect(request.META.get('HTTP_REFERER'))
+
+class ScrapeView(View):
+
+    def post(self, request, **kwargs):
+        user = request.user
+        scraper = request.POST.get('scraper', '')
+        action = request.POST.get('action', '')
+
+        if action == 'run':
+            thr = threading.Thread(target=call_command, args=('scrape',), kwargs={'scraper': scraper})
+            thr.setDaemon(True)
+            thr.start()
+
+        elif action == 'stop':
+            tracker = models.ScrapeTracker.objects.filter(name=scraper).first()
+            tracker.status = 'finished'
+            tracker.save()
 
         else:
             return redirect(request.META.get('HTTP_REFERER'))
