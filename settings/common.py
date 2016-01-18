@@ -37,7 +37,6 @@ TEMPLATE_DEBUG = DEBUG
 ########## MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ('Alexander Stefanov', 'alexander.stefanov@lulin.bg'),
     ('Djordje Padejski', 'padejski@stanford.edu'),
     ('Matt Gathu', 'mattgathu@gmail.com'),
 )
