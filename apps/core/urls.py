@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^datasets/public-officials/$', views.PublicOfficialsView.as_view(), name='public-officials'),
     url(r'^datasets/public-officials/(?P<pk>\d+)/$', views.PublicOfficialDetailsView.as_view(), name='public-officials'),
 
-    url(r'^datasets/companies/$', views.CompaniesView.as_view(), name='companies'),
-    url(r'^datasets/companies/(?P<pk>\d+)/$', views.CompanyDetailsView.as_view(), name='companies'),
+    url(r'^companies/$', views.CompaniesView.as_view(), name='companies'),
+    url(r'^companies/(?P<pk>\d+)/$', views.CompanyDetailsView.as_view(), name='companies'),
 
     url(r'^datasets/company-members/$', views.CompanyMembersView.as_view(), name='company-members'),
     url(r'^datasets/company-members/(?P<pk>\d+)/$', views.CompanyMemberDetailsView.as_view(), name='company-members'),
