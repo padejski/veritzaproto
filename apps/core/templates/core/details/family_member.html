@@ -5,8 +5,9 @@
 
 {% block content %}
 	<ol class="breadcrumb">
-	  <li><a href="{% url 'home' %}">Home</a></li>
-	  <li><a href="{% url 'family-members' %}">Public official's family member</a></li>
+	  <li><a href="{% url 'montenegro:index' %}">Home</a></li>
+	  <li><a href="{% url 'montenegro:datasets' %}">Datasets</a></li>
+	  <li><a href="{% url 'montenegro:family-members' %}">Public official's family member</a></li>
 	  <li>{{ object.id }}</li>
 	</ol>
 
@@ -29,7 +30,7 @@
 					<th>Name</th>
 				</tr>
 					<tr>
-						<td><a href="{% url 'public-officials' object.public_official.id %}">{{ object.public_official.name }}</a></td>
+						<td><a href="{% url 'montenegro:public-officials' object.public_official.id %}">{{ object.public_official.name }}</a></td>
 					</tr>
 				</table>
 			</div>

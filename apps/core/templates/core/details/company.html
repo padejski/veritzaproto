@@ -5,8 +5,9 @@
 
 {% block content %}
 	<ol class="breadcrumb">
-	  <li><a href="{% url 'home' %}">Home</a></li>
-	  <li><a href="{% url 'companies' %}">Companies</a></li>
+	  <li><a href="{% url 'montenegro:index' %}">Home</a></li>
+	  <li><a href="{% url 'montenegro:datasets' %}">Datasets</a></li>
+	  <li><a href="{% url 'montenegro:companies' %}">Companies</a></li>
 	  <li>{{ object.id }}</li>
 	</ol>
 
@@ -42,7 +43,7 @@
 				</tr>
 				{% for member in object.company_members %}
 					<tr>
-						<td><a href="{% url 'company-members' member.id %}">{{ member.company_member.full_name }}</a></td>
+						<td><a href="{% url 'montenegro:company-members' member.id %}">{{ member.company_member.full_name }}</a></td>
 						<td>{{ member.title|default:"" }}</td>
 						<td>{{ member.share|default:"" }}</td>
 					</tr>
@@ -66,7 +67,7 @@
 					</tr>
 					{% for procurement in object.company_procurements %}
 					<tr>
-						<td><a href="{% url 'public-procurements' procurement.id %}">{{ procurement.number }}</a></td>
+						<td><a href="{% url 'montenegro:public-procurements' procurement.id %}">{{ procurement.number }}</a></td>
 						<td>{{ procurement.title }}</td>
 						<td>{{ procurement.subject }}</td>
 						<td>{{ procurement.value }} &euro;</td>

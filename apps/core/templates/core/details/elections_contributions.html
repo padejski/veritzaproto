@@ -5,8 +5,9 @@
 
 {% block content %}
 	<ol class="breadcrumb">
-	  <li><a href="{% url 'home' %}">Home</a></li>
-	  <li><a href="{% url 'elections-contributions' %}">Elections contribution</a></li>
+	  <li><a href="{% url 'montenegro:index' %}">Home</a></li>
+	  <li><a href="{% url 'montenegro:datasets' %}">Datasets</a></li>
+	  <li><a href="{% url 'montenegro:elections-contributions' %}">Elections contribution</a></li>
 	  <li>{{ object.id }}</li>
 	</ol>
 

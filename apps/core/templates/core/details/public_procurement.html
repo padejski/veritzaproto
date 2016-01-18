@@ -5,8 +5,9 @@
 
 {% block content %}
 	<ol class="breadcrumb">
-	  <li><a href="{% url 'home' %}">Home</a></li>
-	  <li><a href="{% url 'public-procurements' %}">Public procurements</a></li>
+	  <li><a href="{% url 'montenegro:index' %}">Home</a></li>
+	  <li><a href="{% url 'montenegro:datasets' %}">Datasets</a></li>
+	  <li><a href="{% url 'montenegro:public-procurements' %}">Public procurements</a></li>
 	  <li>{{ object.id }}</li>
 	</ol>
 
@@ -42,7 +43,7 @@
 			</tr>
 			{% for winner in object.winners %}
 				<tr>
-					<td><a href="{% url 'companies' winner.company.id %}">{{ winner.company.registration_number }}</a></td>
+					<td><a href="{% url 'montenegro:companies' winner.company.id %}">{{ winner.company.registration_number }}</a></td>
 					<td>{{ winner.company.full_name }}</td>
 					<td>{{ winner.company.registration_date }}</td>
 					<td>{{ winner.company.location }}</td>

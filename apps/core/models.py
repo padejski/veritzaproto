@@ -1153,7 +1153,7 @@ def send_notification(sender, instance=None, created=None, **kwargs):
         content_type = ContentType.objects.get_for_model(sender)
         subscriptions = Subscription.objects.select_related().filter(dataset=content_type)
 
-        record_url = 'http://{0}{1}'.format(Site.objects.get_current().domain, reverse(instance.get_url_name(), args=[instance.id]))
+        record_url = 'http://{0}{1}'.format(Site.objects.get_current().domain, reverse(('montenegro:'+instance.get_url_name()), args=[instance.id]))
 
         subject = '"{0}" dataset updated'.format(instance.get_class_name())
         body = mark_safe('New record has been added in the "{0}" dataset.'

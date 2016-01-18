@@ -5,8 +5,9 @@
 
 {% block content %}
 	<ol class="breadcrumb">
-	  <li><a href="{% url 'home' %}">Home</a></li>
-	  <li><a href="{% url 'public-officials' %}">Public officials</a></li>
+	  <li><a href="{% url 'montenegro:index' %}">Home</a></li>
+	  <li><a href="{% url 'montenegro:datasets' %}">Datasets</a></li>
+	  <li><a href="{% url 'montenegro:public-officials' %}">Public officials</a></li>
 	  <li>{{ object.id }}</li>
 	</ol>
 
@@ -35,7 +36,7 @@
 				</tr>
 				{% for company in object.official_companies %}
 					<tr>
-						<td><a href="{% url 'companies' company.company.id %}">{{ company.company.registration_number }}</a></td>
+						<td><a href="{% url 'montenegro:companies' company.company.id %}">{{ company.company.registration_number }}</a></td>
 						<td>{{ company.company.full_name }}</td>
 						<td>{{ company.company.registration_date }}</td>
 						<td>{{ company.company.location }}</td>
