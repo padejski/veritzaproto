@@ -3,6 +3,7 @@ from django.utils.html import escape
 from django.core.urlresolvers import reverse
 
 import django_tables2 as tables
+from django_tables2.utils import A
 
 from apps.core import models
 
@@ -66,6 +67,7 @@ class CompanyTable(VeritzaTable):
 
     members = tables.Column(accessor='companymember_set')
     procurements = tables.Column(accessor='biddercompany_set')
+    registration_number = tables.LinkColumn('montenegro:companies', args=[A('id')])
 
     class Meta:
         model = models.Company
@@ -74,11 +76,6 @@ class CompanyTable(VeritzaTable):
             'id', 'uuid', 'created_by', 'created', 'updated', 'active', 'is_ok',
             'mail_address', 'name',  'status', 'system_id'
         )
-
-    def render_registration_number(self, record, value):
-        return mark_safe(u'<a href="{0}" title="Current record details">{1}</a>'.format(
-            reverse('montenegro:companies', args=[record.id]), escape(value)
-        ))
 
     def render_members(self, record, value):
         return len(value.all())
