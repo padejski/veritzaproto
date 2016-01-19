@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.db.models import Q, Prefetch
+from django.db.models import Q, Prefetch, CharField, TextField
 from django.db import IntegrityError
 from django.views.generic import View, TemplateView
 from django.views.generic.detail import DetailView
@@ -145,7 +145,7 @@ class SearchView(LoginRequiredMixin, TemplateView):
             for model in self.searched_classes:
                 filters = [
                     Q(**{field.name + '__icontains': search})
-                    for field in model._meta.fields if isinstance(field, (models.CharField, models.TextField))
+                    for field in model._meta.fields if isinstance(field, (CharField, TextField))
                 ]
                 query = filters.pop()
                 for item in filters:
