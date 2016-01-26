@@ -30,7 +30,7 @@ class UnsavedManyToManyField(models.ManyToManyField):
 class BaseModel(models.Model):
     """base model"""
     id = models.AutoField(primary_key=True)
-    hash = models.CharField(max_length=255, unique=True)
+    hash = models.CharField(editable=False, max_length=255, unique=True)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
@@ -42,7 +42,7 @@ class BaseModel(models.Model):
 class CompanyBaseModel(BaseModel):
     """Company base model"""
     name = models.CharField(max_length=255)
-    alt_name = models.CharField(max_length=255, verbose_name='name', null=True)
+    alt_name = models.CharField(max_length=255, verbose_name='alternative name', null=True)
     founders = models.CharField(max_length=255, null=True)
     directors = models.CharField(max_length=255, null=True)
     type = models.CharField(max_length=255, null=True)

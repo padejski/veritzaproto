@@ -39,7 +39,7 @@ class Company(cmodels.CompanyBaseModel):
     place = models.CharField(max_length=255)
     tax_number = models.CharField(max_length=255)
     termination_date = models.CharField(max_length=255)
-    officials = UnsavedManyToManyField('Official')
+    officials = UnsavedManyToManyField('Official', blank=True)
     other_individuals = models.CharField(max_length=255, null=True)
     supervisors = models.CharField(max_length=255, null=True)
 
