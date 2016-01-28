@@ -3,7 +3,7 @@
 import dateutil
 import scrapy
 from scrapy.contrib.djangoitem import DjangoItem
-from veritza.apps.core.models import (
+from apps.core.models import (
     PublicOfficial, PublicOfficialReport, Company, CompanyMember, CompanyMemberTitle,
     PublicProcurement, ProcurementCompanyRaw, ContractingAuthority
 )

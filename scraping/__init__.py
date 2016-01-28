@@ -1,6 +1,6 @@
 from scrapy.dupefilter import RFPDupeFilter
 
-from veritza.apps.core.models import Company
+from apps.core.models import Company
 
 
 class DBDupeFilter(RFPDupeFilter):
