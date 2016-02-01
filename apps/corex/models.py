@@ -9,6 +9,37 @@ Desc      : Veritza core models
 # imports
 # ============================================================================
 from django.db import models
+from django.conf import settings
+from django.core.mail import send_mail
+from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
+from django.contrib.contenttypes.models import ContentType
+
+from apps.core.models import Subscription
+
+
+# ============================================================================
+# utility function(s)
+# ============================================================================
+def send_email_notification(sender, instance, **kwargs):
+    """send email notification signal hook
+
+    This util function sends an email notification to User
+    """
+    if kwargs['created']:
+        ctype = ContentType.objects.get_for_model(sender)
+        subs = Subscription.objects.select_related().filter(dataset=ctype)
+        url = 'http://{0}{1}'.format(Site.objects.get_current().domain, \
+                reverse(('{}:{}'.format(sender._meta.app_label, instance.get_url_name())), \
+                args=[instance.id]))
+
+        subj = '"{0}" dataset updated'.format(instance.get_class_name())
+        body = mark_safe('New record has been added in the "{0}" dataset.' \
+              'You can check it here: {1}'.format(instance.get_class_name(), url))
+        recipients = [sub.user.email for sub in subs]
+
+        send_mail(subj, body, settings.DEFAULT_FROM_EMAIL, recipients)
 
 
 # ============================================================================

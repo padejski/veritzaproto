@@ -14,6 +14,7 @@ from django.core.management import call_command
 import watson
 
 from apps.corex import models as cmodels
+from apps.corex.models import send_email_notification
 from apps.corex.models import UnsavedForeignKey, UnsavedManyToManyField
 
 
@@ -231,6 +232,7 @@ class FundingCompanyProcurement(cmodels.BaseModel):
 # hook up post_save signal to reciever
 # ============================================================================
 post_save.connect(ack_save, sender=Official, dispatch_uid="integrate_data")
+post_save.connect(send_email_notification)
 
 
 # ============================================================================
