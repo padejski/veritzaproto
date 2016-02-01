@@ -11,6 +11,7 @@ Desc      : Veritza core views
 # ============================================================================
 import threading
 
+import watson
 from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
@@ -18,6 +19,8 @@ from django.core.management import call_command
 
 from apps.core.views import LoginRequiredMixin
 from apps.corex import models
+from apps.core import models as Mmodels  # montenegro models
+from apps.serbia import models as Smodels  # serbia models
 
 
 # ============================================================================
@@ -100,3 +103,43 @@ class ScrapeView(View):
             return redirect(request.META.get('HTTP_REFERER'))
 
         return redirect(request.META.get('HTTP_REFERER'))
+
+
+class SearchView(LoginRequiredMixin, TemplateView):
+    """global search view"""
+    template_name = 'core_search_results.html'
+
+    def get(self, request, *args, **kwargs):
+        """search term"""
+        search_term = request.GET.get('search')
+        context = self.get_context_data(**kwargs)
+        context['search'] = search_term
+        context['results_count'] = 0
+        context['datasets'] = []
+
+        _models = (Smodels.Company, Smodels.ElectionDonation, Smodels.Procurement,
+                   Smodels.Official, Mmodels.ContributorCompanyProcurement,
+                   Mmodels.ContributorIndividualProcurement, Mmodels.ElectionsContributions,
+                   Mmodels.ElectionsContributionCompany, Mmodels.ElectionsContributionCompanyMember,
+                   Mmodels.PublicOfficial, Mmodels.PublicOfficialReport, Mmodels.FamilyMember,
+                   Mmodels.FamilyMemberCompany, Mmodels.Company, Mmodels.CompanyMember,
+                   Mmodels.CompanyMemberTitle, Mmodels.BidderCompany, Mmodels.ProcurementCompanyRaw,
+                   Mmodels.ProcurementCompany, Mmodels.ContractingAuthority, Mmodels.PublicProcurement,
+                   Mmodels.PublicOfficialCompany, Mmodels.ConflictInterestFamilyMember,
+                   Mmodels.ConflictInterest)
+
+        for model in _models:
+            results = watson.filter(model, search_term)
+            context['results_count'] += len(results)
+            context['datasets'].append({
+                'model': model,
+                'model_meta': model._meta,
+                'model_name': model.__name__,
+                'objects': results
+            })
+
+        return self.render_to_response(context)
+
+# ============================================================================
+# EOF
+# ============================================================================

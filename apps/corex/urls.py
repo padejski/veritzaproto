@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^scrapers/$', views.ScrapersView.as_view(), name='scrapers'),
     url(r'^subscription/$', views.SubscriptionView.as_view(), name='subscription'),
     url(r'^scrape/$', views.ScrapeView.as_view(), name='scrape'),
+    url(r'^search/$', views.SearchView.as_view(), name='search'),
 ]
 
 # ============================================================================

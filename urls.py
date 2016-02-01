@@ -17,11 +17,6 @@ urlpatterns = patterns(
     url(r'^', include('apps.corex.urls')),
 
 
-    url(r'^search', core_views.SearchView.as_view(), name='search'),
-
-
-
-
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += patterns('django.views.static',
