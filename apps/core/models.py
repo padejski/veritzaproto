@@ -5,6 +5,7 @@ import logging
 import dateutil
 from datetime import datetime
 
+import watson
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
@@ -638,6 +639,7 @@ class Company(VeritzaBaseModel):
     From Company registry
     """
     class Meta:
+        app_label = 'core'
         verbose_name_plural = "Companies"
 
     registration_number = models.CharField(max_length=255, null=True, db_index=True)
@@ -1166,3 +1168,20 @@ def send_notification(sender, instance=None, created=None, **kwargs):
 
 
 signals.post_save.connect(send_notification)
+
+# ============================================================================
+# register models for django-watson
+# ============================================================================
+for model in (ContributorCompanyProcurement, ContributorIndividualProcurement,
+              ElectionsContributions, ElectionsContributionCompany,
+              ElectionsContributionCompanyMember, PublicOfficial,
+              PublicOfficialReport, FamilyMember, FamilyMemberCompany,
+              Company, CompanyMember, CompanyMemberTitle, BidderCompany,
+              ProcurementCompanyRaw, ProcurementCompany, ContractingAuthority,
+              PublicProcurement, PublicOfficialCompany, ConflictInterestFamilyMember,
+              ConflictInterest):
+    watson.register(model)
+
+# ============================================================================
+# EOF
+# ============================================================================
