@@ -30,6 +30,10 @@ def send_email_notification(sender, instance, **kwargs):
     if kwargs['created']:
         ctype = ContentType.objects.get_for_model(sender)
         subs = Subscription.objects.select_related().filter(dataset=ctype)
+
+        if not subs:
+            return
+            
         url = 'http://{0}{1}'.format(Site.objects.get_current().domain, \
                 reverse(('{}:{}'.format(sender._meta.app_label, instance.get_url_name())), \
                 args=[instance.id]))
