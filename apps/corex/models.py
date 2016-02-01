@@ -33,7 +33,7 @@ def send_email_notification(sender, instance, **kwargs):
 
         if not subs:
             return
-            
+
         url = 'http://{0}{1}'.format(Site.objects.get_current().domain, \
                 reverse(('{}:{}'.format(sender._meta.app_label, instance.get_url_name())), \
                 args=[instance.id]))
@@ -69,9 +69,18 @@ class BaseModel(models.Model):
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
 
+    def get_class(self):
+        return self.__class__
+
+    def get_class_name(self):
+        return self.__class__.__name__
+
     @classmethod
     def get_url_name(cls):
         return cls._meta.verbose_name_plural.replace(' ', '-').lower()
+
+    class Meta:
+        abstract = True
 
 
 class CompanyBaseModel(BaseModel):
