@@ -52,9 +52,6 @@ class BaseModel(models.Model):
     def get_url_name(cls):
         return cls._meta.verbose_name_plural.replace(' ', '-').lower()
 
-    class Meta:
-        abstract = True
-
 
 class CompanyBaseModel(BaseModel):
     """Company base model"""
