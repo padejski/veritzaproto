@@ -1,0 +1,45 @@
+{% extends "veritza_base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h3 class="page-header">{% trans 'Search results' %}</h3>
+<h4>{% trans 'Search term' %}: "{{ search }}"</h4>
+<h4>{% trans 'Total matches' %}: {{ results_count }}</h4>
+<hr/>
+
+{% if search|length < 3 %}
+
+	<h4>{% trans 'You need to input at least 3 characters to be able to search' %}</h4>
+
+{% else %}
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		{% for dataset in datasets %}
+			{% if dataset.objects %}
+	        <div class="panel panel-default">
+	            <div class="panel-heading" role="tab" id="headingOne">
+	                <h4 class="panel-title">
+	                    <a data-toggle="collapse" data-parent="#accordion" href="#{{ dataset.model_meta.app_label }}-{{ dataset.model_name }}" aria-expanded="true" aria-controls="{{ dataset.model_name }}">{{ dataset.model_meta.app_label|capfirst }} {{ dataset.model_meta.verbose_name_plural }} ({{ dataset.objects|length }})</a>
+	                </h4>
+	            </div>
+	            <div id="{{ dataset.model_meta.app_label }}-{{ dataset.model_name }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+	                <div class="panel-body">
+	    				<table class="table table-bordered table-stripped">
+						{% for object in dataset.objects %}
+							{% if dataset.model_meta.app_label != 'core' %}
+								<tr><td><a href="{% url dataset.model_meta.app_label|add:':'|add:dataset.model.get_url_name object.pk %}">{{ object }}</a></td></tr>
+							{% else %}
+								<tr><td><a href="{% url 'montenegro:'|add:dataset.model.get_url_name object.pk %}">{{ object }}</a></td></tr>
+							{% endif %}
+						{% endfor %}
+						</table>
+	                </div>
+	            </div>
+	        </div>
+        	{% endif %}
+        {% endfor %}
+    </div>
+
+{% endif %}
+
+{% endblock %}
