@@ -1172,14 +1172,9 @@ signals.post_save.connect(send_notification)
 # ============================================================================
 # register models for django-watson
 # ============================================================================
-for model in (ContributorCompanyProcurement, ContributorIndividualProcurement,
-              ElectionsContributions, ElectionsContributionCompany,
-              ElectionsContributionCompanyMember, PublicOfficial,
-              PublicOfficialReport, FamilyMember, FamilyMemberCompany,
-              Company, CompanyMember, CompanyMemberTitle, BidderCompany,
-              ProcurementCompanyRaw, ProcurementCompany, ContractingAuthority,
-              PublicProcurement, PublicOfficialCompany, ConflictInterestFamilyMember,
-              ConflictInterest):
+for model in (PublicOfficial, Company, CompanyMember, ConflictInterestFamilyMember,
+              FamilyMemberCompany, ConflictInterest, ElectionsContributions,
+              PublicOfficialCompany, FamilyMember, PublicProcurement, BidderCompany):
     watson.register(model)
 
 # ============================================================================
