@@ -23,7 +23,7 @@
 							{% if dataset.model_meta.app_label != 'core' %}
 								{{ dataset.model_meta.app_label|capfirst }} {{ dataset.model_meta.verbose_name_plural }} ({{ dataset.objects|length }})
 							{% else %}
-								'Montenegro' {{ dataset.model_meta.verbose_name_plural }} ({{ dataset.objects|length }})
+								Montenegro {{ dataset.model_meta.verbose_name_plural }} ({{ dataset.objects|length }})
 							{% endif %}
 						</a>
 	                </h4>
