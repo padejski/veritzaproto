@@ -1012,7 +1012,7 @@ class ConflictInterestFamilyMember(VeritzaBaseModel):
 
     @classmethod
     def get_url_name(cls):
-        return 'conflict-interests-family-members'
+        return 'conflict-interest-family-members'
 
     @classmethod
     def refresh(cls, delete_old=False, **kwargs):
