@@ -949,7 +949,7 @@ class PublicOfficialCompany(VeritzaBaseModel):
 
     class Meta:
         verbose_name = "Public official's company"
-        verbose_name_plural = "Public officials companies"
+        verbose_name_plural = "Public official companies"
         # unique_together = ('official', 'company')
 
     official = models.ForeignKey('PublicOfficial')
