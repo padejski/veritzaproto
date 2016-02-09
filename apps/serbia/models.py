@@ -9,7 +9,7 @@ Desc      : Veritza serbia models
 # necessary imports
 # ============================================================================
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.core.management import call_command
 from django.conf import settings
 from django.core.mail import send_mail
@@ -23,6 +23,7 @@ import watson
 from apps.core.models import Subscription
 from apps.corex import models as cmodels
 from apps.corex.models import UnsavedForeignKey, UnsavedManyToManyField
+from apps.corex.utils import get_hash
 
 
 # ============================================================================
@@ -36,6 +37,16 @@ def ack_save(sender, **kwargs):
     """acknowledge model save if successful"""
     if kwargs['created']:
         call_command('integratedata')
+
+
+def check_instance_hash(sender, instance, **kwargs):
+    """Check if Model's instance has a hash value
+
+    If not generate a hash value
+
+    """
+    if not instance.hash:
+        instance.hash = get_hash(instance)
 
 
 def send_email_notification(sender, instance, **kwargs):
@@ -276,6 +287,12 @@ class FundingCompanyProcurement(cmodels.BaseModel):
 post_save.connect(ack_save, sender=Official, dispatch_uid="integrate_data")
 post_save.connect(send_email_notification)
 
+
+# ============================================================================
+# hook up pre_save signal to receiver
+# ============================================================================
+for model in (Company, Procurement, Official, ElectionDonation):
+    pre_save.connect(check_instance_hash, sender=model)
 
 # ============================================================================
 # register models for django-watson
