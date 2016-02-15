@@ -285,7 +285,7 @@ class FundingCompanyProcurement(cmodels.BaseModel):
 # hook up post_save signal to reciever
 # ============================================================================
 post_save.connect(ack_save, sender=Official, dispatch_uid="integrate_data")
-post_save.connect(send_email_notification)
+post_save.connect(send_email_notification, dispatch_uid="send_email_notification")
 
 
 # ============================================================================
