@@ -11,6 +11,7 @@ __date__ = April 2015
 # Make necessary imports
 # ============================================================================
 import os
+import time
 import datetime
 from itertools import chain
 
@@ -283,6 +284,7 @@ class SerbiaCompanyScraper(BaseScraper):
 
         # save data to database
         for dat in data:
+            time.sleep(60)  # time delay to avoid ip banning
             if dat:
                 model = Company(**dat)
                 self.save_model(model)
