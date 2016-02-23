@@ -103,7 +103,7 @@ STATUS_MAP = {'c': 'Statutory candidate',
 # ============================================================================
 class CommitteeContributionsScraper(BaseScraper):
     """Committee Contributions Scraper"""
-    NAME = 'usa:elections'
+    NAME = 'usa:commiteecontributions'
 
     def __init__(self):
         """Initialize base scraper"""
@@ -155,6 +155,7 @@ class CommitteeContributionsScraper(BaseScraper):
 
 class ElectionCandsScraper(BaseScraper):
     """Election Contributions scraper"""
+    NAME = 'usa:electionscandidates'
 
     def __init__(self):
         """Initialize base scraper"""
@@ -215,6 +216,7 @@ class ElectionCandsScraper(BaseScraper):
 
 class IndividualContributionsScraper(BaseScraper):
     """Individual Contributions Scraper"""
+    NAME = 'usa:individualcontributions'
 
     def __init__(self):
         """Initialize base scraper"""
