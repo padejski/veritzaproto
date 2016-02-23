@@ -20,7 +20,6 @@ from apps.corex.models import ScrapeTracker
 # scrapers list
 # ============================================================================
 SCRAPERS = chain(serbia_scrapers, usa_scrapers)
-SCRAPERS = serbia_scrapers
 
 
 class ScraperScheduler:
