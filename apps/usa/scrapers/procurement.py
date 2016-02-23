@@ -49,7 +49,7 @@ class FedContractsScraper(BaseScraper):
         """Fetch XML data from api url endpoint
 
         """
-        xml = self.get(url).content
+        xml = self.get(url, timeout=180).content
 
         return xml
 

@@ -62,9 +62,9 @@ class BaseScraper(object):
 
         return fcontent
 
-    def get(self, url):
+    def get(self, url, timeout=60):
         """fetch url """
-        res = self.session.get(url, timeout=60)
+        res = self.session.get(url, timeout=timeout)
 
         return res
 
