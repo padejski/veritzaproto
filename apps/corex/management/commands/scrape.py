@@ -19,7 +19,7 @@ from apps.corex.models import ScrapeTracker
 # ============================================================================
 # scrapers list
 # ============================================================================
-SCRAPERS = chain(serbia_scrapers, usa_scrapers)
+SCRAPERS = list(chain(serbia_scrapers, usa_scrapers))
 
 
 class ScraperScheduler:
@@ -66,6 +66,8 @@ class Command(BaseCommand):
 
         if options['scraper']:
             scrapers = [s for s in SCRAPERS if s.NAME == options['scraper']]
+            print(scrapers)
+            print(options['scraper'])
 
         # initialize scheduler
         sched = ScraperScheduler()
