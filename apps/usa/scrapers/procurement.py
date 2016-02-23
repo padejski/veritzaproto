@@ -7,6 +7,7 @@ __date__ = April 2015
 
 """
 from itertools import imap
+from datetime import datetime
 
 from xmltodict import parse as xmlparse
 from django.db.utils import IntegrityError
@@ -16,7 +17,7 @@ from ..models import FedCompany as Company
 from ..models import FedProcurement as Procurement
 from . import constants as const
 
-YEARS = [2015, 2014, 2013, 2012, 2011, 2010, 2009]
+YEARS = range(datetime.now().year, 2008, -1)
 
 
 class FedContractsScraper(BaseScraper):
