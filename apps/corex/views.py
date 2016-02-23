@@ -52,7 +52,7 @@ class ScrapersView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ScrapersView, self).get_context_data(**kwargs)
         context['scrapers'] = [{'name': x.name, 'status': x.status, 'last_run': x.last_run} for
-                               x in models.ScrapeTracker.objects.all()]
+                               x in models.ScrapeTracker.objects.order_by('name').all()]
 
         return context
 
