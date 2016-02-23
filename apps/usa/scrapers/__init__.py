@@ -18,7 +18,7 @@ from toxics_inventory import ToxicsInventoryScraper
 # ============================================================================
 # scrapers list
 # ============================================================================
-usa_scrapers = [SecEdgarScraper, FedContractsScraper,
+usa_scrapers = [SecEdgarScraper, FedContractsScraper, FinDisclosuresScraper,
                 CommitteeContributionsScraper, ElectionCandsScraper,
                 IndividualContributionsScraper, CpscRecallsScraper,
                 CpscRecallsViolationsScraper, IrsExemptScraper,
