@@ -56,7 +56,7 @@ class BaseModel(models.Model):
 class CompanyBaseModel(BaseModel):
     """Company base model"""
     name = models.CharField(max_length=255)
-    alt_name = models.CharField(max_length=255, verbose_name='alternative name', blank=True)
+    alt_name = models.CharField(max_length=255, verbose_name='alternative name', blank=True, null=True)
     founders = models.CharField(max_length=255, null=True)
     directors = models.CharField(max_length=255, null=True)
     type = models.CharField(max_length=255, null=True)
