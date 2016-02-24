@@ -19,7 +19,9 @@ from apps.corex.models import ScrapeTracker
 # ============================================================================
 # scrapers list
 # ============================================================================
-SCRAPERS = chain(serbia_scrapers, usa_scrapers)
+SCRAPERS = [scp.NAME for scp in chain(serbia_scrapers, usa_scrapers)]
+MONTE_SCRAPERS = ['montenegro:companies', 'montenegro:procurements',
+                  'montenegro:public-officials']
 
 
 class Command(BaseCommand):
@@ -28,9 +30,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """run command"""
-        for scp in SCRAPERS:
-            exists = ScrapeTracker.objects.filter(name=scp.NAME).first()
+        for scp in chain(SCRAPERS, MONTE_SCRAPERS):
+            exists = ScrapeTracker.objects.filter(name=scp).first()
             if not exists:
-                tracker = ScrapeTracker(name=scp.NAME)
+                tracker = ScrapeTracker(name=scp)
                 tracker.save()
-                print('initialized {}'.format(scp.NAME))
+                print('initialized {}'.format(scp))

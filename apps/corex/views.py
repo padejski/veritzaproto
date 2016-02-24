@@ -90,7 +90,14 @@ class ScrapeView(View):
         action = request.POST.get('action', '')
 
         if action == 'run':
-            thr = threading.Thread(target=call_command, args=('scrape',), kwargs={'scraper': scraper})
+            if 'monte' in scraper.lower():
+                args = 'run_scraper {}'.format(scraper.split(':')[-1])
+                thr = threading.Thread(target=call_command, args=(args,))
+            else:
+                thr = threading.Thread(target=call_command,
+                                       args=('scrape',),
+                                       kwargs={'scraper': scraper})
+
             thr.setDaemon(True)
             thr.start()
 
