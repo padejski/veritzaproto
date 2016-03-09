@@ -44,6 +44,9 @@ urlpatterns = [
     url(r'^disclosures/(?P<pk>\d+)/$', views.FinancialDisclosureDetailView.as_view(), name='federal-financial-disclosures'),
     url(r'^candidates/(?P<pk>\d+)/$', views.CandidateDetailView.as_view(), name='election-candidates'),
 
+    url(r'^funderscompanies/$', views.FundersCompanies.as_view(), name='funderscompanies'),
+    url(r'^funderscompaniesprocurement', views.FundersCompaniesProcurement.as_view(), name='funderscompaniesprocurement'),
+
     url(r'^search', views.SearchView.as_view(), name='search'),
 
 ]

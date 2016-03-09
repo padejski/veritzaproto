@@ -66,6 +66,8 @@ class DatasetsView(LoginRequiredMixin, TemplateView):
         context['candidates_no'] = models.FedCandidate.objects.count()
         context['econtribs_no'] = models.FedElectionContribution.objects.count()
         context['officials_no'] = 0
+        context['funderscompanies_no'] = models.FedFunderCompany.objects.count()
+        context['funderscompaniesproc_no'] = models.FedFunderCompanyProcurement.objects.count()
 
         return context
 
@@ -80,6 +82,20 @@ class FinancialDisclosuresView(SingleTableView):
 class FinancialDisclosureDetailView(DetailView):
     model = models.FedFinancialDisclosure
     template_name = 'usa_financial_disclosure.html'
+
+
+class FundersCompanies(SingleTableView):
+    """list of election donors/funders companies"""
+    model = models.FedFunderCompany
+    table_class = tables.FunderCompanyTable
+    template_name = 'usa_list.html'
+
+
+class FundersCompaniesProcurement(SingleTableView):
+    """list of companies in procurement owned by political funders"""
+    model = models.FedFunderCompanyProcurement
+    table_class = tables.FunderCompanyProcurementTable
+    template_name = 'usa_list.html'
 
 
 class IndexView(TemplateView):

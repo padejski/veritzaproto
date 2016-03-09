@@ -50,6 +50,32 @@ class ElectionContributionTable(tables.Table):
                    'candidate', 'entity_tp', 'transaction_tp')
 
 
+class FunderCompanyTable(tables.Table):
+    """political donors companies table"""
+    company = tables.LinkColumn('usa:companies', args=[A('company.pk')],
+                                accessor='company.name', verbose_name='company')
+    donor = tables.LinkColumn('usa:electioncontribs', args=[A('contribution.pk')],
+                              accessor='contribution.name', verbose_name='funder')
+
+    class Meta:
+        model = models.FedFunderCompany
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr', 'donation')
+
+
+class FunderCompanyProcurementTable(tables.Table):
+    """political donors companies in procurement table"""
+    company = tables.LinkColumn('usa:companies', args=[A('company.company.pk')],
+                                accessor='company.company.name', verbose_name='company')
+    procurement = tables.LinkColumn('usa:procurements', args=[A('procurement.pk')],
+                                    accessor='procurement.subject', verbose_name='procurement')
+
+    class Meta:
+        model = models.FedFunderCompanyProcurement
+        attrs = {"class": "paleblue table table-striped table-bordered"}
+        exclude = ('id', 'created', 'updated', 'hash', 'basemodel_ptr')
+
+
 class FinancialDisclosureTable(tables.Table):
     """Financial disclosures  data table"""
     name = tables.LinkColumn('usa:federal-financial-disclosures', args=[A('pk')])

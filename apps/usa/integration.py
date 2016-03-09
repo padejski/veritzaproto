@@ -31,13 +31,13 @@ class UsaIntegrator(object):
 
         """
         companies = self.models.Company.objects.all()
-        donations = self.models.FedElectionContribution.objects.all()
+        contributions = self.models.FedElectionContribution.objects.all()
 
         for cmpy in companies:
-            for donation in donations:
+            for contribution in contributions:
                 for individual in cmpy.individuals:
-                    if are_similar(individual, donation.name):
-                        dat = {'company': cmpy, 'donation': donation}
+                    if are_similar(individual, contribution.name):
+                        dat = {'company': cmpy, 'contribution': contribution}
                         self.make_save_model(self.models.FedFunderCompany, dat)
 
                         break
