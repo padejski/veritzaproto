@@ -45,6 +45,14 @@ class FedCompany(cmodels.CompanyBaseModel):
     """Federal company model """
     place = models.CharField(max_length=1024)
 
+    @property
+    def individuals(self):
+        """get a list of company individuals"""
+        individuals = (self.directors, self.founders)
+        individuals = (x for x in individuals if x)
+
+        return set(individuals)
+
     class Meta:
         """extra options"""
         verbose_name_plural = "Federal Companies"
