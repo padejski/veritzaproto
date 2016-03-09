@@ -284,7 +284,7 @@ class SerbiaCompanyScraper(BaseScraper):
 
         # save data to database
         for dat in data:
-            time.sleep(60)  # time delay to avoid ip banning
+            time.sleep(10)  # time delay to avoid ip banning
             if dat:
                 model = Company(**dat)
                 self.save_model(model)
