@@ -257,6 +257,14 @@ class FunderCompany(cmodels.BaseModel):
     company = models.ForeignKey('Company')
     donation = models.ForeignKey('ElectionDonation')
 
+    @classmethod
+    def get_url_name(cls):
+        return 'funderscompanies'
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Funder Companies'
+
 
 class FunderCompanyProcurement(cmodels.BaseModel):
     """Companies Owned by political funders that are in procurement
@@ -264,6 +272,15 @@ class FunderCompanyProcurement(cmodels.BaseModel):
     """
     company = models.ForeignKey('FunderCompany')
     procurement = models.ForeignKey('Procurement')
+
+
+    @classmethod
+    def get_url_name(cls):
+        return 'funderscompaniesprocurement'
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Funder Companies Procurement'
 
 
 class FundingCompany(cmodels.BaseModel):
@@ -280,6 +297,15 @@ class FundingCompanyProcurement(cmodels.BaseModel):
     """
     company = models.ForeignKey('FundingCompany')
     procurement = models.ForeignKey('Procurement')
+
+
+    @classmethod
+    def get_url_name(cls):
+        return 'fundingcompaniesprocurement'
+
+    class Meta:
+        """extra options"""
+        verbose_name_plural = 'Funding Companies Procurement'
 
 # ============================================================================
 # hook up post_save signal to reciever
