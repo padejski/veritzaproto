@@ -6,7 +6,7 @@ import sys
 
 from django.core.management.base import BaseCommand
 
-from apps.serbia.scrapers import SerbiaCompanyScraper as scraper
+from apps.usa.scrapers import FinDisclosuresScraper as scraper
 
 
 class Command(BaseCommand):
