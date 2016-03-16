@@ -37,7 +37,7 @@ class FedCandidate(cmodels.BaseModel):
     url = models.CharField(max_length=1024, null=True)
 
     def __unicode__(self):
-        returm self.cand_name
+        return self.cand_name
 
     class Meta:
         """xtra options"""
@@ -122,6 +122,7 @@ class FedProcurement(cmodels.ProcurementBaseModel):
     """
     def __unicode__(self):
         return ' '.join([self.contracting_auth, self.vendor])
+
     class Meta:
         """extra options"""
         verbose_name_plural = 'Federal Procurement'
