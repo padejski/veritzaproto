@@ -8,6 +8,7 @@ __date__ = June 2015
 # ============================================================================
 # necessary imports
 # ============================================================================
+import time
 import itertools
 from itertools import imap
 
@@ -62,6 +63,7 @@ class FinDisclosuresScraper(BaseScraper):
         form = self.get_form_fields(form)
 
         for form_data in self.gen_form_data(form, states, years):
+            time.sleep(5)
             for data in self.fetch_data(form_data):
                 yield data
 
