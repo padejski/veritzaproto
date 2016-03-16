@@ -36,6 +36,9 @@ class FedCandidate(cmodels.BaseModel):
     cand_zip = models.CharField(max_length=1024, null=True, verbose_name='Zip Code')
     url = models.CharField(max_length=1024, null=True)
 
+    def __unicode__(self):
+        returm self.cand_name
+
     class Meta:
         """xtra options"""
         verbose_name_plural = "Election Candidates"
@@ -52,6 +55,9 @@ class FedCompany(cmodels.CompanyBaseModel):
         individuals = (x for x in individuals if x)
 
         return set(individuals)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         """extra options"""
@@ -84,6 +90,9 @@ class FedElectionContribution(cmodels.BaseModel):
     zip_code = models.CharField(max_length=1024, null=True, verbose_name='Zip Code')
     url = models.CharField(max_length=1024, null=True)
 
+    def __unicode__(self):
+        return ' '.join([self.name, self.transaction_amt])
+
     class Meta:
         """extra options"""
         verbose_name_plural = 'Elections Contributions'
@@ -99,6 +108,9 @@ class FedIrsExemptOrg(cmodels.BaseModel):
     status = models.CharField(max_length=1024, null=True, verbose_name='Deductibility Status')
     url = models.CharField(max_length=1024, null=True)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         """extra options"""
         verbose_name_plural = 'IRS Exempt Organizations'
@@ -108,6 +120,8 @@ class FedProcurement(cmodels.ProcurementBaseModel):
     """Federal Procurement model
 
     """
+    def __unicode__(self):
+        return ' '.join([self.contracting_auth, self.vendor])
     class Meta:
         """extra options"""
         verbose_name_plural = 'Federal Procurement'
@@ -121,6 +135,9 @@ class FedFinancialDisclosure(cmodels.BaseModel):
     pdf = models.CharField(max_length=1024)
     year = models.CharField(max_length=1024)
     url = models.CharField(max_length=1024, null=True)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         """extra options"""
@@ -159,6 +176,9 @@ class FedSecFiling(cmodels.BaseModel):
     street_2 = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
     zip = models.CharField(max_length=1024, null=True)
+
+    def __unicode__(self):
+        return self.company_conformed_name
 
     class Meta:
         """extra options"""
@@ -208,6 +228,9 @@ class FedToxicsFacility(cmodels.BaseModel):
     us_mexico_border_ind = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
 
+    def __unicode__(self):
+        return self.primary_name
+
     class Meta:
         """extra options"""
         verbose_name_plural = 'Toxics Facilities'
@@ -227,6 +250,9 @@ class FedOshaEbsa(cmodels.BaseModel):
     plan_year = models.CharField(max_length=1024, null=True, verbose_name='Plan Year')
     pn = models.CharField(max_length=1024, null=True, verbose_name='Plan Number')
     url = models.CharField(max_length=1024, null=True)
+
+    def __unicode__(self):
+        return self.plan_name
 
     class Meta:
         """extra options"""
@@ -286,6 +312,9 @@ class FedOshaInspection(cmodels.BaseModel):
     zip_dim_id = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
 
+    def __unicode__(self):
+        return self.estab_name
+    
     class Meta:
         """extra options"""
         verbose_name_plural = 'Occupational Safety and Health Inspections'
@@ -318,6 +347,9 @@ class FedCpscRecall(cmodels.BaseModel):
         for image_url in self.images.split(','):
             yield image_url
 
+    def __unicode__(self):
+        return self.title
+
     class Meta:
         """extra options"""
         verbose_name_plural = 'Consumer Product Safety Commission Recalls'
@@ -338,6 +370,9 @@ class FedCpscRecallViolation(cmodels.BaseModel):
     primary_violation = models.CharField(max_length=1024, null=True, verbose_name='Primary Violation')
     product = models.CharField(max_length=1024, null=True)
     url = models.CharField(max_length=1024, null=True)
+
+    def __unicode__(self):
+        return self.firm
 
     class Meta:
         """extra options"""
