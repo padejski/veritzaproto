@@ -51,6 +51,7 @@ class FinDisclosuresScraper(BaseScraper):
         self.session.headers.update(HEADERS)
 
         soup = self.post_soup(BASE_URL, data=data)
+        print(soup)
 
         for data in self.scrape_data(soup):
             yield data
