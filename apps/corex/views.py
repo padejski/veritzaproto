@@ -21,6 +21,7 @@ from apps.core.views import LoginRequiredMixin
 from apps.corex import models
 from apps.core import models as Mmodels  # montenegro models
 from apps.serbia import models as Smodels  # serbia models
+from apps.usa import models as Fmodels # USA Federal models
 
 
 # ============================================================================
@@ -133,7 +134,11 @@ class SearchView(LoginRequiredMixin, TemplateView):
                    Mmodels.CompanyMemberTitle, Mmodels.BidderCompany, Mmodels.ProcurementCompanyRaw,
                    Mmodels.ProcurementCompany, Mmodels.ContractingAuthority, Mmodels.PublicProcurement,
                    Mmodels.PublicOfficialCompany, Mmodels.ConflictInterestFamilyMember,
-                   Mmodels.ConflictInterest)
+                   Mmodels.ConflictInterest, Fmodels.FedCandidate, Fmodels.FedCompany,
+                   Fmodels.FedElectionContribution, Fmodels.FedIrsExemptOrg, Fmodels.FedProcurement,
+                   Fmodels.FedFinancialDisclosure, Fmodels.FedSecFiling, Fmodels.FedToxicsFacility,
+                   Fmodels.FedOshaEbsa, Fmodels.FedOshaInspection, Fmodels.FedCpscRecall,
+                   Fmodels.FedCpscRecallViolation)
 
         for model in _models:
             results = watson.filter(model, search_term)
