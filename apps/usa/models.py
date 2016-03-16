@@ -121,7 +121,7 @@ class FedProcurement(cmodels.ProcurementBaseModel):
 
     """
     def __unicode__(self):
-        return ' '.join([self.contracting_auth, self.vendor])
+        return ' '.join([self.contracting_auth, self.vendor.name])
 
     class Meta:
         """extra options"""
