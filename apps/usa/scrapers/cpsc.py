@@ -104,7 +104,9 @@ class CpscRecallsViolationsScraper(BaseScraper):
 
     def gen_data_dicts(self):
         """generate data dictionaries"""
-        rows = (row for row in self.get_soup(VIOL_URL).find_all('table')[-1].find_all('tr'))
+        tables = self.get_soup(VIOL_URL).find_all('table')[1:]
+        table_rows = (table.find_all('tr') for table in tables)
+        rows = (row for table_row in table_rows for row in table_row)
 
         headers = [x.text.strip().lower().replace(' ', '_') for x in next(rows).find_all('td')]
         headers = [hdr.replace('.', '') for hdr in headers]
