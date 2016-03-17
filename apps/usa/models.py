@@ -257,7 +257,7 @@ class FedOshaEbsa(cmodels.BaseModel):
 
     class Meta:
         """extra options"""
-        verbose_name_plural = 'OSHA Employees Benefits Security Adminstration Enforcements'
+        verbose_name_plural = 'OSHA Employee Benefits Security Adminstration Enforcements'
 
 
 class FedOshaInspection(cmodels.BaseModel):
