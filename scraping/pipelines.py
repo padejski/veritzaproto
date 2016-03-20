@@ -9,7 +9,7 @@ from django.db.models.fields import DateField, DateTimeField
 from django.db import transaction
 from scrapy import log
 
-from veritza.apps.core.models import PublicOfficial
+from apps.core.models import PublicOfficial
 
 
 class VeritzaModelsPipeline(object):
