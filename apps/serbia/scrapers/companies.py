@@ -53,7 +53,7 @@ MAPPING = [(u'Седиште', 'city'),
            ('supervisors', 'supervisors'),
            ('other_individuals', 'other_individuals')]
 
-CODES_FILE = 'IDS2.csv'
+CODES_FILE = 'IDS3.csv'
 
 
 # ============================================================================
