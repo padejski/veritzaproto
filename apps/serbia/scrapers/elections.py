@@ -9,6 +9,7 @@ __date__ = May 2015
 # ============================================================================
 # necessary imports
 # ============================================================================
+import string
 import itertools
 
 from apps.corex.basescraper import BaseScraper
@@ -70,8 +71,7 @@ class SerbiaElectionsScraper(BaseScraper):
         for donation in self.get_donors_donations(donors):
             yield donation
 
-    @staticmethod
-    def gen_names():
+    def gen_names(self):
         """generate search names
 
         self.gen_names() -> search_names_iterable
@@ -86,6 +86,7 @@ class SerbiaElectionsScraper(BaseScraper):
 
         for names in itertools.chain(NAMES, cnames, onames):
             for name in names.strip().split(' '):
+                name = self.remove_punctuation(name)
                 if len(name) > 4:
                     print(name)
                     yield name
@@ -189,6 +190,13 @@ class SerbiaElectionsScraper(BaseScraper):
                 donor_dict['search_name'] = search_name
 
                 yield donor_dict
+
+    @staticmethod
+    def remove_punctuation(strx):
+        """remove punctuation from string """
+        exclude = set(string.punctuation)
+
+        return ''.join(ch for ch in strx if ch not in exclude)
 
     def run(self):
         """run scraper"""
